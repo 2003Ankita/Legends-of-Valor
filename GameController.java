@@ -62,22 +62,54 @@ public class GameController {
      */
     public void startGame() {
 
-        view.showMessage("Welcome to Legends of Valor!");
-        view.showMessage("Please enter your name, hero:");
-        playerName = scanner.nextLine().trim();
-        view.showMessage("Greetings, " + playerName + "! Your adventure begins...\n");
+        // NEW MENU — put at the top of startGame()
+        while (true) {
+            System.out.println("====================================");
+            System.out.println("            GAME MODE MENU          ");
+            System.out.println("====================================");
+            System.out.println("1) Classic Monsters & Heroes");
+            System.out.println("2) Legends of Valor");
+            System.out.println("3) Exit");
+            System.out.println("====================================");
+            System.out.print("Choose your game mode: ");
 
-        loadData();
-        chooseHeroes();
+            int mode = readIntInRange(1, 3);
 
-        board = new Board(boardSize, INACCESSIBLE_RATE, MARKET_RATE, COMMON_RATE);
-        party.setPosition(board.getStartRow(), board.getStartCol());
+            if (mode == 3) {
+                view.showMessage("Farewell, adventurer.");
+                return;
+            }
 
-        placeInitialMonsters();
+            if (mode == 2) {
+                // CALL LEGENDS OF VALOR
+                startLegendsOfValorMode();
+                return; // exit after LoV ends
+            }
 
-        instructions();
-        mainLoop();
+            // ----------------------------
+            // ORIGINAL MONSTERS & HEROES GAME
+            // ----------------------------
+
+            view.showMessage("Welcome to Legends of Valor!");
+            view.showMessage("Please enter your name, hero:");
+            playerName = scanner.nextLine().trim();
+            view.showMessage("Greetings, " + playerName + "! Your adventure begins...\n");
+
+            loadData();
+            chooseHeroes();
+
+            board = new Board(boardSize, INACCESSIBLE_RATE, MARKET_RATE, COMMON_RATE);
+            party.setPosition(board.getStartRow(), board.getStartCol());
+
+            placeInitialMonsters();
+
+            instructions();
+            mainLoop();
+
+            return;  // end after classic game finishes
+        }
     }
+
     /* ================= DATA LOADING ================= */
 
     /**
@@ -113,6 +145,12 @@ public class GameController {
         itemPool.add(new Spell("Fire Blast", 750, 1, SpellType.FIRE, 250, 60));
         itemPool.add(new Spell("Ice Shard", 600, 1, SpellType.ICE, 180, 40));
     }
+    private void startLegendsOfValorMode() {
+        System.out.println("\n⚔ Starting Legends of Valor ⚔\n");
+        LegendsOfValorGame lov = new LegendsOfValorGame(scanner);
+        lov.start();
+    }
+
 
     /**
      * Places a number of main-monsters on random COMMON tiles.
