@@ -16,7 +16,7 @@ import Monsters.Monster;
  */
 public class LegendsTile extends Tile {
 
-    private final TerrainType terrainType;
+    private TerrainType terrainType;
     private Hero hero; // at most one hero
     private Monster monster; // at most one monster
 
@@ -41,6 +41,10 @@ public class LegendsTile extends Tile {
 
     public TerrainType getTerrainType() {
         return terrainType;
+    }
+
+    public void setTerrainType(TerrainType terrainType) {
+        this.terrainType = terrainType;
     }
 
     public Hero getHero() {

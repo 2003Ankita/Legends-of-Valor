@@ -1,23 +1,11 @@
-package Board;
+package general;
 
 import java.util.*;
 
-import Heros.AttackAction;
-import Heros.Hero;
-import Heros.HeroAction;
-import Heros.HeroFactoryAdapter;
-import Heros.HeroUnit;
-import Heros.MoveAction;
-import Heros.PassAction;
-import Heros.RecallAction;
-import Heros.TeleportAction;
+import Heros.*;
 import Items.Position;
-import Monsters.DefaultMonsterBehavior;
-import Monsters.Monster;
-import Monsters.MonsterBehavior;
-import Monsters.MonsterUnit;
-import general.DamageCalculator;
-import general.DefaultDamageCalculator;
+import Monsters.*;
+import Board.*;
 
 /**
  * Main controller for Legends of Valor.
@@ -575,6 +563,8 @@ public class LegendsOfValorGame {
                 return "C";
             case KOULOU:
                 return "K";
+            case OBSTACLE:
+                return "O";
             default:
                 return "P";
         }
