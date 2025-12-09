@@ -2,7 +2,7 @@ package Heros;
 
 import java.util.Scanner;
 
-import Board.LegendsOfValorGame;
+import general.LegendsOfValorGame;
 
 /**
  * Optional "do nothing" action for a hero turn.

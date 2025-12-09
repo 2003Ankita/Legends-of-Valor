@@ -2,7 +2,7 @@ package Heros;
 
 import java.util.Scanner;
 
-import Board.LegendsOfValorGame;
+import general.LegendsOfValorGame;
 
 /**
  * Recall: return hero to their Nexus tile.

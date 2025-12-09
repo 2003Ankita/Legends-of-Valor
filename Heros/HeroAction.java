@@ -2,7 +2,7 @@ package Heros;
 
 import java.util.Scanner;
 
-import Board.LegendsOfValorGame;
+import general.LegendsOfValorGame;
 
 /**
  * Strategy representing a single hero action (Move, Attack, Teleport, etc.)

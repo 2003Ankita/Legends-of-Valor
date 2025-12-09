@@ -3,9 +3,9 @@ package Heros;
 import java.util.List;
 import java.util.Scanner;
 
-import Board.LegendsOfValorGame;
 import Monsters.Monster;
 import Monsters.MonsterUnit;
+import general.LegendsOfValorGame;
 
 /**
  * Hero physical attack on a monster within range 1.

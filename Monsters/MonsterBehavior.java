@@ -1,6 +1,6 @@
 package Monsters;
 
-import Board.LegendsOfValorGame;
+import general.LegendsOfValorGame;
 
 /**
  * Strategy interface that encapsulates how a monster behaves

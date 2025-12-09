@@ -2,9 +2,9 @@ package Monsters;
 
 import java.util.List;
 
-import Board.LegendsOfValorGame;
 import Heros.HeroUnit;
 import Items.Position;
+import general.LegendsOfValorGame;
 
 /**
  * Default monster AI:

@@ -3,8 +3,8 @@ package Heros;
 import java.util.List;
 import java.util.Scanner;
 
-import Board.LegendsOfValorGame;
 import Items.Position;
+import general.LegendsOfValorGame;
 
 /**
  * Teleport: move hero to a tile adjacent to a target hero in another lane,
