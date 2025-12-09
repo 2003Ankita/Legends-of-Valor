@@ -3,11 +3,11 @@ package general;
 import java.util.ArrayList;
 import java.util.List;
 
-import Heros.Hero;
-import Heros.HeroStat;
-import Heros.Paladin;
-import Heros.Sorcerer;
-import Heros.Warrior;
+import Heroes.Hero;
+import Heroes.HeroStat;
+import Heroes.Paladin;
+import Heroes.Sorcerer;
+import Heroes.Warrior;
 import Items.Armor;
 import Items.Item;
 import Items.Potion;

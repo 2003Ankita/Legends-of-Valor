@@ -1,7 +1,7 @@
 package general;
 
 import Board.Board;
-import Heros.Party;
+import Heroes.Party;
 import Monsters.Monster;
 
 /**

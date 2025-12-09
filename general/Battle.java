@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import Board.Weather;
-import Heros.*;
+import Heroes.*;
 import Items.*;
 import Monsters.Monster;
 

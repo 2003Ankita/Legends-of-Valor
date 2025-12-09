@@ -6,8 +6,8 @@ import java.util.Scanner;
 import Board.Board;
 import Board.Tile;
 import Board.TileType;
-import Heros.Hero;
-import Heros.Party;
+import Heroes.Hero;
+import Heroes.Party;
 import Monsters.Monster;
 
 /**

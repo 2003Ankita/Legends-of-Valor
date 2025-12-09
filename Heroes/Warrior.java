@@ -1,15 +1,15 @@
-package Heros;
+package Heroes;
 
 /**
- * Represents a Sorcerer hero.
- * Sorcerers excel in spellcasting and receive extra bonuses
- * to Dexterity and Agility when leveling up.
+ * Represents a Warrior hero.
+ * Warriors specialize in physical combat and gain extra bonuses
+ * to Strength and Agility when leveling up.
  */
-public class Sorcerer extends Hero {
+public class Warrior extends Hero {
 
     /**
-     * Creates a Sorcerer with the given attributes.
-     *
+     * Creates a Warrior with the specified attributes.
+     * 
      * @param name      hero name
      * @param level     starting level
      * @param mana      starting mana
@@ -18,17 +18,17 @@ public class Sorcerer extends Hero {
      * @param agility   base agility value
      * @param gold      starting gold
      */
-    public Sorcerer(String name, int level, double mana,
+    public Warrior(String name, int level, double mana,
             double strength, double dexterity, double agility,
             double gold) {
         super(name, level, mana, strength, dexterity, agility, gold);
     }
 
     /**
-     * Levels up the Sorcerer.
+     * Levels up the Warrior.
      * Stat scaling rules:
      * - Base +5% to Strength, Dexterity, Agility
-     * - Additional +5% to Dexterity & Agility (favored stats)
+     * - Additional +5% to Strength and Agility (favored stats)
      * - HP resets to (level × 100)
      * - Mana increases by 10%
      */
@@ -36,27 +36,28 @@ public class Sorcerer extends Hero {
     public void levelUp() {
         level++;
 
-        // Base +5%
+        // Increase all skills by 5%
         strength *= 1.05;
         dexterity *= 1.05;
         agility *= 1.05;
 
-        // Favored +5%: Only Dexterity & Agility
-        dexterity *= 1.05;
+        // Favored skills +5% extra
+        strength *= 1.05;
         agility *= 1.05;
 
+        // Reset HP and MP as per PDF
         hp = level * 100;
         mana *= 1.1;
     }
 
     /**
-     * Creates a deep copy of this Sorcerer.
-     * Used when forming a party so no hero instance is shared.
+     * Produces a deep copy of this Warrior.
+     * Ensures party selection does not share references.
      * 
-     * @return a new Sorcerer with identical stats
+     * @return a new Warrior with identical stats
      */
     @Override
     protected Hero copyInternal() {
-        return new Sorcerer(name, level, mana, strength, dexterity, agility, gold);
+        return new Warrior(name, level, mana, strength, dexterity, agility, gold);
     }
 }

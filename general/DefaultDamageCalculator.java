@@ -3,7 +3,7 @@ package general;
 import Board.TerrainEffect;
 import Board.TerrainEffectFactory;
 import Board.TerrainType;
-import Heros.Hero;
+import Heroes.Hero;
 import Items.Armor;
 import Items.Spell;
 import Items.Weapon;

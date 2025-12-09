@@ -2,7 +2,6 @@ package general;
 
 import java.util.*;
 
-import Heros.*;
 import Items.Armor;
 import Items.Item;
 import Items.Potion;
@@ -10,6 +9,7 @@ import Items.Spell;
 import Items.Weapon;
 import Monsters.*;
 import Board.*;
+import Heroes.*;
 
 /**
  * Main controller for Legends of Valor.

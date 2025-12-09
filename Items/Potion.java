@@ -1,6 +1,6 @@
 package Items;
 
-import Heros.HeroStat;
+import Heroes.HeroStat;
 
 /**
  * Represents a consumable potion item that boosts a specific hero stat

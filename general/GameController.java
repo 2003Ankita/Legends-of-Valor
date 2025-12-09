@@ -3,7 +3,7 @@ package general;
 import java.util.*;
 
 import Board.*;
-import Heros.*;
+import Heroes.*;
 import Items.*;
 import Monsters.*;
 

@@ -3,7 +3,7 @@ package Monsters;
 import java.util.List;
 
 import Board.Position;
-import Heros.HeroUnit;
+import Heroes.HeroUnit;
 import general.LegendsOfValorGame;
 
 /**

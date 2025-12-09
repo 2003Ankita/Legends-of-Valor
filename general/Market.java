@@ -3,7 +3,7 @@ package general;
 import java.util.ArrayList;
 import java.util.List;
 
-import Heros.Hero;
+import Heroes.Hero;
 import Items.Item;
 
 /**

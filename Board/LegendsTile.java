@@ -1,6 +1,6 @@
 package Board;
 
-import Heros.Hero;
+import Heroes.Hero;
 import Monsters.Monster;
 
 /**

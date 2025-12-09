@@ -1,4 +1,4 @@
-package Heros;
+package Heroes;
 
 import java.util.Scanner;
 
