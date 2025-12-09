@@ -211,7 +211,7 @@ public final class DataLoader {
     public static List<Item> loadPotions(String ignored) {
         List<Item> list = new ArrayList<>();
 
-        list.add(new Potion("Healing_Potion", 250, 1, HeroStat.HP, 100));
+        list.add(new Potion("Healing_Potion", 250, 1, HeroStat.HP, 100.));
         list.add(new Potion("Strength_Potion", 200, 1, HeroStat.STRENGTH, 75));
         list.add(new Potion("Magic_Potion", 350, 2, HeroStat.MANA, 100));
         list.add(new Potion("Luck_Elixir", 500, 4, HeroStat.AGILITY, 65));

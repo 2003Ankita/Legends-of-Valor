@@ -3,6 +3,7 @@ package general;
 import Board.TerrainType;
 import Heros.Hero;
 import Items.Armor;
+import Items.Spell;
 import Items.Weapon;
 import Monsters.Monster;
 
@@ -16,4 +17,7 @@ public interface DamageCalculator {
 
         double monsterAttacksHero(Monster monster, Hero hero,
                         TerrainType terrainType, Armor armor);
+
+        double heroCastsSpell(Hero hero, Monster monster,
+                        Spell spell, TerrainType terrainType);
 }

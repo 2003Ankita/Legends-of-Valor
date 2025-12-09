@@ -3,7 +3,7 @@ package Heros;
 import java.util.List;
 import java.util.Scanner;
 
-import Items.Position;
+import Board.Position;
 import general.LegendsOfValorGame;
 
 /**

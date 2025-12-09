@@ -2,8 +2,6 @@ package Board;
 
 import java.util.Random;
 
-import Items.Position;
-
 /**
  * Board implementation dedicated to Legends of Valor.
  *

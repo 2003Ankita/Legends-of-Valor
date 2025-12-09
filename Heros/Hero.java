@@ -1,6 +1,9 @@
 package Heros;
 
+import java.util.List;
+
 import Items.Armor;
+import Items.Spell;
 import Items.Weapon;
 import general.Character;
 import general.Inventory;
@@ -22,6 +25,7 @@ public abstract class Hero extends Character {
     protected Inventory inventory;
     protected Weapon weapon;
     protected Armor armor;
+    protected List<Spell> spell;
 
     /**
      * Creates a new hero with the given base stats.
@@ -82,6 +86,10 @@ public abstract class Hero extends Character {
         mana -= amount;
         if (mana < 0)
             mana = 0;
+    }
+
+    public double getHP() {
+        return hp;
     }
 
     /** @return hero's strength stat */
@@ -145,6 +153,10 @@ public abstract class Hero extends Character {
     /** @return currently equipped armor (may be null) */
     public Armor getArmor() {
         return armor;
+    }
+
+    public List<Spell> getSpells() {
+        return spell;
     }
 
     /**

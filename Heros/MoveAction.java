@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import Board.*;
 import general.*;
-import Items.Position;
 
 /**
  * Moves hero one tile in cardinal directions, enforcing LoV rules.

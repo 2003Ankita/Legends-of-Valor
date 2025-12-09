@@ -3,7 +3,11 @@ package general;
 import java.util.*;
 
 import Heros.*;
-import Items.Position;
+import Items.Armor;
+import Items.Item;
+import Items.Potion;
+import Items.Spell;
+import Items.Weapon;
 import Monsters.*;
 import Board.*;
 
@@ -48,6 +52,13 @@ public class LegendsOfValorGame {
         return heroes;
     }
 
+    public List<MonsterUnit> getMonstersOnBoard() {
+        return monstersOnBoard;
+    }
+
+    public DamageCalculator getDamageCalculator() {
+        return damageCalculator;
+    }
     // ======================= Game Loop =======================
 
     public void start() {
@@ -123,7 +134,11 @@ public class LegendsOfValorGame {
 
     private Monster cloneForCurrentLevel(Monster base) {
         Monster copy = base.copy();
-        copy.setLevel(base.getLevel());
+        int maxHeroLevel = 1;
+        for (HeroUnit h : heroes) {
+            maxHeroLevel = Math.max(maxHeroLevel, h.getHero().getLevel());
+        }
+        copy.setLevel(maxHeroLevel);
         return copy;
     }
 
@@ -131,39 +146,201 @@ public class LegendsOfValorGame {
 
     private void heroesTurn() {
         for (HeroUnit unit : heroes) {
-            if (!unit.isAlive())
+            Hero hero = unit.getHero();
+            if (hero == null) {
                 continue;
+            }
+            if (hero.getHP() <= 0) {
+                continue;
+            }
 
-            System.out.println("\n--- Hero turn: " + unit.getHero().getName()
-                    + " at " + unit.getPosition() + " ---");
-            renderBoard();
+            boolean turnDone = false;
 
-            HeroAction action = chooseHeroAction(unit);
-            action.execute(this, unit, scanner);
+            while (!turnDone) {
+                System.out.println("\n--- Hero turn: " + hero.getName()
+                        + " at " + unit.getPosition()
+                        + " (lane " + unit.getLane() + ") ---");
+
+                renderBoard();
+                printSingleHeroStatus(unit);
+
+                printHeroMenu();
+
+                int choice = readInt(scanner, 0, 9);
+
+                switch (choice) {
+                    case 1: // Move
+                        new MoveAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 2: // Attack
+                        new AttackAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 3:
+                        new CastSpellAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 4:
+                        new UsePotionAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 5: // Teleport
+                        new TeleportAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 6: // Recall
+                        new RecallAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 7: // Equip Weapon/Armor
+                        new EquipAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    case 8: // Show hero info
+                        showHeroInfo(unit);
+                        break;
+
+                    case 9: // Show inventory
+                        showHeroInventory(unit);
+                        break;
+
+                    case 0: // Pass
+                        new PassAction().execute(this, unit, scanner);
+                        turnDone = true;
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice, please try again.");
+                }
+            }
         }
     }
 
-    private HeroAction chooseHeroAction(HeroUnit unit) {
-        System.out.println("Choose action: ");
+    // Menu text
+    public void printHeroMenu() {
+        System.out.println("\nChoose action:");
         System.out.println("1) Move");
         System.out.println("2) Attack");
-        System.out.println("3) Teleport");
-        System.out.println("4) Recall");
-        System.out.println("5) Pass");
+        System.out.println("3) Cast Spell");
+        System.out.println("4) Use Potion");
+        System.out.println("5) Teleport");
+        System.out.println("6) Recall");
+        System.out.println("7) Equip weapon/armor");
+        System.out.println("8) Show hero info (does NOT end turn)");
+        System.out.println("9) Show inventory (does NOT end turn)");
+        System.out.println("0) Pass");
+    }
 
-        int choice = readInt(scanner, 1, 5);
-        switch (choice) {
-            case 1:
-                return new MoveAction();
-            case 2:
-                return new AttackAction();
-            case 3:
-                return new TeleportAction();
-            case 4:
-                return new RecallAction();
-            default:
-                return new PassAction();
+    // Short status line at the top of a hero's turn
+    public void printSingleHeroStatus(HeroUnit unit) {
+        Hero h = unit.getHero();
+        System.out.println("Status: " + h.battleInfo() + " | Gold: " + (int) h.getGold());
+    }
+
+    private void showHeroInfo(HeroUnit unit) {
+        Hero h = unit.getHero();
+        System.out.println("\n=== Hero Info ===");
+        System.out.println(h.fullInfo());
+        System.out.println("Position: " + unit.getPosition() + " in lane " + unit.getLane());
+
+        Weapon w = h.getWeapon();
+        if (w != null) {
+            System.out.println("Equipped weapon: " + w.getName() +
+                    " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
+        } else {
+            System.out.println("Equipped weapon: none");
         }
+
+        Armor a = h.getArmor();
+        if (a != null) {
+            System.out.println("Equipped armor: " + a.getName() +
+                    " (reduction " + a.getDamageReduction() + ")");
+        } else {
+            System.out.println("Equipped armor: none");
+        }
+    }
+
+    private void showHeroInventory(HeroUnit unit) {
+        Hero h = unit.getHero();
+        Inventory inv = h.getInventory();
+
+        System.out.println("\n=== Inventory of " + h.getName() + " ===");
+
+        // Weapons
+        List<Weapon> weapons = inv.getWeapons();
+        System.out.println("\n-- Weapons --");
+        if (weapons.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < weapons.size(); i++) {
+                Weapon w = weapons.get(i);
+                System.out.printf("  %d) %s (dmg %.1f, lvlReq %d, hands %d)%n",
+                        i + 1, w.getName(), w.getDamage(),
+                        w.getLevelRequirement(), w.getHandsRequired());
+            }
+        }
+
+        // Armors
+        List<Armor> armors = inv.getArmors();
+        System.out.println("\n-- Armors --");
+        if (armors.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < armors.size(); i++) {
+                Armor a = armors.get(i);
+                System.out.printf("  %d) %s (reduction %.1f, lvlReq %d)%n",
+                        i + 1, a.getName(),
+                        a.getDamageReduction(), a.getLevelRequirement());
+            }
+        }
+
+        // Spells
+        List<Spell> spells = inv.getSpells();
+        System.out.println("\n-- Spells --");
+        if (spells.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < spells.size(); i++) {
+                Spell s = spells.get(i);
+                System.out.printf("  %d) %s (dmg %.1f, mana %.1f, type %s)%n",
+                        i + 1, s.getName(), s.getDamage(),
+                        s.getManaCost(), s.getType());
+            }
+        }
+
+        // Potions
+        List<Potion> potions = inv.getPotions();
+        System.out.println("\n-- Potions --");
+        if (potions.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < potions.size(); i++) {
+                Potion p = potions.get(i);
+                System.out.printf("  %d) %s (effect %s)%n",
+                        i + 1, p.getName(), p.getStat());
+            }
+        }
+
+        System.out.println("\n-- Other Items --");
+        List<Item> all = inv.getAllItems();
+        boolean printed = false;
+        for (Item it : all) {
+            if (!(it instanceof Weapon) && !(it instanceof Armor)
+                    && !(it instanceof Spell) && !(it instanceof Potion)) {
+                System.out.println("  - " + it.getName());
+                printed = true;
+            }
+        }
+        if (!printed)
+            System.out.println("  (none)");
     }
 
     private void monstersTurn() {
@@ -261,8 +438,7 @@ public class LegendsOfValorGame {
             if (!m.isAlive())
                 continue;
             Position pos = m.getPosition();
-            if (Math.abs(pos.row - center.row) <= radius
-                    && Math.abs(pos.col - center.col) <= radius) {
+            if (Math.abs(pos.row - center.row) + Math.abs(pos.col - center.col) <= radius) {
                 result.add(m);
             }
         }
@@ -353,7 +529,7 @@ public class LegendsOfValorGame {
         }
     }
 
-    private void rewardHeroesForKill(Monster monster) {
+    public void rewardHeroesForKill(Monster monster) {
         double goldReward = 500 * monster.getLevel(); // spec suggestion
         int expReward = 2 * monster.getLevel();
 
@@ -367,14 +543,15 @@ public class LegendsOfValorGame {
     // ==================== Round bookkeeping ====================
 
     private void regenHeroes() {
-        // At end of each round, each alive hero regains ~10% HP.
-        // :contentReference[oaicite:3]{index=3}
         for (HeroUnit h : heroes) {
             Hero hero = h.getHero();
             if (hero.getHp() > 0) {
                 double maxHp = hero.getLevel() * 100.0;
-                double heal = maxHp * 0.10;
-                hero.takeDamage(-heal); // negative damage heals
+                double healHp = maxHp * 0.10;
+                hero.takeDamage(-healHp);
+
+                double healMp = hero.getMana() * 0.10;
+                hero.SetMana(healMp);
             }
         }
     }

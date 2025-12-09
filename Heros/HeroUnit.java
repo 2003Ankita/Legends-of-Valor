@@ -1,7 +1,7 @@
 package Heros;
 
 import Board.Lane;
-import Items.Position;
+import Board.Position;
 
 /**
  * Represents a hero piece on the Legends of Valor board.

@@ -5,13 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 import Board.Weather;
-import Heros.Hero;
-import Heros.Party;
-import Items.Armor;
-import Items.Potion;
-import Items.Spell;
-import Items.SpellType;
-import Items.Weapon;
+import Heros.*;
+import Items.*;
 import Monsters.Monster;
 
 /**

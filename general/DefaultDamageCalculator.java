@@ -5,6 +5,7 @@ import Board.TerrainEffectFactory;
 import Board.TerrainType;
 import Heros.Hero;
 import Items.Armor;
+import Items.Spell;
 import Items.Weapon;
 import Monsters.Monster;
 
@@ -49,6 +50,19 @@ public class DefaultDamageCalculator implements DamageCalculator {
         }
 
         double mitigated = baseDamage * (1.0 - armorReduction / 100.0);
+        return Math.max(0.0, mitigated);
+    }
+
+    @Override
+    public double heroCastsSpell(Hero hero, Monster monster,
+            Spell spell, TerrainType terrainType) {
+        TerrainEffect effect = TerrainEffectFactory.forTerrain(terrainType);
+
+        double effectiveDexterity = hero.getDexterity() * effect.getDexterityMultiplier();
+
+        double base = spell.getDamage() * (1 + effectiveDexterity / 10000.0);
+
+        double mitigated = base * (1.0 - monster.getDefense() / 100.0);
         return Math.max(0.0, mitigated);
     }
 }

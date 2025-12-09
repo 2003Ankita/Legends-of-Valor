@@ -35,6 +35,10 @@ public class Weapon extends Item {
         return handsRequired;
     }
 
+    public int getLevelRequirement() {
+        return levelRequired;
+    }
+
     /**
      * Returns formatted weapon information including:
      * - name, price, level requirement (from Item)
