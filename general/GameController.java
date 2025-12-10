@@ -77,38 +77,23 @@ public class GameController {
 
             int mode = readIntInRange(1, 3);
 
-            if (mode == 3) {
-                view.showMessage("Farewell, adventurer.");
-                return;
+            switch (mode) {
+                case 1:
+                    // Classic Monsters & Heroes
+                    startMonsterAndHeroes();
+                    return; // end after classic game finishes
+                case 2:
+                    // Legends of Valor
+                    startLegendsOfValorMode();
+                    return; // exit after LoV ends
+                case 3:
+                    view.showMessage("Farewell, adventurer.");
+                    return;
+                default:
+                    // readIntInRange already guards the range, but keep safe
+                    view.showMessage("Please enter a valid option.");
+                    break;
             }
-
-            if (mode == 2) {
-                // CALL LEGENDS OF VALOR
-                startLegendsOfValorMode();
-                return; // exit after LoV ends
-            }
-
-            // ----------------------------
-            // ORIGINAL MONSTERS & HEROES GAME
-            // ----------------------------
-
-            view.showMessage("Welcome to Legends of Valor!");
-            view.showMessage("Please enter your name, hero:");
-            playerName = scanner.nextLine().trim();
-            view.showMessage("Greetings, " + playerName + "! Your adventure begins...\n");
-
-            loadData();
-            chooseHeroes();
-
-            board = new Board(boardSize, INACCESSIBLE_RATE, MARKET_RATE, COMMON_RATE);
-            party.setPosition(board.getStartRow(), board.getStartCol());
-
-            placeInitialMonsters();
-
-            instructions();
-            mainLoop();
-
-            return; // end after classic game finishes
         }
     }
 
@@ -152,6 +137,29 @@ public class GameController {
         System.out.println("\n⚔ Starting Legends of Valor ⚔\n");
         LegendsOfValorGame lov = new LegendsOfValorGame(scanner);
         lov.start();
+    }
+
+    private void startMonsterAndHeroes() {
+        // ----------------------------
+        // ORIGINAL MONSTERS & HEROES GAME
+        // ----------------------------
+
+        view.showMessage("Welcome to the Classic Monsters & Heroes!");
+        view.showMessage("Please enter your name:");
+        playerName = scanner.nextLine().trim();
+        view.showMessage("Greetings, " + playerName + "! Your adventure begins...\n");
+
+        loadData();
+        chooseHeroes();
+
+        board = new Board(boardSize, INACCESSIBLE_RATE, MARKET_RATE, COMMON_RATE);
+        party.setPosition(board.getStartRow(), board.getStartCol());
+
+        placeInitialMonsters();
+
+        instructions();
+        mainLoop();
+
     }
 
     /**

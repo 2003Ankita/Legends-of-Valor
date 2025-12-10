@@ -98,17 +98,37 @@ public class LegendsOfValorGame {
         }
 
         Lane[] lanes = Lane.values();
+        Set<Integer> pickedHeroes = new HashSet<>();
+        Set<Lane> pickedLanes = new HashSet<>();
         for (int heroIndex = 0; heroIndex < 3; heroIndex++) {
-            System.out.println("Select hero #" + (heroIndex + 1) + ":");
-            int idx = readInt(scanner, 1, pool.size()) - 1;
-            Hero chosen = pool.remove(idx);
-
-            System.out.println("Assign a lane for " + chosen.getName() + ":");
-            for (int li = 0; li < lanes.length; li++) {
-                System.out.printf("%d) %s%n", li + 1, lanes[li]);
+            int idx;
+            while (true) {
+                System.out.println("Select hero #" + (heroIndex + 1) + ":");
+                idx = readInt(scanner, 1, pool.size()) - 1;
+                if (pickedHeroes.contains(idx)) {
+                    System.out.println("Hero already selected, choose another.");
+                    continue;
+                }
+                pickedHeroes.add(idx);
+                break;
             }
-            int laneIdx = readInt(scanner, 1, lanes.length) - 1;
-            Lane lane = lanes[laneIdx];
+            Hero chosen = pool.get(idx);
+
+            Lane lane;
+            while (true) {
+                System.out.println("Assign a lane for " + chosen.getName() + ":");
+                for (int li = 0; li < lanes.length; li++) {
+                    System.out.printf("%d) %s%n", li + 1, lanes[li]);
+                }
+                int laneIdx = readInt(scanner, 1, lanes.length) - 1;
+                lane = lanes[laneIdx];
+                if (pickedLanes.contains(lane)) {
+                    System.out.println("Lane already has a hero, choose another lane.");
+                    continue;
+                }
+                pickedLanes.add(lane);
+                break;
+            }
 
             Position nexus = board.heroNexusForLane(lane);
             HeroUnit unit = new HeroUnit(chosen, lane, nexus);
@@ -162,8 +182,8 @@ public class LegendsOfValorGame {
                         + " (lane " + unit.getLane() + ") ---");
 
                 renderBoard();
-                printSingleHeroStatus(unit);
-
+                // printSingleHeroStatus(unit);
+                showHeroInfo(unit);
                 printHeroMenu();
 
                 int choice = readInt(scanner, 0, 9);
