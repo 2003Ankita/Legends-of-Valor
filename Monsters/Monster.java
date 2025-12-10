@@ -43,6 +43,7 @@ public abstract class Monster extends Character {
 
     /** @return monster’s defense value */
     public double getDefense() {
+
         return defense;
     }
 

@@ -23,11 +23,11 @@ public class DefaultDamageCalculator implements DamageCalculator {
         TerrainEffect effect = TerrainEffectFactory.forTerrain(terrainType);
 
         double effectiveStrength = hero.getStrength() * effect.getStrengthMultiplier();
-
         double weaponDamage = (weapon != null) ? weapon.getDamage() : 0.0;
 
         double rawDamage = (effectiveStrength + weaponDamage) * 0.05;
-        double mitigated = rawDamage * (1.0 - monster.getDefense() / 100.0);
+        // double mitigated = rawDamage * (1.0 - monster.getDefense() / 100.0);
+        double mitigated = rawDamage * (1.0 - monster.getDefense() / 2000.0);// test for a better value
         return Math.max(0.0, mitigated);
     }
 
