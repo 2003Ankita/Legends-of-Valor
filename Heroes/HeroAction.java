@@ -9,5 +9,9 @@ import general.LegendsOfValorGame;
  * to be performed during the hero's turn.
  */
 public interface HeroAction {
-    void execute(LegendsOfValorGame game, HeroUnit heroUnit, Scanner in);
+    /**
+     * @return true if the action was performed and the turn should end,
+     *         false if the player should choose another action.
+     */
+    boolean execute(LegendsOfValorGame game, HeroUnit heroUnit, Scanner in);
 }

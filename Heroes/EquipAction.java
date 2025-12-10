@@ -9,7 +9,7 @@ import general.*;
 public class EquipAction implements HeroAction {
 
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
+    public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         Hero hero = unit.getHero();
         Inventory inv = hero.getInventory();
 
@@ -21,14 +21,14 @@ public class EquipAction implements HeroAction {
         int choice = game.readInt(in, 0, 2);
         if (choice == 0) {
             System.out.println("Cancel equip.");
-            return;
+            return false;
         }
 
         if (choice == 1) {
             List<Weapon> weapons = inv.getWeapons();
             if (weapons.isEmpty()) {
                 System.out.println("No weapons available.");
-                return;
+                return false;
             }
 
             System.out.println("\nChoose a weapon to equip:");
@@ -41,13 +41,14 @@ public class EquipAction implements HeroAction {
             int idx = game.readInt(in, 1, weapons.size());
             hero.equipWeapon(weapons.get(idx - 1));
             System.out.println(hero.getName() + " equipped " + weapons.get(idx - 1).getName());
+            return true;
         }
 
         else if (choice == 2) {
             List<Armor> armors = inv.getArmors();
             if (armors.isEmpty()) {
                 System.out.println("No armor available.");
-                return;
+                return false;
             }
 
             System.out.println("\nChoose armor to equip:");
@@ -60,6 +61,8 @@ public class EquipAction implements HeroAction {
             int idx = game.readInt(in, 1, armors.size());
             hero.equipArmor(armors.get(idx - 1));
             System.out.println(hero.getName() + " equipped " + armors.get(idx - 1).getName());
+            return true;
         }
+        return true;
     }
 }

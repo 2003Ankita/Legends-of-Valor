@@ -190,38 +190,31 @@ public class LegendsOfValorGame {
 
                 switch (choice) {
                     case 1: // Move
-                        new MoveAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new MoveAction().execute(this, unit, scanner);
                         break;
 
                     case 2: // Attack
-                        new AttackAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new AttackAction().execute(this, unit, scanner);
                         break;
 
                     case 3:
-                        new CastSpellAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new CastSpellAction().execute(this, unit, scanner);
                         break;
 
                     case 4:
-                        new UsePotionAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new UsePotionAction().execute(this, unit, scanner);
                         break;
 
                     case 5: // Teleport
-                        new TeleportAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new TeleportAction().execute(this, unit, scanner);
                         break;
 
                     case 6: // Recall
-                        new RecallAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new RecallAction().execute(this, unit, scanner);
                         break;
 
                     case 7: // Equip Weapon/Armor
-                        new EquipAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new EquipAction().execute(this, unit, scanner);
                         break;
 
                     case 8: // Show hero info
@@ -233,8 +226,7 @@ public class LegendsOfValorGame {
                         break;
 
                     case 0: // Pass
-                        new PassAction().execute(this, unit, scanner);
-                        turnDone = true;
+                        turnDone = new PassAction().execute(this, unit, scanner);
                         break;
 
                     default:

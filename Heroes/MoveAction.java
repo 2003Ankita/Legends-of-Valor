@@ -11,37 +11,40 @@ import general.*;
 public class MoveAction implements HeroAction {
 
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
-        System.out.print("Move (W/A/S/D): ");
-        String line = in.nextLine().trim().toUpperCase();
-        if (line.isEmpty())
-            return;
-        char ch = line.charAt(0);
-
+    public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         int dr = 0, dc = 0;
-        switch (ch) {
-            case 'W':
-                dr = -1;
-                break; // north
-            case 'S':
-                dr = 1;
-                break; // south
-            case 'A':
-                dc = -1;
-                break; // west
-            case 'D':
-                dc = 1;
-                break; // east
-            default:
-                System.out.println("Invalid direction.");
-                return;
+        while (true) {
+            System.out.print("Move (W/A/S/D): ");
+            String line = in.nextLine().trim().toUpperCase();
+            if (line.isEmpty()) {
+                System.out.println("Please enter W, A, S, or D.");
+                continue;
+            }
+            char ch = line.charAt(0);
+            switch (ch) {
+                case 'W':
+                    dr = -1;
+                    break; // north
+                case 'S':
+                    dr = 1;
+                    break; // south
+                case 'A':
+                    dc = -1;
+                    break; // west
+                case 'D':
+                    dc = 1;
+                    break; // east
+                default:
+                    System.out.println("Invalid direction. Use W, A, S, or D.");
+                    continue;
+            }
+            break;
         }
-
         Position current = unit.getPosition();
         Position dest = current.translate(dr, dc);
         if (!game.getBoard().inBounds(dest)) {
             System.out.println("You cannot move outside the board boundaries.");
-            return;
+            return true;
         }
 
         LegendsTile destTile = game.getBoard().getTile(dest);
@@ -58,7 +61,7 @@ public class MoveAction implements HeroAction {
                 System.out.println("You chose not to clear the obstacle. Your turn ends.");
             }
             // In either case, the hero does not move this turn
-            return;
+            return true;
         }
 
         if (game.canHeroMoveTo(unit, dest)) {
@@ -66,5 +69,6 @@ public class MoveAction implements HeroAction {
         } else {
             System.out.println("Illegal move for Legends of Valor.");
         }
+        return true;
     }
 }

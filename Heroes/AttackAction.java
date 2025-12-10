@@ -13,11 +13,11 @@ import general.LegendsOfValorGame;
 public class AttackAction implements HeroAction {
 
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
+    public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         List<MonsterUnit> targets = game.getMonstersInRange(unit.getPosition(), 1);
         if (targets.isEmpty()) {
             System.out.println("No monsters in attack range.");
-            return;
+            return false;
         }
 
         System.out.println("Choose target to attack:");
@@ -30,5 +30,6 @@ public class AttackAction implements HeroAction {
         int choice = game.readInt(in, 1, targets.size());
         MonsterUnit target = targets.get(choice - 1);
         game.heroAttack(unit, target);
+        return true;
     }
 }

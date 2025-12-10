@@ -12,13 +12,13 @@ import Board.*;
 public class CastSpellAction implements HeroAction {
 
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
+    public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         Hero hero = unit.getHero();
         List<Spell> spells = hero.getSpells();
 
         if (spells == null || spells.isEmpty()) {
             System.out.println("No spells available.");
-            return;
+            return false;
         }
 
         System.out.println("\nAvailable spells:");
@@ -32,20 +32,20 @@ public class CastSpellAction implements HeroAction {
         int idx = game.readInt(in, 0, spells.size());
         if (idx == 0) {
             System.out.println("Cancel casting spell.");
-            return;
+            return false;
         }
         Spell spell = spells.get(idx - 1);
 
         if (hero.getMana() < spell.getManaCost()) {
             System.out.println("Not enough MP.");
-            return;
+            return false;
         }
 
         Position pos = unit.getPosition();
         List<MonsterUnit> targets = game.getMonstersInRange(pos, 1); // 用改成曼哈顿距离后的方法
         if (targets.isEmpty()) {
             System.out.println("No monsters in range to cast spell on.");
-            return;
+            return false;
         }
 
         System.out.println("Choose target monster:");
@@ -74,5 +74,6 @@ public class CastSpellAction implements HeroAction {
             game.getMonstersOnBoard().remove(target);
             game.rewardHeroesForKill(target.getMonster());
         }
+        return true;
     }
 }

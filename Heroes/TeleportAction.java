@@ -13,11 +13,11 @@ import general.LegendsOfValorGame;
 public class TeleportAction implements HeroAction {
 
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
+    public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         List<HeroUnit> others = game.getOtherHeroes(unit);
         if (others.isEmpty()) {
             System.out.println("No other heroes to teleport to.");
-            return;
+            return false;
         }
         System.out.println("Teleport target hero:");
         for (int i = 0; i < others.size(); i++) {
@@ -31,7 +31,7 @@ public class TeleportAction implements HeroAction {
         List<Position> candidates = game.validTeleportDestinations(unit, target);
         if (candidates.isEmpty()) {
             System.out.println("No legal teleport destinations near that hero.");
-            return;
+            return false;
         }
         System.out.println("Choose destination:");
         for (int i = 0; i < candidates.size(); i++) {
@@ -41,5 +41,6 @@ public class TeleportAction implements HeroAction {
         Position dest = candidates.get(destIdx - 1);
 
         game.moveHero(unit, dest);
+        return true;
     }
 }

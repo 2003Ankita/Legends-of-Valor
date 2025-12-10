@@ -9,14 +9,14 @@ import general.*;
 public class UsePotionAction implements HeroAction {
 
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
+    public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         Hero hero = unit.getHero();
         Inventory inv = hero.getInventory();
 
         List<Potion> potions = inv.getPotions();
         if (potions.isEmpty()) {
             System.out.println("No potions available.");
-            return;
+            return false;
         }
 
         System.out.println("\nChoose a potion to use:");
@@ -32,7 +32,7 @@ public class UsePotionAction implements HeroAction {
         int choice = game.readInt(in, 0, potions.size());
         if (choice == 0) {
             System.out.println("Cancel using potion.");
-            return;
+            return false;
         }
 
         Potion selected = potions.get(choice - 1);
@@ -42,6 +42,7 @@ public class UsePotionAction implements HeroAction {
         inv.remove(selected);
 
         System.out.println(hero.getName() + " used " + selected.getName() + ".");
+        return true;
     }
 
     private void applyPotionEffect(Potion p, Hero hero) {

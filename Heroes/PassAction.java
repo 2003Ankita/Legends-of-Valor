@@ -9,7 +9,8 @@ import general.LegendsOfValorGame;
  */
 public class PassAction implements HeroAction {
     @Override
-    public void execute(LegendsOfValorGame game, HeroUnit heroUnit, Scanner in) {
+    public boolean execute(LegendsOfValorGame game, HeroUnit heroUnit, Scanner in) {
         System.out.println(heroUnit.getHero().getName() + " passes the turn.");
+        return true;
     }
 }
