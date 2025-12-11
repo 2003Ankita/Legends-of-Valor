@@ -148,4 +148,6 @@ public class ConsoleGameView implements GameView {
             sb.append(s);
         return sb.toString();
     }
+
+
 }

@@ -58,7 +58,7 @@ public class CastSpellAction implements HeroAction {
         int tIdx = game.readInt(in, 1, targets.size());
         MonsterUnit target = targets.get(tIdx - 1);
 
-        hero.SetMana(hero.getMana() - spell.getManaCost());
+        hero.setMana(hero.getMana() - spell.getManaCost());
 
         LegendsTile tile = game.getBoard().getTile(pos);
         double dmg = game.getDamageCalculator().heroCastsSpell(

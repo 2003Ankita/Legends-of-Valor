@@ -9,181 +9,108 @@ import general.Character;
 import general.Inventory;
 
 /**
- * Abstract base class representing all hero types (Warrior, Sorcerer, Paladin,
- * etc.).
- * Extends Character and adds hero-specific stats such as mana, experience,
- * attributes (strength, dexterity, agility), inventory, equipment,
- * and level-up mechanics.
+ * Base Hero class with support for:
+ * - Tile bonuses (Bush/Koulou)
+ * - Clean stat resets when leaving tiles
+ * - Proper spell list usage
  */
 public abstract class Hero extends Character {
+
     protected double mana;
     protected int experience;
+
     protected double strength;
     protected double dexterity;
     protected double agility;
     protected double gold;
+
+    // base stats (for resetting after tile bonuses)
+    public double baseStrength;
+    public double baseDexterity;
+    public double baseAgility;
+
     protected Inventory inventory;
     protected Weapon weapon;
     protected Armor armor;
-    protected List<Spell> spell;
-
-    /**
-     * Creates a new hero with the given base stats.
-     * HP is automatically set to (level * 100).
-     * 
-     * @param name      hero name
-     * @param level     starting level
-     * @param mana      starting mana
-     * @param strength  base strength stat
-     * @param dexterity base dexterity stat (spell/accuracy related)
-     * @param agility   base agility stat (dodge related)
-     * @param gold      starting gold
-     */
 
     public Hero(String name, int level, double mana,
-            double strength, double dexterity, double agility,
-            double gold) {
+                double strength, double dexterity, double agility,
+                double gold) {
+
         super(name, level, level * 100);
+
         this.mana = mana;
         this.strength = strength;
         this.dexterity = dexterity;
         this.agility = agility;
+
+        this.baseStrength = strength;
+        this.baseDexterity = dexterity;
+        this.baseAgility = agility;
+
         this.gold = gold;
         this.inventory = new Inventory();
     }
 
-    public void SetMana(double Mana) {
-        this.mana = Mana;
-    }
+    /* ---------------- Position removed ------------------
+       Party holds the team's position, not individual heroes.
+       ----------------------------------------------------- */
 
-    public void SetHP(double HP) {
-        this.hp = HP;
-    }
+    public void setMana(double m) { this.mana = m; }
+    public void setHP(double HP) { this.hp = HP; }
+    public void setStrength(double s) { this.strength = s; }
+    public void setDexterity(double d) { this.dexterity = d; }
+    public void setAgility(double agility) { this.agility = agility; }
 
-    public void SetStrength(double strength) {
-        this.strength = strength;
-    }
+    public double getMana() { return mana; }
+    public double getHP() { return hp; }
 
-    public void SetDexterity(double dexterity) {
-        this.dexterity = dexterity;
-    }
+    public double getStrength() { return strength; }
+    public double getDexterity() { return dexterity; }
+    public double getAgility() { return agility; }
+    public double getGold() { return gold; }
 
-    public void SetAgility(double agility) {
-        this.agility = agility;
-    }
+    public void addGold(double amount) { gold += amount; }
+    public void removeGold(double amount) { gold = Math.max(0, gold - amount); }
 
-    public double getMana() {
-        return mana;
-    }
-
-    /**
-     * Reduces the hero's mana by a given amount.
-     * Mana cannot fall below zero.
-     * 
-     * @param amount mana consumed
-     */
-    public void reduceMana(double amount) {
-        mana -= amount;
-        if (mana < 0)
-            mana = 0;
-    }
-
-    public double getHP() {
-        return hp;
-    }
-
-    /** @return hero's strength stat */
-    public double getStrength() {
-        return strength;
-    }
-
-    /** @return hero's dexterity stat */
-    public double getDexterity() {
-        return dexterity;
-    }
-
-    /** @return hero's agility stat */
-    public double getAgility() {
-        return agility;
-    }
-
-    /** @return hero's current gold */
-    public double getGold() {
-        return gold;
-    }
-
-    /**
-     * Adds gold to the hero's total.
-     * 
-     * @param amount gold gained
-     */
-    public void addGold(double amount) {
-        gold += amount;
-    }
-
-    /**
-     * Removes gold from the hero.
-     * Cannot reduce gold below zero.
-     *
-     * @param amount gold spent
-     */
-    public void removeGold(double amount) {
-        gold -= amount;
-        if (gold < 0)
-            gold = 0;
-    }
-
-    /**
-     * @return the hero's dodge chance based on agility
-     */
     public double getDodgeChance() {
         return agility * 0.002;
     }
 
-    /** @return the hero’s inventory */
-    public Inventory getInventory() {
-        return inventory;
+    public Inventory getInventory() { return inventory; }
+    public Weapon getWeapon() { return weapon; }
+    public Armor getArmor() { return armor; }
+
+    public void equipWeapon(Weapon w) { this.weapon = w; }
+    public void equipArmor(Armor a) { this.armor = a; }
+
+    /* ---------------- Tile Effects ---------------- */
+
+    // called when stepping on a Bush tile
+    public void applyBushBonus() {
+        this.dexterity = baseDexterity * 1.1;  // +10%
     }
 
-    /** @return currently equipped weapon (may be null) */
-    public Weapon getWeapon() {
-        return weapon;
+    // called when stepping on a Koulou tile
+    public void applyKoulouBonus() {
+        this.strength = baseStrength * 1.1;    // +10%
     }
 
-    /** @return currently equipped armor (may be null) */
-    public Armor getArmor() {
-        return armor;
+    // reset bonuses when leaving a tile
+    public void resetTileBonuses() {
+        this.strength = baseStrength;
+        this.dexterity = baseDexterity;
+        this.agility = baseAgility;
     }
+
+    /* ---------------- Spells ---------------- */
 
     public List<Spell> getSpells() {
-        return spell;
+        return inventory.getSpells();  // FIX: use inventory spells
     }
 
-    /**
-     * Equips a weapon.
-     *
-     * @param w weapon to equip
-     */
-    public void equipWeapon(Weapon w) {
-        this.weapon = w;
-    }
+    /* ---------------- Experience / Level Up ---------------- */
 
-    /**
-     * Equips armor.
-     *
-     * @param a armor to equip
-     */
-    public void equipArmor(Armor a) {
-        this.armor = a;
-    }
-
-    /**
-     * Increases the hero's experience and handles automatic leveling.
-     * When experience exceeds (level * 10), the hero levels up and
-     * excess exp carries over.
-     *
-     * @param exp gained experience
-     */
     public void gainExperience(int exp) {
         experience += exp;
         while (experience >= level * 10) {
@@ -192,26 +119,15 @@ public abstract class Hero extends Character {
         }
     }
 
-    /**
-     * Each hero type (Warrior, Sorcerer, Paladin) defines its own
-     * stat-scaling rules inside this method.
-     */
     public abstract void levelUp();
 
-    /**
-     * Returns concise hero information for menus or selection screens.
-     * 
-     * @return formatted short info string
-     */
+    /* ---------------- Info ---------------- */
+
     public String shortInfo() {
-        return name + " (lvl " + level + ", HP " + (int) hp + ", MP " + (int) mana + ", gold " + (int) gold + ")";
+        return name + " (lvl " + level + ", HP " + (int) hp +
+                ", MP " + (int) mana + ", gold " + (int) gold + ")";
     }
 
-    /**
-     * Returns full hero stats including attributes.
-     * 
-     * @return detailed hero stat summary
-     */
     public String fullInfo() {
         return name + " lvl " + level +
                 " HP " + (int) hp +
@@ -222,30 +138,22 @@ public abstract class Hero extends Character {
                 " Gold " + (int) gold;
     }
 
-    /**
-     * Returns minimal battle info (HP/MP only).
-     * 
-     * @return battle summary string
-     */
     public String battleInfo() {
         return name + " HP " + (int) hp + " MP " + (int) mana;
     }
 
-    /**
-     * Creates a deep copy of this hero using the subclass-specific
-     * copyInternal() method.
-     * 
-     * @return a duplicated hero object
-     */
+    /* ---------------- Copy ---------------- */
+
     public Hero copy() {
         Hero h = copyInternal();
         return h;
     }
+    public void reduceMana(double amount) {
+        mana -= amount;
+        if (mana < 0)
+            mana = 0;
+    }
 
-    /**
-     * Implemented by each subclass to clone the specific hero type.
-     * 
-     * @return a new instance with the same stats
-     */
+
     protected abstract Hero copyInternal();
 }

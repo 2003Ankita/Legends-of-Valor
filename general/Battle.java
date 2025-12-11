@@ -231,19 +231,19 @@ public class Battle {
         Potion p = potions.get(choice - 1);
         switch (p.getStat()) {
             case HP:
-                h.SetHP(h.getHp() + p.getAmount());
+                h.setHP(h.getHp() + p.getAmount());
                 break;
             case MP:
-                h.SetMana(h.getMana() + p.getAmount());
+                h.setMana(h.getMana() + p.getAmount());
                 break;
             case STRENGTH:
-                h.SetStrength(h.getStrength() + p.getAmount());
+                h.setStrength(h.getStrength() + p.getAmount());
                 break;
             case DEXTERITY:
-                h.SetDexterity(h.getDexterity() + p.getAmount());
+                h.setDexterity(h.getDexterity() + p.getAmount());
                 break;
             case AGILITY:
-                h.SetAgility(h.getAgility() + p.getAmount());
+                h.setAgility(h.getAgility() + p.getAmount());
                 break;
         }
         h.getInventory().remove(p);
@@ -341,7 +341,7 @@ public class Battle {
             if (!h.isAlive())
                 continue;
             h.hp = Math.min(h.getLevel() * 100, h.hp * hpRegen);
-            h.SetMana(h.getMana() * mpRegen);
+            h.setMana(h.getMana() * mpRegen);
 
         }
     }
@@ -366,7 +366,7 @@ public class Battle {
                 h.addGold(goldGain);
             } else {
                 h.hp = (h.level * 100) * 0.5;
-                h.SetMana(h.getMana() * 0.5);
+                h.setMana(h.getMana() * 0.5);
             }
         }
     }

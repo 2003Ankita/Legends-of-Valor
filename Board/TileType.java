@@ -7,5 +7,6 @@ package Board;
  * COMMON — Normal tile; may trigger random battles or hold main monsters
  */
 public enum TileType {
-    INACCESSIBLE, MARKET, COMMON
+    INACCESSIBLE, MARKET, COMMON, BUSH, KOULOU
+
 }

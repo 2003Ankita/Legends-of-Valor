@@ -51,31 +51,31 @@ public class UsePotionAction implements HeroAction {
 
         // HP potion
         if (name.contains("health") || name.contains("hp")) {
-            hero.SetHP(hero.getHP() + amount);
+            hero.setHP(hero.getHP() + amount);
             System.out.println("HP increased by " + amount);
         }
 
         // Mana potion
         if (name.contains("mana") || name.contains("mp")) {
-            hero.SetMana(hero.getMana() + amount);
+            hero.setMana(hero.getMana() + amount);
             System.out.println("Mana increased by " + amount);
         }
 
         // Strength potion
         if (name.contains("strength")) {
-            hero.SetStrength(hero.getStrength() + amount);
+            hero.setStrength(hero.getStrength() + amount);
             System.out.println("Strength increased by " + amount);
         }
 
         // Dexterity potion
         if (name.contains("dexterity") || name.contains("dex")) {
-            hero.SetDexterity(hero.getDexterity() + amount);
+            hero.setDexterity(hero.getDexterity() + amount);
             System.out.println("Dexterity increased by " + amount);
         }
 
         // Agility potion
         if (name.contains("agility") || name.contains("agi")) {
-            hero.SetAgility(hero.getAgility() + amount);
+            hero.setAgility(hero.getAgility() + amount);
             System.out.println("Agility increased by " + amount);
         }
 

@@ -563,7 +563,7 @@ public class LegendsOfValorGame {
                 hero.takeDamage(-healHp);
 
                 double healMp = hero.getMana() * 0.10;
-                hero.SetMana(healMp);
+                hero.setMana(healMp);
             }
         }
     }
@@ -650,6 +650,7 @@ public class LegendsOfValorGame {
             StringBuilder top = new StringBuilder();
             for (int c = 0; c < size; c++) {
                 String t = terrainSymbol(board.getTile(r, c));
+
                 top.append(t + " - " + t + " - " + t + "   ");
             }
             System.out.println(top.toString());
@@ -659,7 +660,13 @@ public class LegendsOfValorGame {
             // ------------------------------
             StringBuilder mid1 = new StringBuilder();
             for (int c = 0; c < size; c++) {
-                mid1.append("|       |   ");
+                LegendsTile tile = board.getTile(r, c);
+
+                if (tile.getTerrainType() == TerrainType.INACCESSIBLE) {
+                    mid1.append("|  XXXX  |   ");   // <-- NEW
+                } else {
+                    mid1.append("|       |   ");   // <-- OLD
+                }
             }
             System.out.println(mid1.toString());
 

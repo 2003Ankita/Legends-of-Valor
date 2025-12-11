@@ -14,7 +14,7 @@ public class MoveAction implements HeroAction {
     public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         int dr = 0, dc = 0;
         while (true) {
-            System.out.print("Move (W/A/S/D): ");
+            System.out.print("Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right ");
             String line = in.nextLine().trim().toUpperCase();
             if (line.isEmpty()) {
                 System.out.println("Please enter W, A, S, or D.");
@@ -43,8 +43,8 @@ public class MoveAction implements HeroAction {
         Position current = unit.getPosition();
         Position dest = current.translate(dr, dc);
         if (!game.getBoard().inBounds(dest)) {
-            System.out.println("You cannot move outside the board boundaries.");
-            return true;
+            System.out.println("You cannot move outside the board boundaries. Choose again");
+            return false;
         }
 
         LegendsTile destTile = game.getBoard().getTile(dest);
