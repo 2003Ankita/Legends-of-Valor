@@ -207,7 +207,7 @@ public class LegendsOfValorGame {
                 showHeroInfo(unit);
                 printHeroMenu();
 
-                int choice = readInt(scanner, 0, 9);
+                int choice = readInt(scanner, 0, 10);
 
                 switch (choice) {
                     case 1: // Move
