@@ -227,26 +227,17 @@ public final class DataLoader {
      * Loads spells based on the supplied filename.
      * If the filename contains "ice", "fire", or "lightning",
      * returns the appropriate spell list.
-     * 
-     * @param fileName name of the spell file
+     *
      * @return list of spells matching the category
      */
-    public static List<Item> loadSpells(String fileName) {
-        if (fileName == null || fileName.isEmpty()) {
-            System.err.println("Warning: Spell file missing. No spells loaded.");
-            return new ArrayList<>();
-        }
-
-        fileName = fileName.toLowerCase();
-
-        if (fileName.contains("ice"))
-            return loadIceSpells();
-        if (fileName.contains("fire"))
-            return loadFireSpells();
-        if (fileName.contains("lightning"))
-            return loadLightningSpells();
-        return new ArrayList<>();
+    public static List<Item> loadSpells(String ignored) {
+        List<Item> list = new ArrayList<>();
+        list.addAll(loadFireSpells());
+        list.addAll(loadIceSpells());
+        list.addAll(loadLightningSpells());
+        return list;
     }
+
 
     /**
      * Loads Ice spells only.

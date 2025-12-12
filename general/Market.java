@@ -5,6 +5,10 @@ import java.util.List;
 
 import Heroes.Hero;
 import Items.Item;
+import Items.Weapon;
+import Items.Armor;
+import Items.Potion;
+import Items.Spell;
 
 /**
  * Represents a market located on a tile. A market holds a list of items
@@ -80,4 +84,52 @@ public class Market {
         stock.add(item);
         return true;
     }
+    public void printAllItems() {
+
+        System.out.println("\n===== Weapons =====");
+        int count = 0;
+        for (Item item : stock) {
+            if (item instanceof Weapon w) {
+                System.out.printf("%d) %s | Price: %d | LevelReq: %d | Damage: %.1f | Hands: %d%n",
+                        count++, w.getName(), w.getPrice(),
+                        w.getLevelRequired(), w.getDamage(), w.getHandsRequired());
+            }
+        }
+        if (count == 0) System.out.println("(none)");
+
+        System.out.println("\n===== Armors =====");
+        count = 0;
+        for (Item item : stock) {
+            if (item instanceof Armor a) {
+                System.out.printf("%d) %s | Price: %d | LevelReq: %d | Reduction: %.1f%n",
+                        count++, a.getName(), a.getPrice(),
+                        a.getLevelRequired(), a.getDamageReduction());
+            }
+        }
+        if (count == 0) System.out.println("(none)");
+
+        System.out.println("\n===== Potions =====");
+        count = 0;
+        for (Item item : stock) {
+            if (item instanceof Potion p) {
+                System.out.printf("%d) %s | Price: %d | LevelReq: %d | EffectAmount: %.1f | Desc: %s%n",
+                        count++, p.getName(), p.getPrice(),
+                        p.getLevelRequired(), p.getAmount(), p.getStat());
+            }
+        }
+        if (count == 0) System.out.println("(none)");
+
+        System.out.println("\n===== Spells =====");
+        count = 0;
+        for (Item item : stock) {
+            if (item instanceof Spell s) {
+                System.out.printf("%d) %s | Price: %d | LevelReq: %d | Damage: %.1f | Mana: %.1f | Type: %s%n",
+                        count++, s.getName(), s.getPrice(),
+                        s.getLevelRequired(), s.getDamage(),
+                        s.getManaCost(), s.getType());
+            }
+        }
+        if (count == 0) System.out.println("(none)");
+    }
+
 }

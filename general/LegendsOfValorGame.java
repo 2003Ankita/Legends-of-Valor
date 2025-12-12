@@ -367,23 +367,94 @@ public class LegendsOfValorGame {
         Hero hero = unit.getHero();
 
         while (true) {
+
+            // ✅ STEP 1: show full catalog FIRST
+            showFullMarketCatalog();
+
+            // ✅ STEP 2: then action menu
             System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
             System.out.println("Gold: " + (int) hero.getGold());
             System.out.println("1) Buy");
             System.out.println("2) Sell");
-            System.out.println("0) Exit Market");
+            System.out.println("3) Exit Market");
 
-            int choice = readInt(scanner, 0, 2);
+            int choice = readInt(scanner, 1, 3);
 
-            if (choice == 0) return;
+            if (choice == 3) return;
 
             if (choice == 1) {
-                handleBuy(hero);
-            } else if (choice == 2) {
+                buyCategoryMenu(hero);
+            } else { // choice == 2
                 handleSell(hero);
             }
         }
     }
+
+    private void buyCategoryMenu(Hero hero) {
+        while (true) {
+            System.out.println("\n--- What do you want to buy? ---");
+            System.out.println("1) Weapons");
+            System.out.println("2) Armors");
+            System.out.println("3) Potions");
+            System.out.println("4) Spells");
+            System.out.println("0) Back");
+
+            int choice = readInt(scanner, 0, 4);
+            if (choice == 0) return;
+
+            switch (choice) {
+                case 1 -> handleBuyByType(hero, Weapon.class);
+                case 2 -> handleBuyByType(hero, Armor.class);
+                case 3 -> handleBuyByType(hero, Potion.class);
+                case 4 -> handleBuyByType(hero, Spell.class);
+            }
+        }
+    }
+    private void showFullMarketCatalog() {
+        System.out.println("\n===== MARKET CATALOG =====");
+        market.printAllItems();
+    }
+
+
+
+    private void handleBuyByType(Hero hero, Class<? extends Item> clazz) {
+        List<Item> stock = market.getStock();
+        List<Item> filtered = new ArrayList<>();
+
+        for (Item it : stock) {
+            if (clazz.isInstance(it)) filtered.add(it);
+        }
+
+        if (filtered.isEmpty()) {
+            System.out.println("No items available in this category.");
+            return;
+        }
+
+        System.out.println("\n--- Buy " + clazz.getSimpleName() + "s ---");
+        System.out.println("Gold: " + (int) hero.getGold());
+
+        for (int i = 0; i < filtered.size(); i++) {
+            Item it = filtered.get(i);
+            System.out.printf("%d) %s | price %d | lvl req %d%n",
+                    i + 1, it.getName(), it.getPrice(), it.getLevelRequired());
+        }
+        System.out.println("0) Cancel");
+
+        int choice = readInt(scanner, 0, filtered.size());
+        if (choice == 0) return;
+
+        Item selected = filtered.get(choice - 1);
+
+        if (market.buy(hero, selected)) {
+            System.out.println("Purchased: " + selected.getName());
+            System.out.println("Remaining Gold: " + (int) hero.getGold());
+        } else {
+            System.out.println("Cannot buy item (level too low or insufficient gold).");
+            System.out.println("Current Gold: " + (int) hero.getGold());
+        }
+    }
+
+
     private void handleBuy(Hero hero) {
         List<Item> stock = market.getStock();
 
