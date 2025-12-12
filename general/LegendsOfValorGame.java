@@ -352,38 +352,81 @@ public class LegendsOfValorGame {
         while (true) {
             System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
             System.out.println("Gold: " + (int) hero.getGold());
+            System.out.println("1) Buy");
+            System.out.println("2) Sell");
+            System.out.println("0) Exit Market");
 
-            List<Item> stock = market.getStock();
-            if (stock.isEmpty()) {
-                System.out.println("Market is out of stock.");
-                return;
-            }
+            int choice = readInt(scanner, 0, 2);
 
-            for (int i = 0; i < stock.size(); i++) {
-                Item it = stock.get(i);
-                System.out.printf("%d) %s | price %d | lvl req %d%n",
-                        i + 1,
-                        it.getName(),
-                        it.getPrice(),
-                        it.getLevelRequired());
-            }
+            if (choice == 0) return;
 
-            System.out.println("0) Exit market");
-            int choice = readInt(scanner, 0, stock.size());
-
-            if (choice == 0)
-                return;
-
-            Item selected = stock.get(choice - 1);
-            boolean success = market.buy(hero, selected);
-
-            if (success) {
-                System.out.println("Purchased: " + selected.getName());
-            } else {
-                System.out.println("Cannot buy item (level or gold too low).");
+            if (choice == 1) {
+                handleBuy(hero);
+            } else if (choice == 2) {
+                handleSell(hero);
             }
         }
     }
+    private void handleBuy(Hero hero) {
+        List<Item> stock = market.getStock();
+
+        if (stock.isEmpty()) {
+            System.out.println("Market is out of stock.");
+            return;
+        }
+
+        System.out.println("\n--- Buy Items ---");
+        for (int i = 0; i < stock.size(); i++) {
+            Item it = stock.get(i);
+            System.out.printf("%d) %s | price %d | lvl req %d%n",
+                    i + 1,
+                    it.getName(),
+                    it.getPrice(),
+                    it.getLevelRequired());
+        }
+        System.out.println("0) Cancel");
+
+        int choice = readInt(scanner, 0, stock.size());
+        if (choice == 0) return;
+
+        Item selected = stock.get(choice - 1);
+        if (market.buy(hero, selected)) {
+            System.out.println("Purchased: " + selected.getName());
+            System.out.println("Remaining Gold: " + (int) hero.getGold());
+        } else {
+            System.out.println("Cannot buy item (level too low or insufficient gold).");
+            System.out.println("Current Gold: " + (int) hero.getGold());
+        }
+
+    }
+    private void handleSell(Hero hero) {
+        List<Item> items = hero.getInventory().getAllItems();
+
+        if (items.isEmpty()) {
+            System.out.println("You have no items to sell.");
+            return;
+        }
+
+        System.out.println("\n--- Sell Items ---");
+        for (int i = 0; i < items.size(); i++) {
+            Item it = items.get(i);
+            System.out.printf("%d) %s | sell price %d%n",
+                    i + 1,
+                    it.getName(),
+                    it.getPrice() / 2);
+        }
+        System.out.println("0) Cancel");
+
+        int choice = readInt(scanner, 0, items.size());
+        if (choice == 0) return;
+
+        Item selected = items.get(choice - 1);
+        market.sell(hero, selected);
+        System.out.println("Sold: " + selected.getName());
+        System.out.println("Updated Gold: " + (int) hero.getGold());
+
+    }
+
 
     private void showHeroInventory(HeroUnit unit) {
         Hero h = unit.getHero();
