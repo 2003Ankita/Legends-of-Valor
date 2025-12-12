@@ -151,7 +151,8 @@ public class GameController {
 
             if (choice == heroPool.size() + 1) {
                 view.showMessage("Farewell, " + playerName + ".");
-                System.exit(0);
+                promptNextAction();
+                return;
             }
 
             Hero picked = heroPool.get(choice - 1);
@@ -187,6 +188,29 @@ public class GameController {
 
             board.registerMainMonsterAt(r, c);  // FIXED: single placement
             placed++;
+        }
+    }
+    private void promptNextAction() {
+        while (true) {
+            System.out.println("\nWhat would you like to do next?");
+            System.out.println("1) Play Monsters & Heroes");
+            System.out.println("2) Play Legends of Valor");
+            System.out.println("3) Exit Game");
+            System.out.print("> ");
+
+            int choice = readIntInRange(1, 3);
+
+            switch (choice) {
+                case 1:
+                    startMonsterAndHeroes();
+                    return;
+                case 2:
+                    startLegendsOfValorMode();
+                    return;
+                case 3:
+                    view.showMessage("Thank you for playing. Goodbye! 👋");
+                    System.exit(0);
+            }
         }
     }
 
@@ -231,7 +255,8 @@ public class GameController {
                 case 'M': enterMarket(); continue;
                 case 'Q':
                     view.showMessage(playerName + ", you leave the realm behind… 💔");
-                    System.exit(0);
+                    promptNextAction();
+                    return;
                 default:
                     view.showMessage(MSG_INVALID);
                     continue;
@@ -266,7 +291,9 @@ public class GameController {
                     int choice = readIntInRange(1, 2);
                     if (choice == 2) {
                         view.showMessage(playerName + ", you fled the battle… the realm mourns. 💔");
-                        System.exit(0);
+                        promptNextAction();
+                        return;
+
                     }
 
                     startBattle();
@@ -331,7 +358,9 @@ public class GameController {
 
             if (choice == 4) {
                 view.showMessage(playerName + ", your journey ends.");
-                System.exit(0);
+                promptNextAction();
+                return;
+
             }
 
             switch (choice) {
@@ -365,7 +394,8 @@ public class GameController {
 
             if (choice == items.size() + 2) {
                 view.showMessage(playerName + ", your journey ends here...");
-                System.exit(0);
+                promptNextAction();
+                return;
             }
 
             Item item = items.get(choice - 1);
@@ -401,7 +431,8 @@ public class GameController {
 
             if (choice == items.size() + 2) {
                 view.showMessage(playerName + ", your journey ends here...");
-                System.exit(0);
+                promptNextAction();
+                return;
             }
 
             Item item = items.get(choice - 1);
