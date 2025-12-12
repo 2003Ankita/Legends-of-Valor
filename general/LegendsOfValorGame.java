@@ -250,23 +250,62 @@ public class LegendsOfValorGame {
         System.out.println("9) Show inventory (does NOT end turn)");
         System.out.println("0) Pass");
     }
+    private double effectiveStrength(HeroUnit unit) {
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
+        return unit.getHero().getStrength() * e.getStrengthMultiplier();
+    }
+
+    private double effectiveDexterity(HeroUnit unit) {
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
+        return unit.getHero().getDexterity() * e.getDexterityMultiplier();
+    }
+
+    private double effectiveAgility(HeroUnit unit) {
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
+        return unit.getHero().getAgility() * e.getAgilityMultiplier();
+    }
+
 
     // Short status line at the top of a hero's turn
     public void printSingleHeroStatus(HeroUnit unit) {
         Hero h = unit.getHero();
-        System.out.println("Status: " + h.battleInfo() + " | Gold: " + (int) h.getGold());
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+
+        double str = effectiveStrength(unit);
+        double dex = effectiveDexterity(unit);
+        double agi = effectiveAgility(unit);
+
+        System.out.printf("%s (Lvl %d) HP %.0f MP %.0f Gold %.0f Pos %s Terrain %s | STR %.1f DEX %.1f AGI %.1f%n",
+            h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
+            unit.getPosition(), t, str, dex, agi);
     }
+
 
     private void showHeroInfo(HeroUnit unit) {
         Hero h = unit.getHero();
+
         System.out.println("\n=== Hero Info ===");
         System.out.println(h.fullInfo());
         System.out.println("Position: " + unit.getPosition() + " in lane " + unit.getLane());
 
+    // Terrain + effective stats (so the printed values match combat calculations)
+        TerrainType terrain = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect eff = TerrainEffectFactory.forTerrain(terrain);
+
+        double effStr = h.getStrength() * eff.getStrengthMultiplier();
+        double effDex = h.getDexterity() * eff.getDexterityMultiplier();
+        double effAgi = h.getAgility() * eff.getAgilityMultiplier();
+
+        System.out.println("Current terrain: " + terrain);
+        System.out.printf("Effective STR/DEX/AGI: %.1f / %.1f / %.1f%n", effStr, effDex, effAgi);
+
         Weapon w = h.getWeapon();
         if (w != null) {
             System.out.println("Equipped weapon: " + w.getName() +
-                    " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
+                " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
         } else {
             System.out.println("Equipped weapon: none");
         }
@@ -274,11 +313,12 @@ public class LegendsOfValorGame {
         Armor a = h.getArmor();
         if (a != null) {
             System.out.println("Equipped armor: " + a.getName() +
-                    " (reduction " + a.getDamageReduction() + ")");
+                " (reduction " + a.getDamageReduction() + ")");
         } else {
             System.out.println("Equipped armor: none");
         }
     }
+
 
     private void showHeroInventory(HeroUnit unit) {
         Hero h = unit.getHero();
@@ -397,11 +437,37 @@ public class LegendsOfValorGame {
 
     public void moveHero(HeroUnit unit, Position dest) {
         LegendsTile fromTile = board.getTile(unit.getPosition());
+        TerrainType fromType = fromTile.getTerrainType();
+
         LegendsTile toTile = board.getTile(dest);
+        TerrainType toType = toTile.getTerrainType();
+
         fromTile.removeHero();
         toTile.placeHero(unit.getHero());
         unit.setPosition(dest);
+
+        // Print a buff message when entering a special terrain (avoid repeats if terrain doesn't change)
+        if (toType != fromType) {
+            TerrainEffect eff = TerrainEffectFactory.forTerrain(toType);
+
+            double strM = eff.getStrengthMultiplier();
+            double dexM = eff.getDexterityMultiplier();
+            double agiM = eff.getAgilityMultiplier();
+
+        // Only print for terrains that actually grant a bonus
+            if (toType == TerrainType.BUSH && dexM > 1.0) {
+            System.out.printf("[Terrain Buff] %s entered BUSH: Dexterity +%.0f%% (buff ends when leaving this terrain)%n",
+                    unit.getHero().getName(), (dexM - 1.0) * 100);
+            } else if (toType == TerrainType.CAVE && agiM > 1.0) {
+            System.out.printf("[Terrain Buff] %s entered CAVE: Agility +%.0f%% (buff ends when leaving this terrain)%n",
+                    unit.getHero().getName(), (agiM - 1.0) * 100);
+            } else if (toType == TerrainType.KOULOU && strM > 1.0) {
+            System.out.printf("[Terrain Buff] %s entered KOULOU: Strength +%.0f%% (buff ends when leaving this terrain)%n",
+                    unit.getHero().getName(), (strM - 1.0) * 100);
+            }
+        }
     }
+
 
     public void recallHero(HeroUnit unit) {
         moveHero(unit, unit.getNexusPosition());

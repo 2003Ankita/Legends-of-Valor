@@ -55,10 +55,10 @@ public class LegendsOfValorBoard {
      * Lets you tweak terrain distribution if needed.
      */
     public static class Builder {
-        private double bushRate = 0.20;
-        private double caveRate = 0.20;
-        private double koulouRate = 0.20;
-        private double obstacleRate = 0.05;
+        private double bushRate = 0.15;
+        private double caveRate = 0.15;
+        private double koulouRate = 0.10;
+        private double obstacleRate = 0.20;
         private long randomSeed = System.currentTimeMillis();
 
         public Builder withBushRate(double bushRate) {
