@@ -244,13 +244,14 @@ public class LegendsOfValorGame {
 
                     case 9: // Show inventory
                         showHeroInventory(unit);
+                        break;
+                    case 10:
                         if (board.getTile(unit.getPosition()).isHeroNexus()) {
                             openMarketMenu(unit);
                         } else {
                             System.out.println("\n(You can buy/sell items only at the Hero Nexus.)");
                         }
                         break;
-
                     case 0: // Pass
                         turnDone = new PassAction().execute(this, unit, scanner);
                         break;
@@ -274,6 +275,7 @@ public class LegendsOfValorGame {
         System.out.println("7) Equip weapon/armor");
         System.out.println("8) Show hero info (does NOT end turn)");
         System.out.println("9) Show inventory (does NOT end turn)");
+        System.out.println("10 Market");
         System.out.println("0) Pass");
     }
 
