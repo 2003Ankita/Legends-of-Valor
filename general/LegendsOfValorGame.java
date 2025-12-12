@@ -23,6 +23,7 @@ public class LegendsOfValorGame {
 
     private final DamageCalculator damageCalculator;
     private final MonsterBehavior monsterBehavior;
+
     public enum Difficulty {
         EASY, MEDIUM, HARD
     }
@@ -30,7 +31,6 @@ public class LegendsOfValorGame {
     private Difficulty difficulty = Difficulty.MEDIUM;
     private int roundsSinceLastSpawn = 0;
     private final Market market;
-
 
     private final Scanner scanner;
 
@@ -72,11 +72,16 @@ public class LegendsOfValorGame {
     }
 
     private int spawnInterval() {
-        return switch (difficulty) {
-            case EASY -> 6;
-            case MEDIUM -> 4;
-            case HARD -> 2;
-        };
+        switch (difficulty) {
+            case EASY:
+                return 6;
+            case MEDIUM:
+                return 4;
+            case HARD:
+                return 2;
+            default:
+                return 4;
+        }
     }
 
     public void start() {
@@ -101,8 +106,6 @@ public class LegendsOfValorGame {
             roundNumber++;
         }
     }
-
-
 
     private List<HeroUnit> chooseHeroesAndLanes() {
         List<Hero> pool = HeroFactoryAdapter.loadAllHeroes();
@@ -273,6 +276,7 @@ public class LegendsOfValorGame {
         System.out.println("9) Show inventory (does NOT end turn)");
         System.out.println("0) Pass");
     }
+
     private double effectiveStrength(HeroUnit unit) {
         TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
         TerrainEffect e = TerrainEffectFactory.forTerrain(t);
@@ -291,7 +295,6 @@ public class LegendsOfValorGame {
         return unit.getHero().getAgility() * e.getAgilityMultiplier();
     }
 
-
     // Short status line at the top of a hero's turn
     public void printSingleHeroStatus(HeroUnit unit) {
         Hero h = unit.getHero();
@@ -302,10 +305,9 @@ public class LegendsOfValorGame {
         double agi = effectiveAgility(unit);
 
         System.out.printf("%s (Lvl %d) HP %.0f MP %.0f Gold %.0f Pos %s Terrain %s | STR %.1f DEX %.1f AGI %.1f%n",
-            h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
-            unit.getPosition(), t, str, dex, agi);
+                h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
+                unit.getPosition(), t, str, dex, agi);
     }
-
 
     private void showHeroInfo(HeroUnit unit) {
         Hero h = unit.getHero();
@@ -314,7 +316,7 @@ public class LegendsOfValorGame {
         System.out.println(h.fullInfo());
         System.out.println("Position: " + unit.getPosition() + " in lane " + unit.getLane());
 
-    // Terrain + effective stats (so the printed values match combat calculations)
+        // Terrain + effective stats (so the printed values match combat calculations)
         TerrainType terrain = board.getTile(unit.getPosition()).getTerrainType();
         TerrainEffect eff = TerrainEffectFactory.forTerrain(terrain);
 
@@ -328,7 +330,7 @@ public class LegendsOfValorGame {
         Weapon w = h.getWeapon();
         if (w != null) {
             System.out.println("Equipped weapon: " + w.getName() +
-                " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
+                    " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
         } else {
             System.out.println("Equipped weapon: none");
         }
@@ -336,11 +338,12 @@ public class LegendsOfValorGame {
         Armor a = h.getArmor();
         if (a != null) {
             System.out.println("Equipped armor: " + a.getName() +
-                " (reduction " + a.getDamageReduction() + ")");
+                    " (reduction " + a.getDamageReduction() + ")");
         } else {
             System.out.println("Equipped armor: none");
         }
     }
+
     private void openMarketMenu(HeroUnit unit) {
         Hero hero = unit.getHero();
 
@@ -379,8 +382,6 @@ public class LegendsOfValorGame {
             }
         }
     }
-
-
 
     private void showHeroInventory(HeroUnit unit) {
         Hero h = unit.getHero();
@@ -510,7 +511,8 @@ public class LegendsOfValorGame {
         toTile.placeHero(unit.getHero());
         unit.setPosition(dest);
 
-        // Print a buff message when entering a special terrain (avoid repeats if terrain doesn't change)
+        // Print a buff message when entering a special terrain (avoid repeats if
+        // terrain doesn't change)
         if (toType != fromType) {
             TerrainEffect eff = TerrainEffectFactory.forTerrain(toType);
 
@@ -518,20 +520,22 @@ public class LegendsOfValorGame {
             double dexM = eff.getDexterityMultiplier();
             double agiM = eff.getAgilityMultiplier();
 
-        // Only print for terrains that actually grant a bonus
+            // Only print for terrains that actually grant a bonus
             if (toType == TerrainType.BUSH && dexM > 1.0) {
-            System.out.printf("[Terrain Buff] %s entered BUSH: Dexterity +%.0f%% (buff ends when leaving this terrain)%n",
-                    unit.getHero().getName(), (dexM - 1.0) * 100);
+                System.out.printf(
+                        "[Terrain Buff] %s entered BUSH: Dexterity +%.0f%% (buff ends when leaving this terrain)%n",
+                        unit.getHero().getName(), (dexM - 1.0) * 100);
             } else if (toType == TerrainType.CAVE && agiM > 1.0) {
-            System.out.printf("[Terrain Buff] %s entered CAVE: Agility +%.0f%% (buff ends when leaving this terrain)%n",
-                    unit.getHero().getName(), (agiM - 1.0) * 100);
+                System.out.printf(
+                        "[Terrain Buff] %s entered CAVE: Agility +%.0f%% (buff ends when leaving this terrain)%n",
+                        unit.getHero().getName(), (agiM - 1.0) * 100);
             } else if (toType == TerrainType.KOULOU && strM > 1.0) {
-            System.out.printf("[Terrain Buff] %s entered KOULOU: Strength +%.0f%% (buff ends when leaving this terrain)%n",
-                    unit.getHero().getName(), (strM - 1.0) * 100);
+                System.out.printf(
+                        "[Terrain Buff] %s entered KOULOU: Strength +%.0f%% (buff ends when leaving this terrain)%n",
+                        unit.getHero().getName(), (strM - 1.0) * 100);
             }
         }
     }
-
 
     public void recallHero(HeroUnit unit) {
         moveHero(unit, unit.getNexusPosition());
@@ -750,7 +754,6 @@ public class LegendsOfValorGame {
         }
     }
 
-
     private boolean checkVictoryConditions() {
         // Heroes win if any hero reaches a monster Nexus
         for (HeroUnit hu : heroes) {
@@ -787,9 +790,12 @@ public class LegendsOfValorGame {
             StringBuilder mid1 = new StringBuilder();
             for (int c = 0; c < size; c++) {
                 LegendsTile tile = board.getTile(r, c);
-                if (tile.getTerrainType() == TerrainType.INACCESSIBLE) mid1.append("|  XXX  |");
-                else mid1.append("|       |");
-                if (c != size - 1) mid1.append(" ");
+                if (tile.getTerrainType() == TerrainType.INACCESSIBLE)
+                    mid1.append("|  XXX  |");
+                else
+                    mid1.append("|       |");
+                if (c != size - 1)
+                    mid1.append(" ");
             }
             System.out.println(mid1);
 
@@ -799,15 +805,18 @@ public class LegendsOfValorGame {
                 LegendsTile tile = board.getTile(r, c);
 
                 String content = "";
-                if (tile.getHero() != null) content += "H" + (indexOfHero(tile.getHero()) + 1);
+                if (tile.getHero() != null)
+                    content += "H" + (indexOfHero(tile.getHero()) + 1);
                 if (tile.getMonster() != null) {
-                    if (!content.isEmpty()) content += " ";
+                    if (!content.isEmpty())
+                        content += " ";
                     content += "M" + (indexOfMonster(tile.getMonster()) + 1);
                 }
 
                 String centered = String.format("%-7s", String.format("%3s", content));
                 mid2.append("|").append(centered).append("|");
-                if (c != size - 1) mid2.append(" ");
+                if (c != size - 1)
+                    mid2.append(" ");
             }
             System.out.println(mid2);
         }
@@ -823,11 +832,11 @@ public class LegendsOfValorGame {
         for (int c = 0; c < size; c++) {
             String t = terrainSymbol(board.getTile(r, c));
             sb.append(t).append(" - ").append(t).append(" - ").append(t);
-            if (c != size - 1) sb.append(" ");
+            if (c != size - 1)
+                sb.append(" ");
         }
         return sb.toString();
     }
-
 
     private int indexOfHero(Hero hero) {
         for (int i = 0; i < heroes.size(); i++) {
@@ -884,6 +893,5 @@ public class LegendsOfValorGame {
                 return "P";
         }
     }
-
 
 }
