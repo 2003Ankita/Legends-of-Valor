@@ -232,12 +232,18 @@ public final class DataLoader {
      * @return list of spells matching the category
      */
     public static List<Item> loadSpells(String fileName) {
-        String lower = fileName.toLowerCase();
-        if (lower.contains("ice"))
+        if (fileName == null || fileName.isEmpty()) {
+            System.err.println("Warning: Spell file missing. No spells loaded.");
+            return new ArrayList<>();
+        }
+
+        fileName = fileName.toLowerCase();
+
+        if (fileName.contains("ice"))
             return loadIceSpells();
-        if (lower.contains("fire"))
+        if (fileName.contains("fire"))
             return loadFireSpells();
-        if (lower.contains("lightning"))
+        if (fileName.contains("lightning"))
             return loadLightningSpells();
         return new ArrayList<>();
     }

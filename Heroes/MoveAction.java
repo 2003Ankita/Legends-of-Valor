@@ -58,17 +58,20 @@ public class MoveAction implements HeroAction {
                 destTile.setTerrainType(TerrainType.PLAIN);
                 System.out.println("You cleared the obstacle tile. Your turn ends.");
             } else {
-                System.out.println("You chose not to clear the obstacle. Your turn ends.");
+                System.out.println("Obstacle not cleared. Choose a different action/move.");
+                return false; // don't consume turn if they decline
             }
-            // In either case, the hero does not move this turn
-            return true;
+            return true; // consumes turn only when cleared
+
         }
 
         if (game.canHeroMoveTo(unit, dest)) {
             game.moveHero(unit, dest);
+            return true; // valid move consumes the turn
         } else {
-            System.out.println("Illegal move for Legends of Valor.");
+            System.out.println("Illegal move for Legends of Valor. Try again.");
+            return false; // IMPORTANT: retry; do NOT end turn
         }
-        return true;
+
     }
 }

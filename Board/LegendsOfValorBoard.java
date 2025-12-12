@@ -50,6 +50,16 @@ public class LegendsOfValorBoard {
         return new Position(0, lane.getRightColumn());
     }
 
+    public Lane laneForColumn(int col) {
+        for (Lane l : Lane.values()) {
+            if (l.containsColumn(col)) return l;
+        }
+        return null; // column is a wall (2 or 5)
+    }
+    public Lane laneForPosition(Position p) {
+        return laneForColumn(p.col);
+    }
+
     /**
      * Builder for LegendsOfValorBoard (Builder pattern).
      * Lets you tweak terrain distribution if needed.

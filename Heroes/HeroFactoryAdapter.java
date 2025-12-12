@@ -16,6 +16,7 @@ public final class HeroFactoryAdapter {
 
     private HeroFactoryAdapter() {
     }
+    private static final String SPELL_FILE = "spells.txt";
 
     public static List<Hero> loadAllHeroes() {
         List<Hero> result = new ArrayList<>();
@@ -38,7 +39,8 @@ public final class HeroFactoryAdapter {
         result.addAll(DataLoader.loadWeapons(null));
         result.addAll(DataLoader.loadArmors(null));
         result.addAll(DataLoader.loadPotions(null));
-        result.addAll(DataLoader.loadSpells(null));
+        result.addAll(DataLoader.loadSpells(SPELL_FILE));
+
         return result;
     }
 }

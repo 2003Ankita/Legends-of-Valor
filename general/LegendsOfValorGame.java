@@ -23,6 +23,14 @@ public class LegendsOfValorGame {
 
     private final DamageCalculator damageCalculator;
     private final MonsterBehavior monsterBehavior;
+    public enum Difficulty {
+        EASY, MEDIUM, HARD
+    }
+
+    private Difficulty difficulty = Difficulty.MEDIUM;
+    private int roundsSinceLastSpawn = 0;
+    private final Market market;
+
 
     private final Scanner scanner;
 
@@ -42,6 +50,9 @@ public class LegendsOfValorGame {
 
         this.heroes = chooseHeroesAndLanes();
         spawnInitialMonsters();
+        List<Item> marketStock = HeroFactoryAdapter.loadAllItems();
+        this.market = new Market(marketStock);
+
     }
 
     public LegendsOfValorBoard getBoard() {
@@ -60,6 +71,13 @@ public class LegendsOfValorGame {
         return damageCalculator;
     }
     // ======================= Game Loop =======================
+    private int spawnInterval() {
+        return switch (difficulty) {
+            case EASY -> 6;
+            case MEDIUM -> 4;
+            case HARD -> 2;
+        };
+    }
 
     public void start() {
         System.out.println("=== Legends of Valor ===");
@@ -85,6 +103,7 @@ public class LegendsOfValorGame {
     }
 
     // ================ Hero & Monster selection =================
+
 
     private List<HeroUnit> chooseHeroesAndLanes() {
         List<Hero> pool = HeroFactoryAdapter.loadAllHeroes();
@@ -223,6 +242,11 @@ public class LegendsOfValorGame {
 
                     case 9: // Show inventory
                         showHeroInventory(unit);
+                        if (board.getTile(unit.getPosition()).isHeroNexus()) {
+                            openMarketMenu(unit);
+                        } else {
+                            System.out.println("\n(You can buy/sell items only at the Hero Nexus.)");
+                        }
                         break;
 
                     case 0: // Pass
@@ -318,6 +342,45 @@ public class LegendsOfValorGame {
             System.out.println("Equipped armor: none");
         }
     }
+    private void openMarketMenu(HeroUnit unit) {
+        Hero hero = unit.getHero();
+
+        while (true) {
+            System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
+            System.out.println("Gold: " + (int) hero.getGold());
+
+            List<Item> stock = market.getStock();
+            if (stock.isEmpty()) {
+                System.out.println("Market is out of stock.");
+                return;
+            }
+
+            for (int i = 0; i < stock.size(); i++) {
+                Item it = stock.get(i);
+                System.out.printf("%d) %s | price %d | lvl req %d%n",
+                        i + 1,
+                        it.getName(),
+                        it.getPrice(),
+                        it.getLevelRequired());
+            }
+
+            System.out.println("0) Exit market");
+            int choice = readInt(scanner, 0, stock.size());
+
+            if (choice == 0)
+                return;
+
+            Item selected = stock.get(choice - 1);
+            boolean success = market.buy(hero, selected);
+
+            if (success) {
+                System.out.println("Purchased: " + selected.getName());
+            } else {
+                System.out.println("Cannot buy item (level or gold too low).");
+            }
+        }
+    }
+
 
 
     private void showHeroInventory(HeroUnit unit) {
@@ -419,16 +482,18 @@ public class LegendsOfValorGame {
         }
 
         // Cannot move behind a monster in same lane
-        Lane lane = unit.getLane();
+        Lane lane = board.laneForColumn(dest.col); // lane must be based on destination
+
         for (MonsterUnit mu : monstersOnBoard) {
             if (!mu.isAlive())
                 continue;
             if (mu.getLane() == lane) {
                 Position mp = mu.getPosition();
                 // monsters move downwards; "behind" = row index less than monster
-                if (dest.col == mp.col && dest.row < mp.row) {
-                    return false;
+                if (dest.row < mp.row) {
+                    return false; // cannot move/teleport past a monster in that lane
                 }
+
             }
         }
 
@@ -648,8 +713,12 @@ public class LegendsOfValorGame {
     }
 
     private void maybeSpawnNewMonsters() {
-        if (roundNumber % spawnFrequency != 0)
+        roundsSinceLastSpawn++;
+
+        if (roundsSinceLastSpawn < spawnInterval())
             return;
+
+        roundsSinceLastSpawn = 0;
 
         int maxHeroLevel = 1;
         for (HeroUnit h : heroes) {
@@ -663,9 +732,11 @@ public class LegendsOfValorGame {
             Monster base = pool.get(random.nextInt(pool.size()));
             Monster clone = base.copy();
             clone.setLevel(maxHeroLevel);
-            Position spawn = board.monsterNexusForLane(lane);
 
+            Position spawn = board.monsterNexusForLane(lane);
             LegendsTile spawnTile = board.getTile(spawn);
+
+            // If Nexus occupied, try the space below (PDF-safe)
             if (spawnTile.getMonster() != null) {
                 Position below = new Position(spawn.row + 1, spawn.col);
                 if (board.inBounds(below)
@@ -679,6 +750,7 @@ public class LegendsOfValorGame {
             board.getTile(spawn).placeMonster(clone);
         }
     }
+
 
     private boolean checkVictoryConditions() {
         // Heroes win if any hero reaches a monster Nexus
@@ -704,77 +776,59 @@ public class LegendsOfValorGame {
 
     // ==================== Rendering ====================
 
-    private void renderBoard() {
+    void renderBoard() {
         int size = board.getSize();
         System.out.println();
 
         for (int r = 0; r < size; r++) {
+            // top border for this row
+            System.out.println(borderRow(r));
 
-            // ------------------------------
-            // 1) TOP BORDER
-            // ------------------------------
-            StringBuilder top = new StringBuilder();
-            for (int c = 0; c < size; c++) {
-                String t = terrainSymbol(board.getTile(r, c));
-
-                top.append(t + " - " + t + " - " + t + "   ");
-            }
-            System.out.println(top.toString());
-
-            // ------------------------------
-            // 2) MIDDLE EMPTY ROW (left & right borders)
-            // ------------------------------
+            // empty/XXX row
             StringBuilder mid1 = new StringBuilder();
             for (int c = 0; c < size; c++) {
                 LegendsTile tile = board.getTile(r, c);
-
-                if (tile.getTerrainType() == TerrainType.INACCESSIBLE) {
-                    mid1.append("|  XXXX  |   ");   // <-- NEW
-                } else {
-                    mid1.append("|       |   ");   // <-- OLD
-                }
+                if (tile.getTerrainType() == TerrainType.INACCESSIBLE) mid1.append("|  XXX  |");
+                else mid1.append("|       |");
+                if (c != size - 1) mid1.append(" ");
             }
-            System.out.println(mid1.toString());
+            System.out.println(mid1);
 
-            // ------------------------------
-            // 3) MIDDLE CONTENT ROW (hero/monster centered)
-            // ------------------------------
+            // content row
             StringBuilder mid2 = new StringBuilder();
             for (int c = 0; c < size; c++) {
-
                 LegendsTile tile = board.getTile(r, c);
 
                 String content = "";
-
-                if (tile.getHero() != null) {
-                    content += "H" + (indexOfHero(tile.getHero()) + 1);
-                }
+                if (tile.getHero() != null) content += "H" + (indexOfHero(tile.getHero()) + 1);
                 if (tile.getMonster() != null) {
-                    if (!content.isEmpty())
-                        content += " ";
+                    if (!content.isEmpty()) content += " ";
                     content += "M" + (indexOfMonster(tile.getMonster()) + 1);
                 }
 
-                // center content in a 7-width space
                 String centered = String.format("%-7s", String.format("%3s", content));
-
-                mid2.append("|" + centered + "|   ");
+                mid2.append("|").append(centered).append("|");
+                if (c != size - 1) mid2.append(" ");
             }
-            System.out.println(mid2.toString());
-
-            // ------------------------------
-            // 4) BOTTOM BORDER
-            // ------------------------------
-            StringBuilder bottom = new StringBuilder();
-            for (int c = 0; c < size; c++) {
-                String t = terrainSymbol(board.getTile(r, c));
-                bottom.append(t + " - " + t + " - " + t + "   ");
-            }
-            System.out.println(bottom.toString());
-
-            System.out.println();
+            System.out.println(mid2);
         }
+
+        // final bottom border
+        System.out.println(borderRow(size - 1));
+        System.out.println();
     }
+
+    private String borderRow(int r) {
+        int size = board.getSize();
+        StringBuilder sb = new StringBuilder();
+        for (int c = 0; c < size; c++) {
+            String t = terrainSymbol(board.getTile(r, c));
+            sb.append(t).append(" - ").append(t).append(" - ").append(t);
+            if (c != size - 1) sb.append(" ");
+        }
+        return sb.toString();
+    }
+
 
     private int indexOfHero(Hero hero) {
         for (int i = 0; i < heroes.size(); i++) {
@@ -831,5 +885,6 @@ public class LegendsOfValorGame {
                 return "P";
         }
     }
+
 
 }
