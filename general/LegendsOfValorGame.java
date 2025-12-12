@@ -828,10 +828,11 @@ public class LegendsOfValorGame {
         System.out.println();
 
         for (int r = 0; r < size; r++) {
-            // top border for this row
+
+            // TOP border of row r
             System.out.println(borderRow(r));
 
-            // empty/XXX row
+            // empty / inaccessible row
             StringBuilder mid1 = new StringBuilder();
             for (int c = 0; c < size; c++) {
                 LegendsTile tile = board.getTile(r, c);
@@ -839,8 +840,7 @@ public class LegendsOfValorGame {
                     mid1.append("|  XXX  |");
                 else
                     mid1.append("|       |");
-                if (c != size - 1)
-                    mid1.append(" ");
+                if (c != size - 1) mid1.append(" ");
             }
             System.out.println(mid1);
 
@@ -848,26 +848,25 @@ public class LegendsOfValorGame {
             StringBuilder mid2 = new StringBuilder();
             for (int c = 0; c < size; c++) {
                 LegendsTile tile = board.getTile(r, c);
-
                 String content = "";
+
                 if (tile.getHero() != null)
                     content += "H" + (indexOfHero(tile.getHero()) + 1);
                 if (tile.getMonster() != null) {
-                    if (!content.isEmpty())
-                        content += " ";
+                    if (!content.isEmpty()) content += " ";
                     content += "M" + (indexOfMonster(tile.getMonster()) + 1);
                 }
 
                 String centered = String.format("%-7s", String.format("%3s", content));
                 mid2.append("|").append(centered).append("|");
-                if (c != size - 1)
-                    mid2.append(" ");
+                if (c != size - 1) mid2.append(" ");
             }
             System.out.println(mid2);
+
+            // BOTTOM border — SAME ROW r
+            System.out.println(borderRow(r));
         }
 
-        // final bottom border
-        System.out.println(borderRow(size - 1));
         System.out.println();
     }
 
