@@ -26,7 +26,6 @@ public class Market {
 
     /**
      * Returns the list of all items currently in the market.
-     * 
      * @return list of market stock items
      */
     public List<Item> getStock() {
