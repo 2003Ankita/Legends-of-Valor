@@ -90,6 +90,7 @@ public class LegendsOfValorGame {
         while (running) {
             System.out.println("\n--- ROUND " + roundNumber + " ---");
             renderBoard();
+            printMonstersStatus();
 
             heroesTurn();
             if (checkVictoryConditions())
@@ -277,6 +278,22 @@ public class LegendsOfValorGame {
         System.out.println("9) Show inventory (does NOT end turn)");
         System.out.println("10 Market");
         System.out.println("0) Pass");
+    }
+
+    // Quick status dump for all monsters on the board each round
+    private void printMonstersStatus() {
+        if (monstersOnBoard.isEmpty()) {
+            System.out.println("(No monsters on board)");
+            return;
+        }
+        System.out.println("\nMonsters on board:");
+        for (int i = 0; i < monstersOnBoard.size(); i++) {
+            MonsterUnit mu = monstersOnBoard.get(i);
+            Monster m = mu.getMonster();
+            System.out.printf("M%d) %s (Lvl %d, HP %.1f, DMG %.1f, DEF %.1f, Dodge %.0f%%) at %s lane %s%n",
+                    i + 1, m.getName(), m.getLevel(), m.getHp(), m.getDamage(), m.getDefense(),
+                    m.getDodgeChance() * 100, mu.getPosition(), mu.getLane());
+        }
     }
 
     private double effectiveStrength(HeroUnit unit) {
