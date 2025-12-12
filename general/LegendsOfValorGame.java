@@ -102,7 +102,6 @@ public class LegendsOfValorGame {
         }
     }
 
-    // ================ Hero & Monster selection =================
 
 
     private List<HeroUnit> chooseHeroesAndLanes() {
