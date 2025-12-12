@@ -70,7 +70,7 @@ public class LegendsOfValorGame {
     public DamageCalculator getDamageCalculator() {
         return damageCalculator;
     }
-    // ======================= Game Loop =======================
+
     private int spawnInterval() {
         return switch (difficulty) {
             case EASY -> 6;
