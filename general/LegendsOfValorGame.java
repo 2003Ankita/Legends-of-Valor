@@ -35,6 +35,13 @@ public class LegendsOfValorGame {
     private final Scanner scanner;
 
     private int roundNumber = 1;
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String RESET = "\u001B[0m";
+    private int heroKills = 0;
+    private int monsterKills = 0;
+
     private final int spawnFrequency; // e.g. every 8 rounds
 
     public LegendsOfValorGame(Scanner scanner) {
@@ -89,6 +96,10 @@ public class LegendsOfValorGame {
         boolean running = true;
         while (running) {
             System.out.println("\n--- ROUND " + roundNumber + " ---");
+            System.out.println(
+                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills
+            );
+
             renderBoard();
             printMonstersStatus();
 
@@ -771,16 +782,26 @@ public class LegendsOfValorGame {
                 target.getMonster(),
                 tile.getTerrainType(),
                 attacker.getHero().getWeapon());
+        double beforeHp = target.getMonster().getHp();
+
         target.getMonster().takeDamage(dmg);
-        System.out.printf("%s hits %s for %.1f damage%n",
+
+        System.out.printf(
+                "⚔ Damage Recap: %s dealt %.1f damage → Monster HP: %.1f → %.1f%n",
                 attacker.getHero().getName(),
-                target.getMonster().getName(), dmg);
+                dmg,
+                beforeHp,
+                target.getMonster().getHp()
+        );
+
 
         if (!target.isAlive()) {
+            heroKills++;
             System.out.println(
-                    "🗡️ Hero " + attacker.getHero().getName() +
-                            " has slain Monster " + target.getMonster().getName() + "!"
+                    GREEN + "🗡️ Hero " + attacker.getHero().getName() +
+                            " has slain Monster " + target.getMonster().getName() + "!" + RESET
             );
+
 
             System.out.println(target.getMonster().getName() + " is defeated!");
             board.getTile(target.getPosition()).removeMonster();
@@ -803,15 +824,24 @@ public class LegendsOfValorGame {
                     attacker.getMonster().getName());
             return;
         }
+        double beforeHp = target.getHero().getHp();
+
         target.getHero().takeDamage(dmg);
-        System.out.printf("%s hits %s for %.1f damage%n",
+
+        System.out.printf(
+                "⚔ Damage Recap: %s dealt %.1f damage → Hero HP: %.1f → %.1f%n",
                 attacker.getMonster().getName(),
-                target.getHero().getName(), dmg);
+                dmg,
+                beforeHp,
+                target.getHero().getHp()
+        );
+
 
         if (!target.isAlive()) {
+            monsterKills++;
             System.out.println(
-                    "💀 Monster " + attacker.getMonster().getName() +
-                            " has killed Hero " + target.getHero().getName() + "!"
+                    RED + "💀 Monster " + attacker.getMonster().getName() +
+                            " has killed Hero " + target.getHero().getName() + "!" + RESET
             );
 
             System.out.println(target.getHero().getName() + " has fallen!");
