@@ -777,6 +777,11 @@ public class LegendsOfValorGame {
                 target.getMonster().getName(), dmg);
 
         if (!target.isAlive()) {
+            System.out.println(
+                    "🗡️ Hero " + attacker.getHero().getName() +
+                            " has slain Monster " + target.getMonster().getName() + "!"
+            );
+
             System.out.println(target.getMonster().getName() + " is defeated!");
             board.getTile(target.getPosition()).removeMonster();
             monstersOnBoard.remove(target);
@@ -804,6 +809,11 @@ public class LegendsOfValorGame {
                 target.getHero().getName(), dmg);
 
         if (!target.isAlive()) {
+            System.out.println(
+                    "💀 Monster " + attacker.getMonster().getName() +
+                            " has killed Hero " + target.getHero().getName() + "!"
+            );
+
             System.out.println(target.getHero().getName() + " has fallen!");
         }
     }
