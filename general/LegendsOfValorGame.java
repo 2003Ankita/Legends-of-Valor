@@ -41,6 +41,8 @@ public class LegendsOfValorGame {
     private static final String RESET = "\u001B[0m";
     private int heroKills = 0;
     private int monsterKills = 0;
+    private int heroComboStreak = 0;
+    private int monsterComboStreak = 0;
 
     private final int spawnFrequency; // e.g. every 8 rounds
 
@@ -796,6 +798,13 @@ public class LegendsOfValorGame {
 
 
         if (!target.isAlive()) {
+            heroComboStreak++;
+            monsterComboStreak = 0;
+
+            if (heroComboStreak > 1) {
+                System.out.println("🔥 HERO COMBO x" + heroComboStreak + "!");
+            }
+
             heroKills++;
             System.out.println(
                     GREEN + "🗡️ Hero " + attacker.getHero().getName() +
@@ -838,6 +847,13 @@ public class LegendsOfValorGame {
 
 
         if (!target.isAlive()) {
+            monsterComboStreak++;
+            heroComboStreak = 0;
+
+            if (monsterComboStreak > 1) {
+                System.out.println("💀 MONSTER COMBO x" + monsterComboStreak + "!");
+            }
+
             monsterKills++;
             System.out.println(
                     RED + "💀 Monster " + attacker.getMonster().getName() +
