@@ -391,16 +391,17 @@ public class LegendsOfValorGame {
             System.out.println("Equipped armor: none");
         }
     }
-
+    /**
+     * Opens and manages the market interaction loop for a hero, allowing
+     * buying, selling, exiting the market, or quitting the game.
+     */
     private void openMarketMenu(HeroUnit unit) {
         Hero hero = unit.getHero();
 
         while (true) {
 
-            // ✅ STEP 1: show full catalog FIRST
             showFullMarketCatalog();
 
-            // ✅ STEP 2: then action menu
             System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
             System.out.println("Gold: " + (int) hero.getGold());
             System.out.println("1) Buy");
@@ -430,7 +431,10 @@ public class LegendsOfValorGame {
             }
         }
     }
-
+    /**
+     * Displays a purchase-category menu and routes the hero to the
+     * corresponding item-buying workflow until the user exits.
+     */
     private void buyCategoryMenu(Hero hero) {
         while (true) {
             System.out.println("\n--- What do you want to buy? ---");
@@ -460,12 +464,17 @@ public class LegendsOfValorGame {
             }
         }
     }
-
+    /**
+     * Displays the complete market catalog of available items to the console.
+     */
     private void showFullMarketCatalog() {
         System.out.println("\n===== MARKET CATALOG =====");
         market.printAllItems();
     }
-
+    /**
+     * Handles purchasing items of a specific type for a hero by filtering market stock,
+     * processing user selection, and completing or rejecting the transaction.
+     */
     private void handleBuyByType(Hero hero, Class<? extends Item> clazz) {
         List<Item> stock = market.getStock();
         List<Item> filtered = new ArrayList<>();
@@ -546,7 +555,10 @@ public class LegendsOfValorGame {
         }
 
     }
-
+    /**
+     * Handles the item-selling interaction for a hero, allowing the player to
+     * select, sell, cancel, or quit, and updates inventory and gold accordingly.
+     */
     private void handleSell(Hero hero) {
         List<Item> items = hero.getInventory().getAllItems();
 
@@ -584,7 +596,10 @@ public class LegendsOfValorGame {
         System.out.println("Updated Gold: " + (int) hero.getGold());
 
     }
-
+    /**
+     * Displays the specified hero’s inventory to the console, grouped by item type
+     * and formatted with relevant item statistics.
+     */
     private void showHeroInventory(HeroUnit unit) {
         Hero h = unit.getHero();
         Inventory inv = h.getInventory();
@@ -659,7 +674,10 @@ public class LegendsOfValorGame {
         if (!printed)
             System.out.println("  (none)");
     }
-
+    /**
+     * Executes a turn for each active monster by delegating behavior
+     * to the monster AI controller.
+     */
     private void monstersTurn() {
         for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
             monsterBehavior.takeTurn(unit, this);
@@ -667,7 +685,11 @@ public class LegendsOfValorGame {
     }
 
     // ========= Movement & range queries used by actions / AI =========
-
+    /**
+     * Determines whether a hero can legally move to the specified position,
+     * enforcing board bounds, terrain rules, occupancy constraints,
+     * and lane-based monster blocking logic.
+     */
     public boolean canHeroMoveTo(HeroUnit unit, Position dest) {
         if (!board.inBounds(dest))
             return false;
@@ -701,7 +723,10 @@ public class LegendsOfValorGame {
 
         return true;
     }
-
+    /**
+     * Moves a hero to a new position, updates board occupancy and hero state,
+     * and applies terrain-based buff notifications when entering special tiles.
+     */
     public void moveHero(HeroUnit unit, Position dest) {
         LegendsTile fromTile = board.getTile(unit.getPosition());
         TerrainType fromType = fromTile.getTerrainType();
@@ -742,7 +767,10 @@ public class LegendsOfValorGame {
     public void recallHero(HeroUnit unit) {
         moveHero(unit, unit.getNexusPosition());
     }
-
+    /**
+     * Determines whether a monster can legally move to the specified position,
+     * validating board bounds, terrain restrictions, and tile occupancy.
+     */
     public boolean canMonsterMoveTo(MonsterUnit unit, Position dest) {
         if (!board.inBounds(dest))
             return false;
@@ -757,7 +785,10 @@ public class LegendsOfValorGame {
             return false; // heroes can block
         return true;
     }
-
+    /**
+     * Moves a monster to a new board position by updating tile occupancy
+     * and the monster unit’s internal position state.
+     */
     public void moveMonster(MonsterUnit unit, Position dest) {
         LegendsTile fromTile = board.getTile(unit.getPosition());
         LegendsTile toTile = board.getTile(dest);
@@ -765,7 +796,10 @@ public class LegendsOfValorGame {
         toTile.placeMonster(unit.getMonster());
         unit.setPosition(dest);
     }
-
+    /**
+     * Returns all living heroes within a given range of the specified position,
+     * based on row and column distance constraints.
+     */
     public List<HeroUnit> getHeroesInRange(Position center, int radius) {
         List<HeroUnit> result = new ArrayList<>();
         for (HeroUnit h : heroes) {
@@ -779,6 +813,10 @@ public class LegendsOfValorGame {
         }
         return result;
     }
+    /**
+     * Returns all living monsters within a given Manhattan distance
+     * from the specified center position.
+     */
 
     public List<MonsterUnit> getMonstersInRange(Position center, int radius) {
         List<MonsterUnit> result = new ArrayList<>();
@@ -795,7 +833,6 @@ public class LegendsOfValorGame {
     /**
      * Returns a list of all heroes excluding the specified hero unit.
      */
-
     public List<HeroUnit> getOtherHeroes(HeroUnit unit) {
         List<HeroUnit> result = new ArrayList<>();
         for (HeroUnit h : heroes) {
