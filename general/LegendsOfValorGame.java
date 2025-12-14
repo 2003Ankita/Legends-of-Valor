@@ -47,11 +47,16 @@ public class LegendsOfValorGame {
     private int monsterComboStreak = 0;
 
     private final int spawnFrequency; // e.g. every 8 rounds
-
+    /**
+     * Creates a Legends of Valor game with a default monster spawn frequency.
+     */
     public LegendsOfValorGame(Scanner scanner) {
         this(scanner, 8);
     }
-
+    /**
+     * Initializes a Legends of Valor game instance with configurable monster spawn frequency,
+     * sets up the board, heroes, initial monsters, market inventory, and core game systems.
+     */
     public LegendsOfValorGame(Scanner scanner, int spawnFrequency) {
         this.board = new LegendsOfValorBoard.Builder().build();
         this.scanner = scanner;
@@ -65,23 +70,34 @@ public class LegendsOfValorGame {
         this.market = new Market(marketStock);
 
     }
-
+    /**
+     * Returns the current game board instance.
+     */
     public LegendsOfValorBoard getBoard() {
         return board;
     }
-
+    /**
+     * Returns the list of active hero units in the game.
+     */
     public List<HeroUnit> getHeroes() {
         return heroes;
     }
-
+    /**
+     * Returns the list of monster units currently on the board.
+     */
     public List<MonsterUnit> getMonstersOnBoard() {
         return monstersOnBoard;
     }
-
+    /**
+     * Returns the damage calculator used for combat resolution.
+     */
     public DamageCalculator getDamageCalculator() {
         return damageCalculator;
     }
-
+    /**
+     * Returns the number of rounds between monster spawns
+     * based on the current game difficulty.
+     */
     private int spawnInterval() {
         switch (difficulty) {
             case EASY:
@@ -94,6 +110,11 @@ public class LegendsOfValorGame {
                 return 4;
         }
     }
+    /**
+     * Starts and manages the main game loop, alternating hero and monster turns,
+     * updating round state, handling spawning and regeneration, and checking
+     * for victory or quit conditions.
+     */
 
     public void start() {
         System.out.println("=== Legends of Valor ===");
@@ -128,7 +149,10 @@ public class LegendsOfValorGame {
             roundNumber++;
         }
     }
-
+    /**
+     * Allows the player to select heroes and assign each to a unique lane,
+     * initializing hero units at their corresponding hero nexus positions.
+     */
     private List<HeroUnit> chooseHeroesAndLanes() {
         List<Hero> pool = HeroFactoryAdapter.loadAllHeroes();
         List<HeroUnit> result = new ArrayList<>();
@@ -181,7 +205,10 @@ public class LegendsOfValorGame {
 
         return result;
     }
-
+    /**
+     * Spawns the initial set of monsters at each lane’s monster nexus,
+     * scaling their levels to match the current heroes.
+     */
     private void spawnInitialMonsters() {
         List<Monster> pool = HeroFactoryAdapter.loadAllMonsters();
         Random random = new Random();
