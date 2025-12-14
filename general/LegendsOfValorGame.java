@@ -951,6 +951,12 @@ public class LegendsOfValorGame {
             }
         }
     }
+    /**
+     * Displays a post-game menu and routes the player to the selected next action.
+     * Allows the user to start another game mode or exit the application.
+     *
+     * Side effects: reads user input, launches new game controllers, or terminates the program.
+     */
     private void showPostQuitMenu() {
         System.out.println("\nWhat would you like to do next?");
         System.out.println("1) Play Monsters and Heroes");
@@ -973,7 +979,16 @@ public class LegendsOfValorGame {
         }
     }
 
-
+    /**
+     * Spawns a new wave of monsters at lane-specific nexus positions when the
+     * spawn interval is reached.
+     *
+     * Monsters are scaled to the highest current hero level and one monster
+     * is spawned per lane, unless the lane’s nexus tile is already occupied.
+     *
+     * Side effects: mutates board state, updates the active monster list,
+     * and resets the spawn counter when spawning occurs.
+     */
     private void maybeSpawnNewMonsters() {
         roundsSinceLastSpawn++;
 
@@ -1010,7 +1025,14 @@ public class LegendsOfValorGame {
 
         }
     }
-
+    /**
+     * Checks whether the game has reached a terminal victory condition.
+     *
+     * Heroes win if any hero reaches a monster nexus tile.
+     * Monsters win if any monster reaches a hero nexus tile.
+     *
+     * @return true if either side has won; false otherwise
+     */
     private boolean checkVictoryConditions() {
         // Heroes win if any hero reaches a monster Nexus
         for (HeroUnit hu : heroes) {
@@ -1034,7 +1056,15 @@ public class LegendsOfValorGame {
     }
 
     // ==================== Rendering ====================
-
+    /**
+     * Renders the current game board to the console in a grid-based layout.
+     *
+     * Each board row is printed with top and bottom borders, terrain indicators
+     * (including inaccessible tiles), and centered entity markers for heroes
+     * and monsters occupying each tile.
+     *
+     * Side effects: prints the board state to standard output.
+     */
     void renderBoard() {
         int size = board.getSize();
         System.out.println();
@@ -1084,7 +1114,10 @@ public class LegendsOfValorGame {
 
         System.out.println();
     }
-
+    /**
+     * Constructs and returns the horizontal border string for a given board row
+     * using terrain-specific symbols for visual consistency.
+     */
     private String borderRow(int r) {
         int size = board.getSize();
         StringBuilder sb = new StringBuilder();
@@ -1104,7 +1137,10 @@ public class LegendsOfValorGame {
         }
         return -1;
     }
-
+    /**
+     * Returns the index of the specified monster in the active monster list,
+     * or -1 if the monster is not currently on the board.
+     */
     private int indexOfMonster(Monster monster) {
         for (int i = 0; i < monstersOnBoard.size(); i++) {
             if (monstersOnBoard.get(i).getMonster() == monster)
