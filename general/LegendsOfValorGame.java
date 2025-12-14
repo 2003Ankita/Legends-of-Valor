@@ -1062,7 +1062,7 @@ public class LegendsOfValorGame {
 
         switch (choice) {
             case 1:
-                new GameController().startGame();
+                new GameController().startMonsterAndHeroes();
                 return;
 
             case 2:
