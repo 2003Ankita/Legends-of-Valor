@@ -37,7 +37,6 @@ public class LegendsOfValorGame {
     private int roundNumber = 1;
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
-    private static final String YELLOW = "\u001B[33m";
     private static final String RESET = "\u001B[0m";
     private int heroKills = 0;
     private int monsterKills = 0;
@@ -645,6 +644,7 @@ public class LegendsOfValorGame {
             }
         }
     }
+
     /**
      * Displays the complete market catalog of available items to the console.
      */
@@ -703,39 +703,6 @@ public class LegendsOfValorGame {
         }
     }
 
-    private void handleBuy(Hero hero) {
-        List<Item> stock = market.getStock();
-
-        if (stock.isEmpty()) {
-            System.out.println("Market is out of stock.");
-            return;
-        }
-
-        System.out.println("\n--- Buy Items ---");
-        for (int i = 0; i < stock.size(); i++) {
-            Item it = stock.get(i);
-            System.out.printf("%d) %s | price %d | lvl req %d%n",
-                    i + 1,
-                    it.getName(),
-                    it.getPrice(),
-                    it.getLevelRequired());
-        }
-        System.out.println("0) Cancel");
-
-        int choice = readInt(scanner, 0, stock.size());
-        if (choice == 0)
-            return;
-
-        Item selected = stock.get(choice - 1);
-        if (market.buy(hero, selected)) {
-            System.out.println("Purchased: " + selected.getName());
-            System.out.println("Remaining Gold: " + (int) hero.getGold());
-        } else {
-            System.out.println("Cannot buy item (level too low or insufficient gold).");
-            System.out.println("Current Gold: " + (int) hero.getGold());
-        }
-
-    }
     /**
      * Handles the item-selling interaction for a hero, allowing the player to
      * select, sell, cancel, or quit, and updates inventory and gold accordingly.
@@ -1032,7 +999,6 @@ public class LegendsOfValorGame {
         h.addGold(goldReward);
     }
 
-    // ==================== Round bookkeeping ====================
 
     private void regenHeroes() {
         for (HeroUnit h : heroes) {
