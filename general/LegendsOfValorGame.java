@@ -792,6 +792,9 @@ public class LegendsOfValorGame {
         }
         return result;
     }
+    /**
+     * Returns a list of all heroes excluding the specified hero unit.
+     */
 
     public List<HeroUnit> getOtherHeroes(HeroUnit unit) {
         List<HeroUnit> result = new ArrayList<>();
@@ -831,6 +834,10 @@ public class LegendsOfValorGame {
     }
 
     // ==================== Combat helpers ====================
+    /**
+     * Executes a hero attack against a monster, applying terrain- and weapon-based
+     * damage, updating combo statistics, and processing monster defeat and rewards.
+     */
 
     public void heroAttack(HeroUnit attacker, MonsterUnit target) {
         Position pos = attacker.getPosition();
@@ -870,6 +877,10 @@ public class LegendsOfValorGame {
             rewardHeroesForKill(attacker, target.getMonster());
         }
     }
+    /**
+     * Executes a monster attack against a hero, applying terrain- and armor-aware
+     * damage, updating combo statistics, and handling hero death outcomes.
+     */
 
     public void monsterAttack(MonsterUnit attacker, HeroUnit target) {
         Position pos = attacker.getPosition();
@@ -912,7 +923,10 @@ public class LegendsOfValorGame {
             System.out.println(target.getHero().getName() + " has fallen!");
         }
     }
-
+    /**
+     * Grants gold and experience rewards to the hero that kills a monster,
+     * with rewards scaled by the monster’s level.
+     */
     public void rewardHeroesForKill(HeroUnit killer, Monster monster) {
         double goldReward = 500 * monster.getLevel(); // spec suggestion
         int expReward = 2 * monster.getLevel();
@@ -1150,7 +1164,10 @@ public class LegendsOfValorGame {
     }
 
     // ==================== Utility ====================
-
+    /**
+     * Reads and validates an integer input from the user within a specified range.
+     * Re-prompts until a valid integer between min and max (inclusive) is entered.
+     */
     public int readInt(Scanner in, int min, int max) {
         while (true) {
             System.out.print("> ");
@@ -1167,6 +1184,10 @@ public class LegendsOfValorGame {
             }
         }
     }
+    /**
+     * Returns a single-character symbol representing the terrain type of a tile
+     * for use in board border and grid rendering.
+     */
 
     private String terrainSymbol(LegendsTile tile) {
         switch (tile.getTerrainType()) {
