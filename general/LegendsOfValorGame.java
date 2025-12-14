@@ -160,6 +160,8 @@ public class LegendsOfValorGame {
         List<Hero> pool = HeroFactoryAdapter.loadAllHeroes();
         List<HeroUnit> result = new ArrayList<>();
         System.out.println("Choose 3 heroes for Legends of Valor:");
+        System.out.println("0) Quit Game");
+
         for (int i = 0; i < pool.size(); i++) {
             Hero h = pool.get(i);
             System.out.printf("%d) %s (lvl %d, HP %.1f, STR %.1f, DEX %.1f, AGI %.1f)%n",
@@ -174,7 +176,16 @@ public class LegendsOfValorGame {
             int idx;
             while (true) {
                 System.out.println("Select hero #" + (heroIndex + 1) + ":");
-                idx = readInt(scanner, 1, pool.size()) - 1;
+                System.out.println("0) Quit Game");
+
+                int choice = readInt(scanner, 0, pool.size());
+                if (choice == 0) {
+                    System.out.println("You chose to quit Legends of Valor.");
+                    showPostQuitMenu();
+                    return new ArrayList<>();
+                }
+                idx = choice - 1;
+
                 if (pickedHeroes.contains(idx)) {
                     System.out.println("Hero already selected, choose another.");
                     continue;
@@ -187,11 +198,19 @@ public class LegendsOfValorGame {
             Lane lane;
             while (true) {
                 System.out.println("Assign a lane for " + chosen.getName() + ":");
+                System.out.println("0) Quit Game");
+
                 for (int li = 0; li < lanes.length; li++) {
                     System.out.printf("%d) %s%n", li + 1, lanes[li]);
                 }
-                int laneIdx = readInt(scanner, 1, lanes.length) - 1;
-                lane = lanes[laneIdx];
+                int laneChoice = readInt(scanner, 0, lanes.length);
+                if (laneChoice == 0) {
+                    System.out.println("You chose to quit Legends of Valor.");
+                    showPostQuitMenu();
+                    return new ArrayList<>();
+                }
+                lane = lanes[laneChoice - 1];
+
                 if (pickedLanes.contains(lane)) {
                     System.out.println("Lane already has a hero, choose another lane.");
                     continue;
@@ -1044,7 +1063,8 @@ public class LegendsOfValorGame {
         switch (choice) {
             case 1:
                 new GameController().startGame();
-                break;
+                return;
+
             case 2:
                 new LegendsOfValorGame(scanner).start();
                 return;
