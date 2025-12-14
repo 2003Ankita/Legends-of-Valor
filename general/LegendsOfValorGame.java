@@ -99,8 +99,7 @@ public class LegendsOfValorGame {
         while (running) {
             System.out.println("\n--- ROUND " + roundNumber + " ---");
             System.out.println(
-                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills
-            );
+                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
 
             renderBoard();
             printMonstersStatus();
@@ -113,7 +112,6 @@ public class LegendsOfValorGame {
             if (checkVictoryConditions())
                 break;
 
-            regenHeroes();
             maybeRespawnHeroes();
             maybeSpawnNewMonsters();
 
@@ -393,7 +391,8 @@ public class LegendsOfValorGame {
 
             int choice = readInt(scanner, 1, 3);
 
-            if (choice == 3) return;
+            if (choice == 3)
+                return;
 
             if (choice == 1) {
                 buyCategoryMenu(hero);
@@ -413,29 +412,38 @@ public class LegendsOfValorGame {
             System.out.println("0) Back");
 
             int choice = readInt(scanner, 0, 4);
-            if (choice == 0) return;
+            if (choice == 0)
+                return;
 
             switch (choice) {
-                case 1 -> handleBuyByType(hero, Weapon.class);
-                case 2 -> handleBuyByType(hero, Armor.class);
-                case 3 -> handleBuyByType(hero, Potion.class);
-                case 4 -> handleBuyByType(hero, Spell.class);
+                case 1:
+                    handleBuyByType(hero, Weapon.class);
+                    break;
+                case 2:
+                    handleBuyByType(hero, Armor.class);
+                    break;
+                case 3:
+                    handleBuyByType(hero, Potion.class);
+                    break;
+                case 4:
+                    handleBuyByType(hero, Spell.class);
+                    break;
             }
         }
     }
+
     private void showFullMarketCatalog() {
         System.out.println("\n===== MARKET CATALOG =====");
         market.printAllItems();
     }
-
-
 
     private void handleBuyByType(Hero hero, Class<? extends Item> clazz) {
         List<Item> stock = market.getStock();
         List<Item> filtered = new ArrayList<>();
 
         for (Item it : stock) {
-            if (clazz.isInstance(it)) filtered.add(it);
+            if (clazz.isInstance(it))
+                filtered.add(it);
         }
 
         if (filtered.isEmpty()) {
@@ -454,7 +462,8 @@ public class LegendsOfValorGame {
         System.out.println("0) Cancel");
 
         int choice = readInt(scanner, 0, filtered.size());
-        if (choice == 0) return;
+        if (choice == 0)
+            return;
 
         Item selected = filtered.get(choice - 1);
 
@@ -466,7 +475,6 @@ public class LegendsOfValorGame {
             System.out.println("Current Gold: " + (int) hero.getGold());
         }
     }
-
 
     private void handleBuy(Hero hero) {
         List<Item> stock = market.getStock();
@@ -488,7 +496,8 @@ public class LegendsOfValorGame {
         System.out.println("0) Cancel");
 
         int choice = readInt(scanner, 0, stock.size());
-        if (choice == 0) return;
+        if (choice == 0)
+            return;
 
         Item selected = stock.get(choice - 1);
         if (market.buy(hero, selected)) {
@@ -500,6 +509,7 @@ public class LegendsOfValorGame {
         }
 
     }
+
     private void handleSell(Hero hero) {
         List<Item> items = hero.getInventory().getAllItems();
 
@@ -519,7 +529,8 @@ public class LegendsOfValorGame {
         System.out.println("0) Cancel");
 
         int choice = readInt(scanner, 0, items.size());
-        if (choice == 0) return;
+        if (choice == 0)
+            return;
 
         Item selected = items.get(choice - 1);
         market.sell(hero, selected);
@@ -527,7 +538,6 @@ public class LegendsOfValorGame {
         System.out.println("Updated Gold: " + (int) hero.getGold());
 
     }
-
 
     private void showHeroInventory(HeroUnit unit) {
         Hero h = unit.getHero();
@@ -793,9 +803,7 @@ public class LegendsOfValorGame {
                 attacker.getHero().getName(),
                 dmg,
                 beforeHp,
-                target.getMonster().getHp()
-        );
-
+                target.getMonster().getHp());
 
         if (!target.isAlive()) {
             heroComboStreak++;
@@ -808,14 +816,12 @@ public class LegendsOfValorGame {
             heroKills++;
             System.out.println(
                     GREEN + "🗡️ Hero " + attacker.getHero().getName() +
-                            " has slain Monster " + target.getMonster().getName() + "!" + RESET
-            );
-
+                            " has slain Monster " + target.getMonster().getName() + "!" + RESET);
 
             System.out.println(target.getMonster().getName() + " is defeated!");
             board.getTile(target.getPosition()).removeMonster();
             monstersOnBoard.remove(target);
-            rewardHeroesForKill(target.getMonster());
+            rewardHeroesForKill(attacker, target.getMonster());
         }
     }
 
@@ -842,9 +848,7 @@ public class LegendsOfValorGame {
                 attacker.getMonster().getName(),
                 dmg,
                 beforeHp,
-                target.getHero().getHp()
-        );
-
+                target.getHero().getHp());
 
         if (!target.isAlive()) {
             monsterComboStreak++;
@@ -857,22 +861,20 @@ public class LegendsOfValorGame {
             monsterKills++;
             System.out.println(
                     RED + "💀 Monster " + attacker.getMonster().getName() +
-                            " has killed Hero " + target.getHero().getName() + "!" + RESET
-            );
+                            " has killed Hero " + target.getHero().getName() + "!" + RESET);
 
             System.out.println(target.getHero().getName() + " has fallen!");
         }
     }
 
-    public void rewardHeroesForKill(Monster monster) {
+    public void rewardHeroesForKill(HeroUnit killer, Monster monster) {
         double goldReward = 500 * monster.getLevel(); // spec suggestion
         int expReward = 2 * monster.getLevel();
 
-        for (HeroUnit hu : heroes) {
-            Hero h = hu.getHero();
-            h.gainExperience(expReward);
-            h.addGold(goldReward);
-        }
+        // Only the killer hero gains rewards and levels up
+        Hero h = killer.getHero();
+        h.gainExperience(expReward);
+        h.addGold(goldReward);
     }
 
     // ==================== Round bookkeeping ====================
@@ -928,10 +930,10 @@ public class LegendsOfValorGame {
             Position spawn = board.monsterNexusForLane(lane);
             LegendsTile spawnTile = board.getTile(spawn);
 
-
             if (spawnTile.getMonster() != null) {
-                System.out.println("[Spawn Blocked] Nexus at lane " + lane + " is occupied. Skipping monster spawn this time.");
-                continue;  // 跳过当前循环，避免新怪物生成
+                System.out.println(
+                        "[Spawn Blocked] Nexus at lane " + lane + " is occupied. Skipping monster spawn this time.");
+                continue; // 跳过当前循环，避免新怪物生成
             }
 
             MonsterUnit mu = new MonsterUnit(clone, lane, spawn);
@@ -982,7 +984,8 @@ public class LegendsOfValorGame {
                     mid1.append("|  XXX  |");
                 else
                     mid1.append("|       |");
-                if (c != size - 1) mid1.append(" ");
+                if (c != size - 1)
+                    mid1.append(" ");
             }
             System.out.println(mid1);
 
@@ -995,13 +998,15 @@ public class LegendsOfValorGame {
                 if (tile.getHero() != null)
                     content += "H" + (indexOfHero(tile.getHero()) + 1);
                 if (tile.getMonster() != null) {
-                    if (!content.isEmpty()) content += " ";
+                    if (!content.isEmpty())
+                        content += " ";
                     content += "M" + (indexOfMonster(tile.getMonster()) + 1);
                 }
 
                 String centered = String.format("%-7s", String.format("%3s", content));
                 mid2.append("|").append(centered).append("|");
-                if (c != size - 1) mid2.append(" ");
+                if (c != size - 1)
+                    mid2.append(" ");
             }
             System.out.println(mid2);
 

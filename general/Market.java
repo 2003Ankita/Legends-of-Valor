@@ -30,6 +30,7 @@ public class Market {
 
     /**
      * Returns the list of all items currently in the market.
+     * 
      * @return list of market stock items
      */
     public List<Item> getStock() {
@@ -84,52 +85,61 @@ public class Market {
         stock.add(item);
         return true;
     }
+
     public void printAllItems() {
 
         System.out.println("\n===== Weapons =====");
         int count = 0;
         for (Item item : stock) {
-            if (item instanceof Weapon w) {
+            if (item instanceof Weapon) {
+                Weapon w = (Weapon) item;
                 System.out.printf("%d) %s | Price: %d | LevelReq: %d | Damage: %.1f | Hands: %d%n",
                         count++, w.getName(), w.getPrice(),
                         w.getLevelRequired(), w.getDamage(), w.getHandsRequired());
             }
         }
-        if (count == 0) System.out.println("(none)");
+        if (count == 0)
+            System.out.println("(none)");
 
         System.out.println("\n===== Armors =====");
         count = 0;
         for (Item item : stock) {
-            if (item instanceof Armor a) {
+            if (item instanceof Armor) {
+                Armor a = (Armor) item;
                 System.out.printf("%d) %s | Price: %d | LevelReq: %d | Reduction: %.1f%n",
                         count++, a.getName(), a.getPrice(),
                         a.getLevelRequired(), a.getDamageReduction());
             }
         }
-        if (count == 0) System.out.println("(none)");
+        if (count == 0)
+            System.out.println("(none)");
 
         System.out.println("\n===== Potions =====");
         count = 0;
         for (Item item : stock) {
-            if (item instanceof Potion p) {
+            if (item instanceof Potion) {
+                Potion p = (Potion) item;
                 System.out.printf("%d) %s | Price: %d | LevelReq: %d | EffectAmount: %.1f | Desc: %s%n",
                         count++, p.getName(), p.getPrice(),
                         p.getLevelRequired(), p.getAmount(), p.getStat());
             }
         }
-        if (count == 0) System.out.println("(none)");
+        if (count == 0)
+            System.out.println("(none)");
 
         System.out.println("\n===== Spells =====");
         count = 0;
         for (Item item : stock) {
-            if (item instanceof Spell s) {
+            if (item instanceof Spell) {
+                Spell s = (Spell) item;
                 System.out.printf("%d) %s | Price: %d | LevelReq: %d | Damage: %.1f | Mana: %.1f | Type: %s%n",
                         count++, s.getName(), s.getPrice(),
                         s.getLevelRequired(), s.getDamage(),
                         s.getManaCost(), s.getType());
             }
         }
-        if (count == 0) System.out.println("(none)");
+        if (count == 0)
+            System.out.println("(none)");
     }
 
 }

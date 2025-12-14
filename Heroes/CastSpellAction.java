@@ -72,7 +72,7 @@ public class CastSpellAction implements HeroAction {
             System.out.println(target.getMonster().getName() + " is defeated!");
             game.getBoard().getTile(target.getPosition()).removeMonster();
             game.getMonstersOnBoard().remove(target);
-            game.rewardHeroesForKill(target.getMonster());
+            game.rewardHeroesForKill(unit, target.getMonster());
         }
         return true;
     }
