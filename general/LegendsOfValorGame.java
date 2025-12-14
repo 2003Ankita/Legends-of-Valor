@@ -194,6 +194,10 @@ public class LegendsOfValorGame {
             board.getTile(spawn).placeMonster(clone);
         }
     }
+    /**
+     * Creates a copy of a monster and scales its level to match
+     * the highest current hero level.
+     */
 
     private Monster cloneForCurrentLevel(Monster base) {
         Monster copy = base.copy();
@@ -206,6 +210,10 @@ public class LegendsOfValorGame {
     }
 
     // ========================== Rounds ==========================
+    /**
+     * Executes the turn sequence for all heroes, repeatedly prompting each hero
+     * for an action until a valid turn-ending action is completed.
+     */
 
     private void heroesTurn() {
         for (HeroUnit unit : heroes) {
@@ -309,7 +317,10 @@ public class LegendsOfValorGame {
 
     }
 
-    // Quick status dump for all monsters on the board each round
+    /**
+     * Prints the current status of all monsters on the board,
+     * including stats, position, and lane information.
+     */
     private void printMonstersStatus() {
         if (monstersOnBoard.isEmpty()) {
             System.out.println("(No monsters on board)");
@@ -324,19 +335,28 @@ public class LegendsOfValorGame {
                     m.getDodgeChance() * 100, mu.getPosition(), mu.getLane());
         }
     }
-
+    /**
+     * Computes and returns the hero’s effective strength based on
+     * the terrain the hero is currently standing on.
+     */
     private double effectiveStrength(HeroUnit unit) {
         TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
         TerrainEffect e = TerrainEffectFactory.forTerrain(t);
         return unit.getHero().getStrength() * e.getStrengthMultiplier();
     }
-
+    /**
+     * Computes and returns the hero’s effective dexterity based on
+     * the terrain the hero is currently standing on.
+     */
     private double effectiveDexterity(HeroUnit unit) {
         TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
         TerrainEffect e = TerrainEffectFactory.forTerrain(t);
         return unit.getHero().getDexterity() * e.getDexterityMultiplier();
     }
-
+    /**
+     * Computes and returns the hero’s effective agility based on
+     * the terrain the hero is currently standing on.
+     */
     private double effectiveAgility(HeroUnit unit) {
         TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
         TerrainEffect e = TerrainEffectFactory.forTerrain(t);
@@ -356,7 +376,10 @@ public class LegendsOfValorGame {
                 h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
                 unit.getPosition(), t, str, dex, agi);
     }
-
+    /**
+     * Displays detailed information about a hero, including position, terrain-adjusted
+     * effective stats, and currently equipped weapon and armor.
+     */
     private void showHeroInfo(HeroUnit unit) {
         Hero h = unit.getHero();
 
