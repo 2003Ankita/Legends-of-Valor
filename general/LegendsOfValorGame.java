@@ -928,18 +928,16 @@ public class LegendsOfValorGame {
             Position spawn = board.monsterNexusForLane(lane);
             LegendsTile spawnTile = board.getTile(spawn);
 
-            // If Nexus occupied, try the space below (PDF-safe)
+
             if (spawnTile.getMonster() != null) {
-                Position below = new Position(spawn.row + 1, spawn.col);
-                if (board.inBounds(below)
-                        && board.getTile(below).isEmptyForMonster()) {
-                    spawn = below;
-                }
+                System.out.println("[Spawn Blocked] Nexus at lane " + lane + " is occupied. Skipping monster spawn this time.");
+                continue;  // 跳过当前循环，避免新怪物生成
             }
 
             MonsterUnit mu = new MonsterUnit(clone, lane, spawn);
             monstersOnBoard.add(mu);
             board.getTile(spawn).placeMonster(clone);
+
         }
     }
 
