@@ -47,12 +47,14 @@ public class LegendsOfValorGame {
     private int monsterComboStreak = 0;
 
     private final int spawnFrequency; // e.g. every 8 rounds
+
     /**
      * Creates a Legends of Valor game with a default monster spawn frequency.
      */
     public LegendsOfValorGame(Scanner scanner) {
         this(scanner, 8);
     }
+
     /**
      * Initializes a Legends of Valor game instance with configurable monster spawn frequency,
      * sets up the board, heroes, initial monsters, market inventory, and core game systems.
@@ -94,28 +96,12 @@ public class LegendsOfValorGame {
     public DamageCalculator getDamageCalculator() {
         return damageCalculator;
     }
-    /**
-     * Returns the number of rounds between monster spawns
-     * based on the current game difficulty.
-     */
-    private int spawnInterval() {
-        switch (difficulty) {
-            case EASY:
-                return 6;
-            case MEDIUM:
-                return 4;
-            case HARD:
-                return 2;
-            default:
-                return 4;
-        }
-    }
+
     /**
      * Starts and manages the main game loop, alternating hero and monster turns,
      * updating round state, handling spawning and regeneration, and checking
      * for victory or quit conditions.
      */
-
     public void start() {
         System.out.println("=== Legends of Valor ===");
         boolean running = true;
@@ -149,6 +135,24 @@ public class LegendsOfValorGame {
             roundNumber++;
         }
     }
+
+    /**
+     * Returns the number of rounds between monster spawns
+     * based on the current game difficulty.
+     */
+    private int spawnInterval() {
+        switch (difficulty) {
+            case EASY:
+                return 6;
+            case MEDIUM:
+                return 4;
+            case HARD:
+                return 2;
+            default:
+                return 4;
+        }
+    }
+
     /**
      * Allows the player to select heroes and assign each to a unique lane,
      * initializing hero units at their corresponding hero nexus positions.
@@ -205,6 +209,7 @@ public class LegendsOfValorGame {
 
         return result;
     }
+
     /**
      * Spawns the initial set of monsters at each lane’s monster nexus,
      * scaling their levels to match the current heroes.
@@ -221,11 +226,11 @@ public class LegendsOfValorGame {
             board.getTile(spawn).placeMonster(clone);
         }
     }
+
     /**
      * Creates a copy of a monster and scales its level to match
      * the highest current hero level.
      */
-
     private Monster cloneForCurrentLevel(Monster base) {
         Monster copy = base.copy();
         int maxHeroLevel = 1;
@@ -236,12 +241,10 @@ public class LegendsOfValorGame {
         return copy;
     }
 
-    // ========================== Rounds ==========================
     /**
      * Executes the turn sequence for all heroes, repeatedly prompting each hero
      * for an action until a valid turn-ending action is completed.
      */
-
     private void heroesTurn() {
         for (HeroUnit unit : heroes) {
             Hero hero = unit.getHero();
@@ -326,6 +329,15 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Executes a turn for each active monster by delegating behavior
+     * to the monster AI controller.
+     */
+    private void monstersTurn() {
+        for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
+            monsterBehavior.takeTurn(unit, this);
+        }
+    }
     // Menu text
     public void printHeroMenu() {
         System.out.println("\nChoose action:");
@@ -344,6 +356,162 @@ public class LegendsOfValorGame {
 
     }
 
+    /**
+     * Displays detailed information about a hero, including position, terrain-adjusted
+     * effective stats, and currently equipped weapon and armor.
+     */
+    private void showHeroInfo(HeroUnit unit) {
+        Hero h = unit.getHero();
+
+        System.out.println("\n=== Hero Info ===");
+        System.out.println(h.fullInfo());
+        System.out.println("Position: " + unit.getPosition() + " in lane " + unit.getLane());
+
+        // Terrain + effective stats (so the printed values match combat calculations)
+        TerrainType terrain = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect eff = TerrainEffectFactory.forTerrain(terrain);
+
+        double effStr = h.getStrength() * eff.getStrengthMultiplier();
+        double effDex = h.getDexterity() * eff.getDexterityMultiplier();
+        double effAgi = h.getAgility() * eff.getAgilityMultiplier();
+
+        System.out.println("Current terrain: " + terrain);
+        System.out.printf("Effective STR/DEX/AGI: %.1f / %.1f / %.1f%n", effStr, effDex, effAgi);
+
+        Weapon w = h.getWeapon();
+        if (w != null) {
+            System.out.println("Equipped weapon: " + w.getName() +
+                    " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
+        } else {
+            System.out.println("Equipped weapon: none");
+        }
+
+        Armor a = h.getArmor();
+        if (a != null) {
+            System.out.println("Equipped armor: " + a.getName() +
+                    " (reduction " + a.getDamageReduction() + ")");
+        } else {
+            System.out.println("Equipped armor: none");
+        }
+    }
+
+    /**
+     * Displays the specified hero’s inventory to the console, grouped by item type
+     * and formatted with relevant item statistics.
+     */
+    private void showHeroInventory(HeroUnit unit) {
+        Hero h = unit.getHero();
+        Inventory inv = h.getInventory();
+
+        System.out.println("\n=== Inventory of " + h.getName() + " ===");
+
+        // Weapons
+        List<Weapon> weapons = inv.getWeapons();
+        System.out.println("\n-- Weapons --");
+        if (weapons.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < weapons.size(); i++) {
+                Weapon w = weapons.get(i);
+                System.out.printf("  %d) %s (dmg %.1f, lvlReq %d, hands %d)%n",
+                        i + 1, w.getName(), w.getDamage(),
+                        w.getLevelRequirement(), w.getHandsRequired());
+            }
+        }
+
+        // Armors
+        List<Armor> armors = inv.getArmors();
+        System.out.println("\n-- Armors --");
+        if (armors.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < armors.size(); i++) {
+                Armor a = armors.get(i);
+                System.out.printf("  %d) %s (reduction %.1f, lvlReq %d)%n",
+                        i + 1, a.getName(),
+                        a.getDamageReduction(), a.getLevelRequirement());
+            }
+        }
+
+        // Spells
+        List<Spell> spells = inv.getSpells();
+        System.out.println("\n-- Spells --");
+        if (spells.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < spells.size(); i++) {
+                Spell s = spells.get(i);
+                System.out.printf("  %d) %s (dmg %.1f, mana %.1f, type %s)%n",
+                        i + 1, s.getName(), s.getDamage(),
+                        s.getManaCost(), s.getType());
+            }
+        }
+
+        // Potions
+        List<Potion> potions = inv.getPotions();
+        System.out.println("\n-- Potions --");
+        if (potions.isEmpty())
+            System.out.println("  (none)");
+        else {
+            for (int i = 0; i < potions.size(); i++) {
+                Potion p = potions.get(i);
+                System.out.printf("  %d) %s (effect %s)%n",
+                        i + 1, p.getName(), p.getStat());
+            }
+        }
+
+        System.out.println("\n-- Other Items --");
+        List<Item> all = inv.getAllItems();
+        boolean printed = false;
+        for (Item it : all) {
+            if (!(it instanceof Weapon) && !(it instanceof Armor)
+                    && !(it instanceof Spell) && !(it instanceof Potion)) {
+                System.out.println("  - " + it.getName());
+                printed = true;
+            }
+        }
+        if (!printed)
+            System.out.println("  (none)");
+    }
+
+    /**
+     * Determines whether a hero can legally move to the specified position,
+     * enforcing board bounds, terrain rules, occupancy constraints,
+     * and lane-based monster blocking logic.
+     */
+    public boolean canHeroMoveTo(HeroUnit unit, Position dest) {
+        if (!board.inBounds(dest))
+            return false;
+
+        LegendsTile tile = board.getTile(dest);
+        TerrainType type = tile.getTerrainType();
+        if (type == TerrainType.INACCESSIBLE || type == TerrainType.OBSTACLE) {
+            return false;
+        }
+
+        // Cannot move onto another hero
+        if (tile.getHero() != null) {
+            return false;
+        }
+
+        // Cannot move behind a monster in same lane
+        Lane lane = board.laneForColumn(dest.col); // lane must be based on destination
+
+        for (MonsterUnit mu : monstersOnBoard) {
+            if (!mu.isAlive())
+                continue;
+            if (mu.getLane() == lane) {
+                Position mp = mu.getPosition();
+                // monsters move downwards; "behind" = row index less than monster
+                if (dest.row < mp.row) {
+                    return false; // cannot move/teleport past a monster in that lane
+                }
+
+            }
+        }
+
+        return true;
+    }
     /**
      * Prints the current status of all monsters on the board,
      * including stats, position, and lane information.
@@ -403,44 +571,7 @@ public class LegendsOfValorGame {
                 h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
                 unit.getPosition(), t, str, dex, agi);
     }
-    /**
-     * Displays detailed information about a hero, including position, terrain-adjusted
-     * effective stats, and currently equipped weapon and armor.
-     */
-    private void showHeroInfo(HeroUnit unit) {
-        Hero h = unit.getHero();
 
-        System.out.println("\n=== Hero Info ===");
-        System.out.println(h.fullInfo());
-        System.out.println("Position: " + unit.getPosition() + " in lane " + unit.getLane());
-
-        // Terrain + effective stats (so the printed values match combat calculations)
-        TerrainType terrain = board.getTile(unit.getPosition()).getTerrainType();
-        TerrainEffect eff = TerrainEffectFactory.forTerrain(terrain);
-
-        double effStr = h.getStrength() * eff.getStrengthMultiplier();
-        double effDex = h.getDexterity() * eff.getDexterityMultiplier();
-        double effAgi = h.getAgility() * eff.getAgilityMultiplier();
-
-        System.out.println("Current terrain: " + terrain);
-        System.out.printf("Effective STR/DEX/AGI: %.1f / %.1f / %.1f%n", effStr, effDex, effAgi);
-
-        Weapon w = h.getWeapon();
-        if (w != null) {
-            System.out.println("Equipped weapon: " + w.getName() +
-                    " (damage " + w.getDamage() + ", hands " + w.getHandsRequired() + ")");
-        } else {
-            System.out.println("Equipped weapon: none");
-        }
-
-        Armor a = h.getArmor();
-        if (a != null) {
-            System.out.println("Equipped armor: " + a.getName() +
-                    " (reduction " + a.getDamageReduction() + ")");
-        } else {
-            System.out.println("Equipped armor: none");
-        }
-    }
     /**
      * Opens and manages the market interaction loop for a hero, allowing
      * buying, selling, exiting the market, or quitting the game.
@@ -646,133 +777,7 @@ public class LegendsOfValorGame {
         System.out.println("Updated Gold: " + (int) hero.getGold());
 
     }
-    /**
-     * Displays the specified hero’s inventory to the console, grouped by item type
-     * and formatted with relevant item statistics.
-     */
-    private void showHeroInventory(HeroUnit unit) {
-        Hero h = unit.getHero();
-        Inventory inv = h.getInventory();
 
-        System.out.println("\n=== Inventory of " + h.getName() + " ===");
-
-        // Weapons
-        List<Weapon> weapons = inv.getWeapons();
-        System.out.println("\n-- Weapons --");
-        if (weapons.isEmpty())
-            System.out.println("  (none)");
-        else {
-            for (int i = 0; i < weapons.size(); i++) {
-                Weapon w = weapons.get(i);
-                System.out.printf("  %d) %s (dmg %.1f, lvlReq %d, hands %d)%n",
-                        i + 1, w.getName(), w.getDamage(),
-                        w.getLevelRequirement(), w.getHandsRequired());
-            }
-        }
-
-        // Armors
-        List<Armor> armors = inv.getArmors();
-        System.out.println("\n-- Armors --");
-        if (armors.isEmpty())
-            System.out.println("  (none)");
-        else {
-            for (int i = 0; i < armors.size(); i++) {
-                Armor a = armors.get(i);
-                System.out.printf("  %d) %s (reduction %.1f, lvlReq %d)%n",
-                        i + 1, a.getName(),
-                        a.getDamageReduction(), a.getLevelRequirement());
-            }
-        }
-
-        // Spells
-        List<Spell> spells = inv.getSpells();
-        System.out.println("\n-- Spells --");
-        if (spells.isEmpty())
-            System.out.println("  (none)");
-        else {
-            for (int i = 0; i < spells.size(); i++) {
-                Spell s = spells.get(i);
-                System.out.printf("  %d) %s (dmg %.1f, mana %.1f, type %s)%n",
-                        i + 1, s.getName(), s.getDamage(),
-                        s.getManaCost(), s.getType());
-            }
-        }
-
-        // Potions
-        List<Potion> potions = inv.getPotions();
-        System.out.println("\n-- Potions --");
-        if (potions.isEmpty())
-            System.out.println("  (none)");
-        else {
-            for (int i = 0; i < potions.size(); i++) {
-                Potion p = potions.get(i);
-                System.out.printf("  %d) %s (effect %s)%n",
-                        i + 1, p.getName(), p.getStat());
-            }
-        }
-
-        System.out.println("\n-- Other Items --");
-        List<Item> all = inv.getAllItems();
-        boolean printed = false;
-        for (Item it : all) {
-            if (!(it instanceof Weapon) && !(it instanceof Armor)
-                    && !(it instanceof Spell) && !(it instanceof Potion)) {
-                System.out.println("  - " + it.getName());
-                printed = true;
-            }
-        }
-        if (!printed)
-            System.out.println("  (none)");
-    }
-    /**
-     * Executes a turn for each active monster by delegating behavior
-     * to the monster AI controller.
-     */
-    private void monstersTurn() {
-        for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
-            monsterBehavior.takeTurn(unit, this);
-        }
-    }
-
-    // ========= Movement & range queries used by actions / AI =========
-    /**
-     * Determines whether a hero can legally move to the specified position,
-     * enforcing board bounds, terrain rules, occupancy constraints,
-     * and lane-based monster blocking logic.
-     */
-    public boolean canHeroMoveTo(HeroUnit unit, Position dest) {
-        if (!board.inBounds(dest))
-            return false;
-
-        LegendsTile tile = board.getTile(dest);
-        TerrainType type = tile.getTerrainType();
-        if (type == TerrainType.INACCESSIBLE || type == TerrainType.OBSTACLE) {
-            return false;
-        }
-
-        // Cannot move onto another hero
-        if (tile.getHero() != null) {
-            return false;
-        }
-
-        // Cannot move behind a monster in same lane
-        Lane lane = board.laneForColumn(dest.col); // lane must be based on destination
-
-        for (MonsterUnit mu : monstersOnBoard) {
-            if (!mu.isAlive())
-                continue;
-            if (mu.getLane() == lane) {
-                Position mp = mu.getPosition();
-                // monsters move downwards; "behind" = row index less than monster
-                if (dest.row < mp.row) {
-                    return false; // cannot move/teleport past a monster in that lane
-                }
-
-            }
-        }
-
-        return true;
-    }
     /**
      * Moves a hero to a new position, updates board occupancy and hero state,
      * and applies terrain-based buff notifications when entering special tiles.
@@ -817,6 +822,7 @@ public class LegendsOfValorGame {
     public void recallHero(HeroUnit unit) {
         moveHero(unit, unit.getNexusPosition());
     }
+
     /**
      * Determines whether a monster can legally move to the specified position,
      * validating board bounds, terrain restrictions, and tile occupancy.
@@ -835,6 +841,7 @@ public class LegendsOfValorGame {
             return false; // heroes can block
         return true;
     }
+
     /**
      * Moves a monster to a new board position by updating tile occupancy
      * and the monster unit’s internal position state.
@@ -846,6 +853,7 @@ public class LegendsOfValorGame {
         toTile.placeMonster(unit.getMonster());
         unit.setPosition(dest);
     }
+
     /**
      * Returns all living heroes within a given range of the specified position,
      * based on row and column distance constraints.
@@ -863,11 +871,11 @@ public class LegendsOfValorGame {
         }
         return result;
     }
+
     /**
      * Returns all living monsters within a given Manhattan distance
      * from the specified center position.
      */
-
     public List<MonsterUnit> getMonstersInRange(Position center, int radius) {
         List<MonsterUnit> result = new ArrayList<>();
         for (MonsterUnit m : monstersOnBoard) {
@@ -880,6 +888,7 @@ public class LegendsOfValorGame {
         }
         return result;
     }
+
     /**
      * Returns a list of all heroes excluding the specified hero unit.
      */
@@ -920,12 +929,10 @@ public class LegendsOfValorGame {
         return result;
     }
 
-    // ==================== Combat helpers ====================
     /**
      * Executes a hero attack against a monster, applying terrain- and weapon-based
      * damage, updating combo statistics, and processing monster defeat and rewards.
      */
-
     public void heroAttack(HeroUnit attacker, MonsterUnit target) {
         Position pos = attacker.getPosition();
         LegendsTile tile = board.getTile(pos);
@@ -964,11 +971,11 @@ public class LegendsOfValorGame {
             rewardHeroesForKill(attacker, target.getMonster());
         }
     }
+
     /**
      * Executes a monster attack against a hero, applying terrain- and armor-aware
      * damage, updating combo statistics, and handling hero death outcomes.
      */
-
     public void monsterAttack(MonsterUnit attacker, HeroUnit target) {
         Position pos = attacker.getPosition();
         LegendsTile tile = board.getTile(pos);
@@ -1010,6 +1017,7 @@ public class LegendsOfValorGame {
             System.out.println(target.getHero().getName() + " has fallen!");
         }
     }
+
     /**
      * Grants gold and experience rewards to the hero that kills a monster,
      * with rewards scaled by the monster’s level.
@@ -1052,6 +1060,7 @@ public class LegendsOfValorGame {
             }
         }
     }
+
     /**
      * Displays a post-game menu and routes the player to the selected next action.
      * Allows the user to start another game mode or exit the application.
@@ -1126,12 +1135,11 @@ public class LegendsOfValorGame {
 
         }
     }
+
     /**
      * Checks whether the game has reached a terminal victory condition.
-     *
      * Heroes win if any hero reaches a monster nexus tile.
      * Monsters win if any monster reaches a hero nexus tile.
-     *
      * @return true if either side has won; false otherwise
      */
     private boolean checkVictoryConditions() {
@@ -1156,7 +1164,7 @@ public class LegendsOfValorGame {
         return false;
     }
 
-    // ==================== Rendering ====================
+
     /**
      * Renders the current game board to the console in a grid-based layout.
      *
@@ -1215,6 +1223,7 @@ public class LegendsOfValorGame {
 
         System.out.println();
     }
+
     /**
      * Constructs and returns the horizontal border string for a given board row
      * using terrain-specific symbols for visual consistency.
@@ -1238,6 +1247,7 @@ public class LegendsOfValorGame {
         }
         return -1;
     }
+
     /**
      * Returns the index of the specified monster in the active monster list,
      * or -1 if the monster is not currently on the board.
@@ -1250,7 +1260,7 @@ public class LegendsOfValorGame {
         return -1;
     }
 
-    // ==================== Utility ====================
+
     /**
      * Reads and validates an integer input from the user within a specified range.
      * Re-prompts until a valid integer between min and max (inclusive) is entered.
@@ -1271,11 +1281,11 @@ public class LegendsOfValorGame {
             }
         }
     }
+
     /**
      * Returns a single-character symbol representing the terrain type of a tile
      * for use in board border and grid rendering.
      */
-
     private String terrainSymbol(LegendsTile tile) {
         switch (tile.getTerrainType()) {
             case HERO_NEXUS:
