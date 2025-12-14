@@ -41,6 +41,8 @@ public class LegendsOfValorGame {
     private static final String RESET = "\u001B[0m";
     private int heroKills = 0;
     private int monsterKills = 0;
+    private boolean quitRequested = false;
+
     private int heroComboStreak = 0;
     private int monsterComboStreak = 0;
 
@@ -104,16 +106,24 @@ public class LegendsOfValorGame {
             renderBoard();
             printMonstersStatus();
 
+
+
             heroesTurn();
+            if (quitRequested) return;
             if (checkVictoryConditions())
                 break;
 
             monstersTurn();
+            if (quitRequested) return;
+
             if (checkVictoryConditions())
                 break;
+            regenHeroes();
 
             maybeRespawnHeroes();
             maybeSpawnNewMonsters();
+            heroComboStreak = 0;
+            monsterComboStreak = 0;
 
             roundNumber++;
         }
@@ -219,7 +229,7 @@ public class LegendsOfValorGame {
                 showHeroInfo(unit);
                 printHeroMenu();
 
-                int choice = readInt(scanner, 0, 10);
+                int choice = readInt(scanner, 0, 12);
 
                 switch (choice) {
                     case 1: // Move
@@ -264,9 +274,15 @@ public class LegendsOfValorGame {
                             System.out.println("\n(You can buy/sell items only at the Hero Nexus.)");
                         }
                         break;
-                    case 0: // Pass
+                    case 11: // Pass
                         turnDone = new PassAction().execute(this, unit, scanner);
                         break;
+                    case 12:
+                        System.out.println("You chose to quit Legends of Valor.");
+                        quitRequested = true;
+                        showPostQuitMenu();
+                        return;
+
 
                     default:
                         System.out.println("Invalid choice, please try again.");
@@ -288,7 +304,9 @@ public class LegendsOfValorGame {
         System.out.println("8) Show hero info (does NOT end turn)");
         System.out.println("9) Show inventory (does NOT end turn)");
         System.out.println("10 Market");
-        System.out.println("0) Pass");
+        System.out.println("11) Pass");
+        System.out.println("12) Quit Game");
+
     }
 
     // Quick status dump for all monsters on the board each round
@@ -388,8 +406,19 @@ public class LegendsOfValorGame {
             System.out.println("1) Buy");
             System.out.println("2) Sell");
             System.out.println("3) Exit Market");
+            System.out.println("4) Quit Game");
 
-            int choice = readInt(scanner, 1, 3);
+
+
+            int choice = readInt(scanner, 1, 4);
+
+            if (choice == 4) {
+                System.out.println("You chose to quit Legends of Valor.");
+                quitRequested = true;
+                showPostQuitMenu();
+                return;
+            }
+
 
             if (choice == 3)
                 return;
@@ -460,10 +489,18 @@ public class LegendsOfValorGame {
                     i + 1, it.getName(), it.getPrice(), it.getLevelRequired());
         }
         System.out.println("0) Cancel");
+        System.out.println("-1) Quit Game");
 
-        int choice = readInt(scanner, 0, filtered.size());
-        if (choice == 0)
+        int choice = readInt(scanner, -1, filtered.size());
+
+        if (choice == -1) {
+            System.out.println("You chose to quit Legends of Valor.");
+            quitRequested = true;
+            showPostQuitMenu();
             return;
+        }
+
+        if (choice == 0) return;
 
         Item selected = filtered.get(choice - 1);
 
@@ -527,10 +564,19 @@ public class LegendsOfValorGame {
                     it.getPrice() / 2);
         }
         System.out.println("0) Cancel");
+        System.out.println("-1) Quit Game");
 
-        int choice = readInt(scanner, 0, items.size());
-        if (choice == 0)
+        int choice = readInt(scanner, -1, items.size());
+
+        if (choice == -1) {
+            System.out.println("You chose to quit Legends of Valor.");
+            quitRequested = true;
+            showPostQuitMenu();
             return;
+        }
+
+        if (choice == 0) return;
+
 
         Item selected = items.get(choice - 1);
         market.sell(hero, selected);
@@ -905,6 +951,28 @@ public class LegendsOfValorGame {
             }
         }
     }
+    private void showPostQuitMenu() {
+        System.out.println("\nWhat would you like to do next?");
+        System.out.println("1) Play Monsters and Heroes");
+        System.out.println("2) Play Legends of Valor");
+        System.out.println("3) Quit Game Completely");
+
+        int choice = readInt(scanner, 1, 3);
+
+        switch (choice) {
+            case 1:
+                new GameController().startGame();
+                break;
+            case 2:
+                new LegendsOfValorGame(scanner).start();
+                return;
+
+            case 3:
+                System.out.println("Thank you for playing. Goodbye!");
+                System.exit(0);
+        }
+    }
+
 
     private void maybeSpawnNewMonsters() {
         roundsSinceLastSpawn++;
