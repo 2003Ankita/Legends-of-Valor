@@ -1120,7 +1120,7 @@ public class LegendsOfValorGame extends Game {
             if (spawnTile.getMonster() != null) {
                 System.out.println(
                         "[Spawn Blocked] Nexus at lane " + lane + " is occupied. Skipping monster spawn this time.");
-                continue; // 跳过当前循环，避免新怪物生成
+                continue; // skip this spawn attempt
             }
 
             MonsterUnit mu = new MonsterUnit(clone, lane, spawn);
