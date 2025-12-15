@@ -56,10 +56,10 @@ public class Battle {
             view.showBattleStatus(party, monsters);
         }
         if (allMonstersDead()) {
-            view.showMessage("Heroes won the battle!");
+            view.showMessage("Victory! Your heroes have defeated every enemy on the battlefield!");
             rewardHeroes();
         } else {
-            view.showMessage("💀 " + playerName + ", your party has fallen. Game over.");
+            view.showMessage("💀 " + playerName + ", your heroes have fallen in battle. The journey ends here.");
             System.exit(0);
 
         }
@@ -78,12 +78,12 @@ public class Battle {
                 continue;
             boolean done = false;
             while (!done) {
-                view.showMessage("\n" + h.getName() + "'s turn.");
-                view.showMessage("1) Attack");
-                view.showMessage("2) Cast Spell");
-                view.showMessage("3) Use Potion");
+                view.showMessage("\\n⚔\uFE0F \" + h.getName() + \"'s turn — choose your action wisely.");
+                view.showMessage("1) Attack an enemy");
+                view.showMessage("2)Cast a powerful spell");
+                view.showMessage("3) Use a potion");
                 view.showMessage("4) Change Equipment");
-                view.showMessage("5) Info");
+                view.showMessage("5) Info : View battle information");
                 view.showMessage("Choose an option (1–5):");
 
                 int choice = readIntInRange(1, 5);
@@ -124,12 +124,12 @@ public class Battle {
             return;
         double base = (h.getStrength() + (h.getWeapon() != null ? h.getWeapon().getDamage() : 0)) * 0.05;
         if (random.nextDouble() < m.getDodgeChance()) {
-            view.showMessage(m.getName() + " dodged the attack!");
+            view.showMessage("💨 " + m.getName() + " swiftly dodged the attack!");
             return;
         }
         double dmg = Math.max(0, base - m.getDefense());
         m.takeDamage(dmg);
-        view.showMessage(h.getName() + " attacked " + m.getName() + " for " + (int) dmg + " damage.");
+        view.showMessage("⚔️ " + h.getName() + " struck " + m.getName() + " for " + (int) dmg + " damage!");
     }
 
     /**
@@ -143,12 +143,12 @@ public class Battle {
     private boolean heroCastSpell(Hero h) {
         List<Spell> spells = h.getInventory().getSpells();
         if (spells.isEmpty()) {
-            view.showMessage("No spells available. Choose another action.");
+            view.showMessage("No spells available. Choose a different action");
             return false;
         }
 
-        view.showMessage("Choose spell:");
-        view.showMessage("Enter choice:");
+        view.showMessage("✨ Choose a spell to cast:");
+        view.showMessage("Enter your choice:");
 
         for (int i = 0; i < spells.size(); i++) {
             view.showMessage((i + 1) + ") " + spells.get(i).info());
@@ -156,7 +156,7 @@ public class Battle {
         int choice = readIntInRange(1, spells.size());
         Spell spell = spells.get(choice - 1);
         if (h.getMana() < spell.getManaCost()) {
-            view.showMessage("Not enough mana.");
+            view.showMessage("🔮 Not enough mana to cast that spell.");
             return false;
         }
         Monster m = chooseMonster();
@@ -218,10 +218,11 @@ public class Battle {
     private boolean heroUsePotion(Hero h) {
         List<Potion> potions = h.getInventory().getPotions();
         if (potions.isEmpty()) {
-            view.showMessage("No potions available.Choose again.");
+            view.showMessage("🧪 No potions left. Choose another action.");
             return false;
         }
-        view.showMessage("Choose potion:");
+        view.showMessage("🧪 Choose a potion to use:");
+
         view.showMessage("Enter choice: "); // ADD
 
         for (int i = 0; i < potions.size(); i++) {
@@ -247,7 +248,7 @@ public class Battle {
                 break;
         }
         h.getInventory().remove(p);
-        view.showMessage(h.getName() + " used " + p.getName());
+        view.showMessage("✨ " + h.getName() + " used " + p.getName() + " and feels refreshed!");
         return true;
     }
 
@@ -264,24 +265,26 @@ public class Battle {
         if (choice == 1) {
             List<Weapon> weapons = h.getInventory().getWeapons();
             if (weapons.isEmpty()) {
-                view.showMessage("No weapons avaiable. Choose again");
+                view.showMessage("⚠️ No weapons available. Choose another option.");
                 return;
             }
-            view.showMessage("Choose weapon:");
+            view.showMessage("⚔️ Choose a weapon to equip:");
             for (int i = 0; i < weapons.size(); i++) {
                 view.showMessage((i + 1) + ") " + weapons.get(i).info());
             }
             view.showMessage("Enter choice: "); // ADD
             int idx = readIntInRange(1, weapons.size()) - 1;
             h.equipWeapon(weapons.get(idx));
-            view.showMessage("Equipped " + weapons.get(idx).getName());
+            view.showMessage("🗡️ Equipped " + weapons.get(idx).getName() + " successfully.");
+
         } else {
             List<Armor> armors = h.getInventory().getArmors();
             if (armors.isEmpty()) {
-                view.showMessage("No armors.Choose again.");
+                view.showMessage("🛡️ No armor available. Choose another option.");
                 return;
             }
-            view.showMessage("Choose armor:");
+            view.showMessage("🛡️ Choose armor to equip:");
+
             for (int i = 0; i < armors.size(); i++) {
                 view.showMessage((i + 1) + ") " + armors.get(i).info());
             }
@@ -289,7 +292,7 @@ public class Battle {
 
             int idx = readIntInRange(1, armors.size()) - 1;
             h.equipArmor(armors.get(idx));
-            view.showMessage("Equipped " + armors.get(idx).getName());
+            view.showMessage("🛡️ Equipped " + armors.get(idx).getName() + " successfully.");
         }
     }
 
@@ -310,7 +313,8 @@ public class Battle {
             if (!isDay)
                 dodge *= 1.1;
             if (random.nextDouble() < dodge) {
-                view.showMessage(target.getName() + " dodged the attack from " + m.getName());
+                view.showMessage("💨 " + target.getName() + " dodged the attack from " + m.getName() + "!");
+
                 continue;
             }
             double dmg = m.getDamage();
@@ -320,7 +324,8 @@ public class Battle {
             if (dmg < 0)
                 dmg = 0;
             target.takeDamage(dmg);
-            view.showMessage(m.getName() + " attacked " + target.getName() + " for " + (int) dmg + " damage.");
+            view.showMessage("💥 " + m.getName() + " struck " + target.getName() + " for " + (int) dmg + " damage!");
+
         }
     }
 
@@ -397,7 +402,7 @@ public class Battle {
                 aliveCount++;
         if (aliveCount == 0)
             return null;
-        view.showMessage("Choose target:");
+        view.showMessage("🎯 Choose your target:");
         int idxShown = 1;
         int[] map = new int[monsters.size()];
         for (int i = 0; i < monsters.size(); i++) {
@@ -441,12 +446,14 @@ public class Battle {
                 String line = scanner.nextLine().trim();
                 int v = Integer.parseInt(line);
                 if (v < min || v > max) {
-                    view.showMessage("Enter a number between " + min + " and " + max + ":");
+                    view.showMessage("⚠️ Please enter a number between " + min + " and " + max + ".");
+
                     continue;
                 }
                 return v;
             } catch (Exception e) {
-                view.showMessage("Invalid input. Enter a number:");
+                view.showMessage("❌ Invalid input. Please enter a valid number:");
+
             }
         }
     }
