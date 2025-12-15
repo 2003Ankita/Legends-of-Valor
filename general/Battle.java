@@ -52,7 +52,7 @@ public class Battle {
             if (allMonstersDead())
                 break;
             monstersTurn();
-            regenHeroes();
+            // regenHeroes();
             view.showBattleStatus(party, monsters);
         }
         if (allMonstersDead()) {

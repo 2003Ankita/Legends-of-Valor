@@ -17,7 +17,6 @@ import Heroes.*;
  */
 public class LegendsOfValorGame extends Game {
 
-
     private final LegendsOfValorBoard board;
     private final List<HeroUnit> heroes;
     private final List<MonsterUnit> monstersOnBoard = new ArrayList<>();
@@ -55,8 +54,10 @@ public class LegendsOfValorGame extends Game {
     }
 
     /**
-     * Initializes a Legends of Valor game instance with configurable monster spawn frequency,
-     * sets up the board, heroes, initial monsters, market inventory, and core game systems.
+     * Initializes a Legends of Valor game instance with configurable monster spawn
+     * frequency,
+     * sets up the board, heroes, initial monsters, market inventory, and core game
+     * systems.
      */
     public LegendsOfValorGame(Scanner scanner, int spawnFrequency) {
         this.board = new LegendsOfValorBoard.Builder().build();
@@ -71,24 +72,28 @@ public class LegendsOfValorGame extends Game {
         this.market = new Market(marketStock);
 
     }
+
     /**
      * Returns the current game board instance.
      */
     public LegendsOfValorBoard getBoard() {
         return board;
     }
+
     /**
      * Returns the list of active hero units in the game.
      */
     public List<HeroUnit> getHeroes() {
         return heroes;
     }
+
     /**
      * Returns the list of monster units currently on the board.
      */
     public List<MonsterUnit> getMonstersOnBoard() {
         return monstersOnBoard;
     }
+
     /**
      * Returns the damage calculator used for combat resolution.
      */
@@ -101,39 +106,39 @@ public class LegendsOfValorGame extends Game {
      * updating round state, handling spawning and regeneration, and checking
      * for victory or quit conditions.
      */
-//    public void start() {
-//        System.out.println("=== Legends of Valor ===");
-//        boolean running = true;
-//        while (running) {
-//            System.out.println("\n--- ROUND " + roundNumber + " ---");
-//            System.out.println(
-//                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
-//
-//            renderBoard();
-//            printMonstersStatus();
-//
-//
-//
-//            heroesTurn();
-//            if (quitRequested) return;
-//            if (checkVictoryConditions())
-//                break;
-//
-//            monstersTurn();
-//            if (quitRequested) return;
-//
-//            if (checkVictoryConditions())
-//                break;
-//            regenHeroes();
-//
-//            maybeRespawnHeroes();
-//            maybeSpawnNewMonsters();
-//            heroComboStreak = 0;
-//            monsterComboStreak = 0;
-//
-//            roundNumber++;
-//        }
-//    }
+    // public void start() {
+    // System.out.println("=== Legends of Valor ===");
+    // boolean running = true;
+    // while (running) {
+    // System.out.println("\n--- ROUND " + roundNumber + " ---");
+    // System.out.println(
+    // "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
+    //
+    // renderBoard();
+    // printMonstersStatus();
+    //
+    //
+    //
+    // heroesTurn();
+    // if (quitRequested) return;
+    // if (checkVictoryConditions())
+    // break;
+    //
+    // monstersTurn();
+    // if (quitRequested) return;
+    //
+    // if (checkVictoryConditions())
+    // break;
+    // regenHeroes();
+    //
+    // maybeRespawnHeroes();
+    // maybeSpawnNewMonsters();
+    // heroComboStreak = 0;
+    // monsterComboStreak = 0;
+    //
+    // roundNumber++;
+    // }
+    // }
     @Override
     protected void initializeGame() {
         System.out.println("=== Legends of Valor ===");
@@ -347,7 +352,6 @@ public class LegendsOfValorGame extends Game {
                         showPostQuitMenu();
                         return;
 
-
                     default:
                         System.out.println("Invalid choice, please try again.");
                 }
@@ -359,12 +363,12 @@ public class LegendsOfValorGame extends Game {
      * Executes a turn for each active monster by delegating behavior
      * to the monster AI controller.
      */
-//    @Override
-//    protected void monstersTurn() {
-//        for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
-//            monsterBehavior.takeTurn(unit, this);
-//        }
-//    }
+    // @Override
+    // protected void monstersTurn() {
+    // for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
+    // monsterBehavior.takeTurn(unit, this);
+    // }
+    // }
     @Override
     protected void monstersTurn() {
         for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
@@ -372,7 +376,7 @@ public class LegendsOfValorGame extends Game {
         }
 
         // END-OF-ROUND LOGIC (previously in start loop)
-        regenHeroes();
+        // regenHeroes();
         maybeRespawnHeroes();
         maybeSpawnNewMonsters();
         heroComboStreak = 0;
@@ -398,7 +402,8 @@ public class LegendsOfValorGame extends Game {
     }
 
     /**
-     * Displays detailed information about a hero, including position, terrain-adjusted
+     * Displays detailed information about a hero, including position,
+     * terrain-adjusted
      * effective stats, and currently equipped weapon and armor.
      */
     private void showHeroInfo(HeroUnit unit) {
@@ -553,6 +558,7 @@ public class LegendsOfValorGame extends Game {
 
         return true;
     }
+
     /**
      * Prints the current status of all monsters on the board,
      * including stats, position, and lane information.
@@ -571,6 +577,7 @@ public class LegendsOfValorGame extends Game {
                     m.getDodgeChance() * 100, mu.getPosition(), mu.getLane());
         }
     }
+
     /**
      * Computes and returns the hero’s effective strength based on
      * the terrain the hero is currently standing on.
@@ -580,6 +587,7 @@ public class LegendsOfValorGame extends Game {
         TerrainEffect e = TerrainEffectFactory.forTerrain(t);
         return unit.getHero().getStrength() * e.getStrengthMultiplier();
     }
+
     /**
      * Computes and returns the hero’s effective dexterity based on
      * the terrain the hero is currently standing on.
@@ -589,6 +597,7 @@ public class LegendsOfValorGame extends Game {
         TerrainEffect e = TerrainEffectFactory.forTerrain(t);
         return unit.getHero().getDexterity() * e.getDexterityMultiplier();
     }
+
     /**
      * Computes and returns the hero’s effective agility based on
      * the terrain the hero is currently standing on.
@@ -631,8 +640,6 @@ public class LegendsOfValorGame extends Game {
             System.out.println("3) Exit Market");
             System.out.println("4) Quit Game");
 
-
-
             int choice = readInt(scanner, 1, 4);
 
             if (choice == 4) {
@@ -642,7 +649,6 @@ public class LegendsOfValorGame extends Game {
                 showPostQuitMenu();
                 return;
             }
-
 
             if (choice == 3)
                 return;
@@ -654,6 +660,7 @@ public class LegendsOfValorGame extends Game {
             }
         }
     }
+
     /**
      * Displays a purchase-category menu and routes the hero to the
      * corresponding item-buying workflow until the user exits.
@@ -695,8 +702,10 @@ public class LegendsOfValorGame extends Game {
         System.out.println("\n===== MARKET CATALOG =====");
         market.printAllItems();
     }
+
     /**
-     * Handles purchasing items of a specific type for a hero by filtering market stock,
+     * Handles purchasing items of a specific type for a hero by filtering market
+     * stock,
      * processing user selection, and completing or rejecting the transaction.
      */
     private void handleBuyByType(Hero hero, Class<? extends Item> clazz) {
@@ -734,7 +743,8 @@ public class LegendsOfValorGame extends Game {
             return;
         }
 
-        if (choice == 0) return;
+        if (choice == 0)
+            return;
 
         Item selected = filtered.get(choice - 1);
 
@@ -780,8 +790,8 @@ public class LegendsOfValorGame extends Game {
             return;
         }
 
-        if (choice == 0) return;
-
+        if (choice == 0)
+            return;
 
         Item selected = items.get(choice - 1);
         market.sell(hero, selected);
@@ -1043,7 +1053,6 @@ public class LegendsOfValorGame extends Game {
         h.addGold(goldReward);
     }
 
-
     private void regenHeroes() {
         for (HeroUnit h : heroes) {
             Hero hero = h.getHero();
@@ -1075,7 +1084,8 @@ public class LegendsOfValorGame extends Game {
      * Displays a post-game menu and routes the player to the selected next action.
      * Allows the user to start another game mode or exit the application.
      *
-     * Side effects: reads user input, launches new game controllers, or terminates the program.
+     * Side effects: reads user input, launches new game controllers, or terminates
+     * the program.
      */
     private void showPostQuitMenu() {
         System.out.println("\nWhat would you like to do next?");
@@ -1152,6 +1162,7 @@ public class LegendsOfValorGame extends Game {
      * Checks whether the game has reached a terminal victory condition.
      * Heroes win if any hero reaches a monster nexus tile.
      * Monsters win if any monster reaches a hero nexus tile.
+     * 
      * @return true if either side has won; false otherwise
      */
     @Override
@@ -1176,8 +1187,6 @@ public class LegendsOfValorGame extends Game {
             }
         }
     }
-
-
 
     /**
      * Renders the current game board to the console in a grid-based layout.
@@ -1274,7 +1283,6 @@ public class LegendsOfValorGame extends Game {
         return -1;
     }
 
-
     /**
      * Reads and validates an integer input from the user within a specified range.
      * Re-prompts until a valid integer between min and max (inclusive) is entered.
@@ -1320,12 +1328,12 @@ public class LegendsOfValorGame extends Game {
                 return "P";
         }
     }
+
     @Override
     protected void endGame() {
         System.out.println("\n=== GAME OVER ===");
         System.out.println("Hero kills: " + heroKills);
         System.out.println("Monster kills: " + monsterKills);
     }
-
 
 }
