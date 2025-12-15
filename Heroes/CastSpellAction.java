@@ -42,7 +42,7 @@ public class CastSpellAction implements HeroAction {
         }
 
         Position pos = unit.getPosition();
-        List<MonsterUnit> targets = game.getMonstersInRange(pos, 1); // 用改成曼哈顿距离后的方法
+        List<MonsterUnit> targets = game.getMonstersInRange(pos, 1);
         if (targets.isEmpty()) {
             System.out.println("No monsters in range to cast spell on.");
             return false;
