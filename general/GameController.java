@@ -61,8 +61,12 @@ public class GameController {
 
             switch (mode) {
                 case 1:
-                    startMonsterAndHeroes();
+//                    startMonsterAndHeroes();
+//                    return;
+                    Game game = new MonstersAndHeroesGame(scanner);
+                    game.startGame();
                     return;
+
                 case 2:
                     startLegendsOfValorMode();
                     return;
@@ -91,8 +95,10 @@ public class GameController {
     }
     private void startLegendsOfValorMode() {
         System.out.println("\n⚔ Starting Legends of Valor ⚔\n");
-        LegendsOfValorGame lov = new LegendsOfValorGame(scanner);
-        lov.start();
+//        LegendsOfValorGame lov = new LegendsOfValorGame(scanner);
+//        lov.start();
+            Game game = new LegendsOfValorGame(scanner);
+            game.startGame();
     }
 
 
@@ -202,8 +208,12 @@ public class GameController {
 
             switch (choice) {
                 case 1:
-                    startMonsterAndHeroes();
+//                    startMonsterAndHeroes();
+//                    return;
+                    Game game = new MonstersAndHeroesGame(scanner);
+                    game.startGame();
                     return;
+
                 case 2:
                     startLegendsOfValorMode();
                     return;

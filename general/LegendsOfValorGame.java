@@ -15,7 +15,8 @@ import Heroes.*;
  * Main controller for Legends of Valor.
  * Reuses domain classes from Monsters & Heroes (Hero, Monster, Items).
  */
-public class LegendsOfValorGame {
+public class LegendsOfValorGame extends Game {
+
 
     private final LegendsOfValorBoard board;
     private final List<HeroUnit> heroes;
@@ -34,7 +35,7 @@ public class LegendsOfValorGame {
 
     private final Scanner scanner;
 
-    private int roundNumber = 1;
+//    private int roundNumber = 1;
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
     private static final String RESET = "\u001B[0m";
@@ -101,38 +102,44 @@ public class LegendsOfValorGame {
      * updating round state, handling spawning and regeneration, and checking
      * for victory or quit conditions.
      */
-    public void start() {
+//    public void start() {
+//        System.out.println("=== Legends of Valor ===");
+//        boolean running = true;
+//        while (running) {
+//            System.out.println("\n--- ROUND " + roundNumber + " ---");
+//            System.out.println(
+//                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
+//
+//            renderBoard();
+//            printMonstersStatus();
+//
+//
+//
+//            heroesTurn();
+//            if (quitRequested) return;
+//            if (checkVictoryConditions())
+//                break;
+//
+//            monstersTurn();
+//            if (quitRequested) return;
+//
+//            if (checkVictoryConditions())
+//                break;
+//            regenHeroes();
+//
+//            maybeRespawnHeroes();
+//            maybeSpawnNewMonsters();
+//            heroComboStreak = 0;
+//            monsterComboStreak = 0;
+//
+//            roundNumber++;
+//        }
+//    }
+    @Override
+    protected void initializeGame() {
         System.out.println("=== Legends of Valor ===");
-        boolean running = true;
-        while (running) {
-            System.out.println("\n--- ROUND " + roundNumber + " ---");
-            System.out.println(
-                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
+        System.out.println("\n--- ROUND " + roundNumber + " ---");
 
-            renderBoard();
-            printMonstersStatus();
-
-
-
-            heroesTurn();
-            if (quitRequested) return;
-            if (checkVictoryConditions())
-                break;
-
-            monstersTurn();
-            if (quitRequested) return;
-
-            if (checkVictoryConditions())
-                break;
-            regenHeroes();
-
-            maybeRespawnHeroes();
-            maybeSpawnNewMonsters();
-            heroComboStreak = 0;
-            monsterComboStreak = 0;
-
-            roundNumber++;
-        }
     }
 
     /**
@@ -263,7 +270,8 @@ public class LegendsOfValorGame {
      * Executes the turn sequence for all heroes, repeatedly prompting each hero
      * for an action until a valid turn-ending action is completed.
      */
-    private void heroesTurn() {
+    @Override
+    protected void heroesTurn() {
         for (HeroUnit unit : heroes) {
             Hero hero = unit.getHero();
             if (hero == null) {
@@ -336,6 +344,7 @@ public class LegendsOfValorGame {
                     case 12:
                         System.out.println("You chose to quit Legends of Valor.");
                         quitRequested = true;
+                        gameOver = true;
                         showPostQuitMenu();
                         return;
 
@@ -351,11 +360,26 @@ public class LegendsOfValorGame {
      * Executes a turn for each active monster by delegating behavior
      * to the monster AI controller.
      */
-    private void monstersTurn() {
+//    @Override
+//    protected void monstersTurn() {
+//        for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
+//            monsterBehavior.takeTurn(unit, this);
+//        }
+//    }
+    @Override
+    protected void monstersTurn() {
         for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
             monsterBehavior.takeTurn(unit, this);
         }
+
+        // END-OF-ROUND LOGIC (previously in start loop)
+        regenHeroes();
+        maybeRespawnHeroes();
+        maybeSpawnNewMonsters();
+        heroComboStreak = 0;
+        monsterComboStreak = 0;
     }
+
     // Menu text
     public void printHeroMenu() {
         System.out.println("\nChoose action:");
@@ -615,6 +639,7 @@ public class LegendsOfValorGame {
             if (choice == 4) {
                 System.out.println("You chose to quit Legends of Valor.");
                 quitRequested = true;
+                gameOver = true;
                 showPostQuitMenu();
                 return;
             }
@@ -705,6 +730,7 @@ public class LegendsOfValorGame {
         if (choice == -1) {
             System.out.println("You chose to quit Legends of Valor.");
             quitRequested = true;
+            gameOver = true;
             showPostQuitMenu();
             return;
         }
@@ -750,6 +776,7 @@ public class LegendsOfValorGame {
         if (choice == -1) {
             System.out.println("You chose to quit Legends of Valor.");
             quitRequested = true;
+            gameOver = true;
             showPostQuitMenu();
             return;
         }
@@ -1066,7 +1093,8 @@ public class LegendsOfValorGame {
                 return;
 
             case 2:
-                new LegendsOfValorGame(scanner).start();
+                Game game = new LegendsOfValorGame(scanner);
+                game.startGame();
                 return;
 
             case 3:
@@ -1128,27 +1156,29 @@ public class LegendsOfValorGame {
      * Monsters win if any monster reaches a hero nexus tile.
      * @return true if either side has won; false otherwise
      */
-    private boolean checkVictoryConditions() {
-        // Heroes win if any hero reaches a monster Nexus
+    @Override
+    protected void checkWinCondition() {
+        // Heroes win
         for (HeroUnit hu : heroes) {
             Position p = hu.getPosition();
             if (board.getTile(p).isMonsterNexus()) {
                 System.out.println("Heroes have reached the Monsters' Nexus. Victory!");
-                return true;
+                gameOver = true;
+                return;
             }
         }
 
-        // Monsters win if any monster reaches a hero Nexus
+        // Monsters win
         for (MonsterUnit mu : monstersOnBoard) {
             Position p = mu.getPosition();
             if (board.getTile(p).isHeroNexus()) {
                 System.out.println("A monster has reached the Heroes' Nexus. Defeat!");
-                return true;
+                gameOver = true;
+                return;
             }
         }
-
-        return false;
     }
+
 
 
     /**
@@ -1292,5 +1322,12 @@ public class LegendsOfValorGame {
                 return "P";
         }
     }
+    @Override
+    protected void endGame() {
+        System.out.println("\n=== GAME OVER ===");
+        System.out.println("Hero kills: " + heroKills);
+        System.out.println("Monster kills: " + monsterKills);
+    }
+
 
 }
