@@ -15,23 +15,25 @@ public class UsePotionAction implements HeroAction {
 
         List<Potion> potions = inv.getPotions();
         if (potions.isEmpty()) {
-            System.out.println("No potions available.");
+            System.out.println("🧪 No potions available to use.");
+
             return false;
         }
 
-        System.out.println("\nChoose a potion to use:");
+        System.out.println("\n🧪 Choose a potion to use:");
+
         for (int i = 0; i < potions.size(); i++) {
             Potion p = potions.get(i);
-            System.out.printf("%d) %s (effect: %s)\n",
+            System.out.printf("%d) %s | ✨ Effect: %s%n",
                     i + 1,
                     p.getName(),
                     p.getStat());
         }
 
-        System.out.println("0) Cancel");
+        System.out.println("0) ↩️ Cancel");
         int choice = game.readInt(in, 0, potions.size());
         if (choice == 0) {
-            System.out.println("Cancel using potion.");
+            System.out.println("↩️ Potion use cancelled.");
             return false;
         }
 
@@ -41,7 +43,7 @@ public class UsePotionAction implements HeroAction {
 
         inv.remove(selected);
 
-        System.out.println(hero.getName() + " used " + selected.getName() + ".");
+        System.out.println("✨ " + hero.getName() + " used " + selected.getName() + "!");
         return true;
     }
 
@@ -52,33 +54,33 @@ public class UsePotionAction implements HeroAction {
         // HP potion
         if (name.contains("health") || name.contains("hp")) {
             hero.setHP(hero.getHP() + amount);
-            System.out.println("HP increased by " + amount);
+            System.out.println("❤️ HP increased by " + amount);
         }
 
         // Mana potion
         if (name.contains("mana") || name.contains("mp")) {
             hero.setMana(hero.getMana() + amount);
-            System.out.println("Mana increased by " + amount);
+            System.out.println("🔮 Mana increased by " + amount);
         }
 
         // Strength potion
         if (name.contains("strength")) {
             hero.setStrength(hero.getStrength() + amount);
-            System.out.println("Strength increased by " + amount);
+            System.out.println("⚔️ Strength increased by " + amount);
         }
 
         // Dexterity potion
         if (name.contains("dexterity") || name.contains("dex")) {
             hero.setDexterity(hero.getDexterity() + amount);
-            System.out.println("Dexterity increased by " + amount);
+            System.out.println("🏹 Dexterity increased by " + amount);
         }
 
         // Agility potion
         if (name.contains("agility") || name.contains("agi")) {
             hero.setAgility(hero.getAgility() + amount);
-            System.out.println("Agility increased by " + amount);
+            System.out.println("🤸 Agility increased by " + amount);
         }
 
-        System.out.println("Updated stats: " + hero.fullInfo());
+        System.out.println("📊 Updated Stats → " + hero.fullInfo());
     }
 }

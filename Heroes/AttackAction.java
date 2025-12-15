@@ -16,15 +16,15 @@ public class AttackAction implements HeroAction {
     public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         List<MonsterUnit> targets = game.getMonstersInRange(unit.getPosition(), 1);
         if (targets.isEmpty()) {
-            System.out.println("No monsters in attack range.");
+            System.out.println("⚠️ No monsters are within attack range.");
             return false;
         }
 
-        System.out.println("Choose target to attack:");
+        System.out.println("🎯 Choose a monster to attack:");
         for (int i = 0; i < targets.size(); i++) {
             MonsterUnit mu = targets.get(i);
             Monster m = mu.getMonster();
-            System.out.printf("%d) %s (HP %.1f, lvl %d) at %s%n",
+            System.out.printf("%d) %s | ❤️ HP %.1f | ⭐ Lvl %d | 📍 Pos %s%n",
                     i + 1, m.getName(), m.getHp(), m.getLevel(), mu.getPosition());
         }
         int choice = game.readInt(in, 1, targets.size());

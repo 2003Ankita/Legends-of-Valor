@@ -124,22 +124,25 @@ public abstract class Hero extends Character {
     /* ---------------- Info ---------------- */
 
     public String shortInfo() {
-        return name + " (lvl " + level + ", HP " + (int) hp +
-                ", MP " + (int) mana + ", gold " + (int) gold + ")";
+        return "🧙 " + name + " | ⭐ Lvl " + level +
+                " | ❤️ HP " + (int) hp +
+                " | 🔮 MP " + (int) mana +
+                " | 💰 Gold " + (int) gold;
     }
 
     public String fullInfo() {
-        return name + " lvl " + level +
-                " HP " + (int) hp +
-                " MP " + (int) mana +
-                " STR " + (int) strength +
-                " DEX " + (int) dexterity +
-                " AGI " + (int) agility +
-                " Gold " + (int) gold;
+        return "🧙 " + name +
+                " | ⭐ Lvl " + level +
+                " | ❤️ HP " + (int) hp +
+                " | 🔮 MP " + (int) mana +
+                " | ⚔️ STR " + (int) strength +
+                " | 🏹 DEX " + (int) dexterity +
+                " | 🤸 AGI " + (int) agility +
+                " | 💰 Gold " + (int) gold;
     }
 
     public String battleInfo() {
-        return name + " HP " + (int) hp + " MP " + (int) mana;
+        return "⚔️ " + name + " | ❤️ HP " + (int) hp + " | 🔮 MP " + (int) mana;
     }
 
     /* ---------------- Copy ---------------- */
