@@ -726,8 +726,7 @@ public class LegendsOfValorGame {
             if (!h.isAlive())
                 continue;
             Position pos = h.getPosition();
-            if (Math.abs(pos.row - center.row) <= radius
-                    && Math.abs(pos.col - center.col) <= radius) {
+            if (Math.abs(pos.row - center.row) + Math.abs(pos.col - center.col) <= radius) {
                 result.add(h);
             }
         }
