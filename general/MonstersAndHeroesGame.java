@@ -19,7 +19,6 @@ public  class MonstersAndHeroesGame extends  Game {
 
     private static final String MSG_INVALID = "❌ Invalid input! Try again.";
     private static final String MSG_INVALID_MOVE = "❌ Invalid move — you cannot go there.";
-    private static final String MSG_DANGER = "⚠ This area feels dangerous...";
     private static final String MSG_WIN = "🎉 Triumph! All monster tiles have fallen — the realm is safe again!";
 
     /* ================= GAME STATE ================= */
@@ -42,23 +41,7 @@ public  class MonstersAndHeroesGame extends  Game {
     }
 
 
-//    public void startMonsterAndHeroes() {
-//        view.showMessage("Welcome to the Classic Monsters & Heroes!");
-//        view.showMessage("Please enter your name:");
-//        playerName = scanner.nextLine().trim();
-//        view.showMessage("Greetings, " + playerName + "! Your adventure begins...\n");
-//
-//        loadData();
-//        chooseHeroes();
-//
-//        board = new Board(DEFAULT_BOARD_SIZE);
-//        party.setPosition(board.getStartRow(), board.getStartCol());
-//
-//        placeInitialMonsters();
-//
-//        instructions();
-//        mainLoop();
-//    }
+
 @Override
 protected void initializeGame() {
     view.showMessage("Welcome to the Classic Monsters & Heroes!");
@@ -96,18 +79,7 @@ protected void initializeGame() {
         view.showMessage("Game Over. Thanks for playing!");
     }
 
-//    private void startLegendsOfValorMode() {
-//        System.out.println("\n⚔ Starting Legends of Valor ⚔\n");
-////        LegendsOfValorGame lov = new LegendsOfValorGame(scanner);
-////        lov.start();
-//        Game game = new LegendsOfValorGame(scanner);
-//        game.startGame();
-//    }
 
-
-    /* ========================================================
-       LOAD HEROES / MONSTERS / ITEMS
-       ======================================================== */
     private void loadData() {
         heroPool = new ArrayList<>();
         monsterPool = new ArrayList<>();
@@ -141,9 +113,7 @@ protected void initializeGame() {
         itemPool.add(new Spell("Ice Shard", 600, 1, SpellType.ICE, 180, 40));
     }
 
-    /* ========================================================
-       HERO SELECTION
-       ======================================================== */
+
     private void chooseHeroes() {
         view.showMessage("How many heroes join your quest? (1–3): ");
         int n = readIntInRange(1, 3);
@@ -177,10 +147,7 @@ protected void initializeGame() {
         party = new Party(chosen);
     }
 
-    /* ========================================================
-       MONSTER PLACEMENT
-       FIXED: removed double increment bug
-       ======================================================== */
+
     private void placeInitialMonsters() {
         int count = party.getHeroes().size();
         int placed = 0;
@@ -229,9 +196,7 @@ protected void initializeGame() {
         }
     }
 
-    /* ========================================================
-       GAME LOOP
-       ======================================================== */
+
     private void mainLoop() {
 
         boolean running = true;
@@ -342,9 +307,6 @@ protected void initializeGame() {
         }
     }
 
-    /* ========================================================
-       MOVEMENT (FULLY FIXED)
-       ======================================================== */
     private boolean moveParty(int dr, int dc) {
         int nr = party.getRow() + dr;
         int nc = party.getCol() + dc;
@@ -365,9 +327,7 @@ protected void initializeGame() {
         return true;
     }
 
-    /* ========================================================
-       MARKET
-       ======================================================== */
+
     private void enterMarket() {
         Tile tile = board.getTile(party.getRow(), party.getCol());
 
@@ -511,9 +471,7 @@ protected void initializeGame() {
         return new ArrayList<>(itemPool.subList(0, Math.min(10, itemPool.size())));
     }
 
-    /* ========================================================
-       BATTLE
-       ======================================================== */
+
     private void startBattle() {
         view.showMessage("\n⚔ A battle begins!");
 
@@ -540,10 +498,6 @@ protected void initializeGame() {
                 party, chosen, view, scanner, random, currentWeather, isDay, playerName
         ).start();
     }
-
-    /* ========================================================
-       HELPERS
-       ======================================================== */
 
     private int readIntInRange(int min, int max) {
         while (true) {
