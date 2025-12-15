@@ -44,14 +44,11 @@ public class GameController {
     public void startGame() {
 
         while (true) {
-            System.out.println("====================================");
-            System.out.println("            GAME MODE MENU          ");
-            System.out.println("====================================");
-            System.out.println("1) Classic Monsters & Heroes");
-            System.out.println("2) Legends of Valor");
-            System.out.println("3) Exit");
-            System.out.println("====================================");
-            System.out.print("Choose your game mode: ");
+            System.out.println("          🎮 GAME MODE MENU 🎮        ");
+            System.out.println("1) 🧙 Classic Monsters & Heroes");
+            System.out.println("2) ⚔️ Legends of Valor");
+            System.out.println("3) 🚪 Exit Game");
+            System.out.print("👉 Choose your adventure : Enter(1/2) to play and for Exit enter 3 ");
 
             int mode = readIntInRange(1, 3);
 
@@ -65,16 +62,16 @@ public class GameController {
                     startLegendsOfValorMode();
                     return;
                 case 3:
-                    view.showMessage("Farewell, adventurer.");
+                    view.showMessage("👋 Farewell, adventurer. Until next time!");
                     return;
             }
         }
     }
     public void startMonsterAndHeroes() {
-        view.showMessage("Welcome to the Classic Monsters & Heroes!");
-        view.showMessage("Please enter your name:");
+        view.showMessage("🧙 Welcome to Classic Monsters & Heroes!");
+        view.showMessage("📝 Enter your hero name:");
         playerName = scanner.nextLine().trim();
-        view.showMessage("Greetings, " + playerName + "! Your adventure begins...\n");
+        view.showMessage("✨ Greetings, " + playerName + "! Your legendary journey begins now...\n");
 
         loadData();
         chooseHeroes();
@@ -130,13 +127,13 @@ public class GameController {
 
 
     private void chooseHeroes() {
-        view.showMessage("How many heroes join your quest? (1–3): ");
+        view.showMessage("🧑‍🤝‍🧑 How many heroes will join your quest? (1–3): ");
         int n = readIntInRange(1, 3);
 
         List<Hero> chosen = new ArrayList<>();
 
         while (chosen.size() < n) {
-            view.showMessage("\nHeroes available:");
+            view.showMessage("\n🧙 Available Heroes:");
             for (int i = 0; i < heroPool.size(); i++)
                 view.showMessage((i + 1) + ") " + heroPool.get(i).shortInfo());
             view.showMessage((heroPool.size() + 1) + ") Quit");
@@ -152,7 +149,7 @@ public class GameController {
             Hero picked = heroPool.get(choice - 1);
 
             if (chosen.stream().anyMatch(h -> h.getName().equals(picked.getName()))) {
-                view.showMessage("❌ Already chosen.");
+                view.showMessage("❌ This hero has already been selected.");
                 continue;
             }
 
@@ -221,14 +218,14 @@ public class GameController {
             /* --- Day/Night --- */
             if (turn % 2 == 0) {
                 isDay = !isDay;
-                view.showMessage(isDay ? "🌞 Day begins." : "🌙 Night falls.");
+                view.showMessage(isDay ? "🌞 Day breaks across the realm." : "🌙 Night falls and darkness spreads.");
             }
 
             /* --- Weather --- */
             if (turn % 5 == 0) {
                 Weather[] w = Weather.values();
                 currentWeather = w[random.nextInt(w.length)];
-                view.showMessage("⛅ Weather shift: " + currentWeather);
+                view.showMessage("⛅ The weather shifts — now it is" + currentWeather);
             }
 
             /* --- Board Render --- */
@@ -274,9 +271,10 @@ public class GameController {
             if (t.getType() == TileType.COMMON) {
 
                 if (random.nextDouble() < DEFAULT_BATTLE_PROB) {
-                    view.showMessage("⚠ Monsters appear!");
+                    view.showMessage("⚠️ Monsters suddenly emerge from the shadows!");
 
-                    view.showMessage("1) Fight");
+
+                    view.showMessage("1) ⚔️ Stand and fight");
                     view.showMessage("2) Quit Game");
 
                     int choice = readIntInRange(1, 2);
@@ -306,7 +304,7 @@ public class GameController {
         Tile next = board.getTile(nr, nc);
 
         if (next.getType() == TileType.INACCESSIBLE) {
-            view.showMessage("❌ That is a wall.");
+            view.showMessage("🧱 You cannot pass — a solid wall blocks your path.");
             return false;
         }
 
@@ -335,10 +333,10 @@ public class GameController {
 
         boolean done = false;
         while (!done) {
-            view.showMessage("\nMarket:");
-            view.showMessage("1) Buy");
-            view.showMessage("2) Sell");
-            view.showMessage("3) Exit");
+            view.showMessage("\n🏪 Market Menu:");
+            view.showMessage("1) 🛒 Buy items");
+            view.showMessage("2) 💰 Sell items");
+            view.showMessage("3) 🚪 Leave market");
             view.showMessage("4) Quit Game");
 
             int choice = readIntInRange(1, 4);
@@ -364,7 +362,8 @@ public class GameController {
         while (true) {
             List<Item> items = market.getStock();
             if (items.isEmpty()) {
-                view.showMessage("Market empty.");
+                view.showMessage("🪙 The market is out of stock.");
+
                 return;
             }
 
@@ -387,10 +386,12 @@ public class GameController {
 
             Item item = items.get(choice - 1);
             if (market.buy(hero, item)) {
-                view.showMessage("Bought " + item.getName());
-                view.showMessage("Gold left: " + (int) hero.getGold());
+                view.showMessage("✅ Purchased " + item.getName() + " successfully.");
+
+                view.showMessage("💰 Gold remaining: " + (int) hero.getGold());
             } else {
-                view.showMessage("❌ Cannot buy (level/gold issue).");
+                view.showMessage("❌ Purchase failed — insufficient level or gold.");
+
             }
         }
     }
@@ -401,7 +402,7 @@ public class GameController {
         while (true) {
             List<Item> items = hero.getInventory().getAllItems();
             if (items.isEmpty()) {
-                view.showMessage("Nothing to sell.");
+                view.showMessage("📦 You have no items to sell.");
                 return;
             }
 
@@ -481,7 +482,8 @@ public class GameController {
             try {
                 int n = Integer.parseInt(scanner.nextLine().trim());
                 if (n >= min && n <= max) return n;
-                view.showMessage("Enter " + min + "–" + max);
+                view.showMessage("⚠️ Please enter a number between " + min + " and " + max + ".");
+
             } catch (Exception e) {
                 view.showMessage(MSG_INVALID);
             }
@@ -497,10 +499,11 @@ public class GameController {
     }
 
     private void instructions() {
-        view.showMessage("\nControls:");
-        view.showMessage("W A S D : Move");
-        view.showMessage("I : Info");
-        view.showMessage("M : Market");
-        view.showMessage("Q : Quit");
+        view.showMessage("\n🎮 Game Controls:");
+
+        view.showMessage("Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right");
+        view.showMessage("I : Info :  View hero information");
+        view.showMessage("M : Enter market");
+        view.showMessage("Q : Quit game");
     }
 }

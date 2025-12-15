@@ -82,10 +82,10 @@ public class ConsoleGameView implements GameView {
         }
 
         System.out.println();
-        System.out.println("Party position: (" + party.getRow() + ", " + party.getCol() + ")");
-        System.out.println("Party highest level: " + party.getHighestLevel());
-        System.out.println("Party total gold: " + (int) party.getTotalGold());
-        System.out.println("Monster tiles remaining: " + board.getMonstersRemaining());
+        System.out.println("📍 Party position: (" + party.getRow() + ", " + party.getCol() + ")");
+        System.out.println("⭐ Highest hero level in party: " + party.getHighestLevel());
+        System.out.println("💰 Total gold carried by party: " + (int) party.getTotalGold());
+        System.out.println("👹 Monster tiles remaining on board: " + board.getMonstersRemaining());
         System.out.println();
     }
 
@@ -98,13 +98,13 @@ public class ConsoleGameView implements GameView {
      */
     @Override
     public void showInfo(Party party, List<Monster> enemies) {
-        System.out.println("\n--- HERO DETAILS ---");
+        System.out.println("\n🧙 HERO DETAILS");
         for (Hero h : party.getHeroes()) {
             System.out.println(h.fullInfo());
         }
 
         if (enemies != null) {
-            System.out.println("\n--- MONSTER DETAILS ---");
+            System.out.println("\n👹 MONSTER DETAILS");
             for (Monster m : enemies) {
                 System.out.println(m.fullInfo());
             }
@@ -120,25 +120,26 @@ public class ConsoleGameView implements GameView {
      */
     @Override
     public void showBattleStatus(Party party, List<Monster> monsters) {
-        System.out.println("\nBattle status:");
+        System.out.println("\n⚔️ Current Battle Status:");
+
         for (Hero h : party.getHeroes()) {
-            System.out.println(h.battleInfo());
+            System.out.println("🛡️ " + h.battleInfo());
         }
         System.out.println();
         for (Monster m : monsters) {
-            System.out.println(m.battleInfo());
+            System.out.println("👹 " + m.battleInfo());
         }
     }
 
     @Override
     public void showMessage(String msg) {
-        System.out.println(msg);
+        System.out.println("▶ " + msg);
     }
 
     /**
      * Simple helper method to replicate a short string a given number of times.
      * 
-     * @param s     the string to repeat
+     * @param s the string to repeat
      * @param count how many times to append it
      * @return resulting repeated string
      */
