@@ -11,7 +11,7 @@ The game is built on top of the *Monsters & Heroes* framework and extends it wit
 Players control a team of heroes, navigate the board strategically, manage combat and inventory, and attempt to reach the enemy Nexus before monsters reach theirs.
 
 ## Student Information
-- 
+- Ankita Patra (U38177365)
 - Ying Huang (U13787608)
 - Xiju Jiang (U03732023)
 
