@@ -95,49 +95,12 @@ public class LegendsOfValorGame extends Game {
     public DamageCalculator getDamageCalculator() {
         return damageCalculator;
     }
-
-    /**
-     * Starts and manages the main game loop, alternating hero and monster turns,
-     * updating round state, handling spawning and regeneration, and checking
-     * for victory or quit conditions.
-     */
-//    public void start() {
-//        System.out.println("=== Legends of Valor ===");
-//        boolean running = true;
-//        while (running) {
-//            System.out.println("\n--- ROUND " + roundNumber + " ---");
-//            System.out.println(
-//                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
-//
-//            renderBoard();
-//            printMonstersStatus();
-//
-//
-//
-//            heroesTurn();
-//            if (quitRequested) return;
-//            if (checkVictoryConditions())
-//                break;
-//
-//            monstersTurn();
-//            if (quitRequested) return;
-//
-//            if (checkVictoryConditions())
-//                break;
-//            regenHeroes();
-//
-//            maybeRespawnHeroes();
-//            maybeSpawnNewMonsters();
-//            heroComboStreak = 0;
-//            monsterComboStreak = 0;
-//
-//            roundNumber++;
-//        }
-//    }
     @Override
     protected void initializeGame() {
-        System.out.println("=== Legends of Valor ===");
-        System.out.println("\n--- ROUND " + roundNumber + " ---");
+        System.out.println("⚔️ === LEGENDS OF VALOR === ⚔️");
+
+        System.out.println("\n🔔 --- ROUND " + roundNumber + " BEGINS --- 🔔");
+
 
     }
 
@@ -165,8 +128,9 @@ public class LegendsOfValorGame extends Game {
     private List<HeroUnit> chooseHeroesAndLanes() {
         List<Hero> pool = HeroFactoryAdapter.loadAllHeroes();
         List<HeroUnit> result = new ArrayList<>();
-        System.out.println("Choose 3 heroes for Legends of Valor:");
-        System.out.println("0) Quit Game");
+        System.out.println("🧙 Choose 3 heroes to defend the realm:");
+
+        System.out.println("0) 🚪 Quit Game");
 
         for (int i = 0; i < pool.size(); i++) {
             Hero h = pool.get(i);
@@ -181,7 +145,9 @@ public class LegendsOfValorGame extends Game {
         for (int heroIndex = 0; heroIndex < 3; heroIndex++) {
             int idx;
             while (true) {
-                System.out.println("Select hero #" + (heroIndex + 1) + ":");
+                System.out.println("👉 Select hero #" + (heroIndex + 1) + ":");
+
+
                 System.out.println("0) Quit Game");
 
                 int choice = readInt(scanner, 0, pool.size());
@@ -193,7 +159,8 @@ public class LegendsOfValorGame extends Game {
                 idx = choice - 1;
 
                 if (pickedHeroes.contains(idx)) {
-                    System.out.println("Hero already selected, choose another.");
+                    System.out.println("❌ This hero is already chosen. Pick a different one.");
+
                     continue;
                 }
                 pickedHeroes.add(idx);
@@ -203,7 +170,8 @@ public class LegendsOfValorGame extends Game {
 
             Lane lane;
             while (true) {
-                System.out.println("Assign a lane for " + chosen.getName() + ":");
+                System.out.println("🛣️ Assign a lane to " + chosen.getName() + ":");
+
                 System.out.println("0) Quit Game");
 
                 for (int li = 0; li < lanes.length; li++) {
@@ -211,14 +179,15 @@ public class LegendsOfValorGame extends Game {
                 }
                 int laneChoice = readInt(scanner, 0, lanes.length);
                 if (laneChoice == 0) {
-                    System.out.println("You chose to quit Legends of Valor.");
+                    System.out.println("👋 You chose to leave Legends of Valor.");
+
                     showPostQuitMenu();
                     return new ArrayList<>();
                 }
                 lane = lanes[laneChoice - 1];
 
                 if (pickedLanes.contains(lane)) {
-                    System.out.println("Lane already has a hero, choose another lane.");
+                    System.out.println("❌ This lane is already occupied. Choose another lane.");
                     continue;
                 }
                 pickedLanes.add(lane);
@@ -283,9 +252,9 @@ public class LegendsOfValorGame extends Game {
             boolean turnDone = false;
 
             while (!turnDone) {
-                System.out.println("\n--- Hero turn: " + hero.getName()
-                        + " at " + unit.getPosition()
-                        + " (lane " + unit.getLane() + ") ---");
+                System.out.println("\n⚔️ Hero Turn → " + hero.getName()
+                        + " | Position: " + unit.getPosition()
+                        + " | Lane: " + unit.getLane());
 
                 renderBoard();
                 // printSingleHeroStatus(unit);
@@ -349,7 +318,8 @@ public class LegendsOfValorGame extends Game {
 
 
                     default:
-                        System.out.println("Invalid choice, please try again.");
+                        System.out.println("❌ Invalid choice. Please select a valid option.");
+
                 }
             }
         }
@@ -382,18 +352,19 @@ public class LegendsOfValorGame extends Game {
     // Menu text
     public void printHeroMenu() {
         System.out.println("\nChoose action:");
-        System.out.println("1) Move");
-        System.out.println("2) Attack");
-        System.out.println("3) Cast Spell");
-        System.out.println("4) Use Potion");
-        System.out.println("5) Teleport");
-        System.out.println("6) Recall");
-        System.out.println("7) Equip weapon/armor");
-        System.out.println("8) Show hero info (does NOT end turn)");
-        System.out.println("9) Show inventory (does NOT end turn)");
-        System.out.println("10 Market");
-        System.out.println("11) Pass");
-        System.out.println("12) Quit Game");
+        System.out.println("1) 🚶 Move");
+        System.out.println("2) ⚔️ Attack");
+        System.out.println("3) 🔮 Cast Spell");
+        System.out.println("4) 🧪 Use Potion");
+        System.out.println("5) ✨ Teleport");
+        System.out.println("6) 🔙 Recall to Nexus");
+        System.out.println("7) 🛡️ Equip Weapon / Armor");
+        System.out.println("8) ℹ️ View Hero Info (does NOT end turn)");
+        System.out.println("9) 🎒 View Inventory (does NOT end turn)");
+        System.out.println("10) 🏪 Open Market");
+        System.out.println("11) ⏭️ Pass Turn");
+        System.out.println("12) 🚪 Quit Game");
+
 
     }
 
@@ -624,12 +595,13 @@ public class LegendsOfValorGame extends Game {
 
             showFullMarketCatalog();
 
-            System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
-            System.out.println("Gold: " + (int) hero.getGold());
-            System.out.println("1) Buy");
-            System.out.println("2) Sell");
-            System.out.println("3) Exit Market");
-            System.out.println("4) Quit Game");
+            System.out.println("\n🏪 === MARKETPLACE (Hero Nexus) === 🏪");
+            System.out.println("💰 Gold Available: " + (int) hero.getGold());
+
+            System.out.println("1) 🛒 Buy Items");
+            System.out.println("2) 💰 Sell Items");
+            System.out.println("3) 🚪 Leave Market");
+            System.out.println("4) ❌ Quit Game");
 
 
 
@@ -709,7 +681,7 @@ public class LegendsOfValorGame extends Game {
         }
 
         if (filtered.isEmpty()) {
-            System.out.println("No items available in this category.");
+            System.out.println("📦 No items available in this category.");
             return;
         }
 
@@ -739,10 +711,11 @@ public class LegendsOfValorGame extends Game {
         Item selected = filtered.get(choice - 1);
 
         if (market.buy(hero, selected)) {
-            System.out.println("Purchased: " + selected.getName());
-            System.out.println("Remaining Gold: " + (int) hero.getGold());
+            System.out.println("✅ Purchased " + selected.getName() + " successfully.");
+
+            System.out.println("💰 Remaining Gold: " + (int) hero.getGold());
         } else {
-            System.out.println("Cannot buy item (level too low or insufficient gold).");
+            System.out.println("❌ Purchase failed — level too low or insufficient gold.");
             System.out.println("Current Gold: " + (int) hero.getGold());
         }
     }
@@ -755,7 +728,7 @@ public class LegendsOfValorGame extends Game {
         List<Item> items = hero.getInventory().getAllItems();
 
         if (items.isEmpty()) {
-            System.out.println("You have no items to sell.");
+            System.out.println("📦 You have no items available to sell.");
             return;
         }
 
@@ -785,8 +758,8 @@ public class LegendsOfValorGame extends Game {
 
         Item selected = items.get(choice - 1);
         market.sell(hero, selected);
-        System.out.println("Sold: " + selected.getName());
-        System.out.println("Updated Gold: " + (int) hero.getGold());
+        System.out.println("💰 Sold " + selected.getName() + " successfully.");
+        System.out.println("💰 Updated Gold Balance: " + (int) hero.getGold());
 
     }
 
@@ -976,7 +949,8 @@ public class LegendsOfValorGame extends Game {
                     GREEN + "🗡️ Hero " + attacker.getHero().getName() +
                             " has slain Monster " + target.getMonster().getName() + "!" + RESET);
 
-            System.out.println(target.getMonster().getName() + " is defeated!");
+            System.out.println("🏆 " + target.getMonster().getName() + " has been defeated!");
+
             board.getTile(target.getPosition()).removeMonster();
             monstersOnBoard.remove(target);
             rewardHeroesForKill(attacker, target.getMonster());
@@ -1025,7 +999,7 @@ public class LegendsOfValorGame extends Game {
                     RED + "💀 Monster " + attacker.getMonster().getName() +
                             " has killed Hero " + target.getHero().getName() + "!" + RESET);
 
-            System.out.println(target.getHero().getName() + " has fallen!");
+            System.out.println("💀 " + target.getHero().getName() + " has fallen in battle!");
         }
     }
 
@@ -1066,7 +1040,7 @@ public class LegendsOfValorGame extends Game {
                 double maxHp = hero.getLevel() * 100.0;
                 hero.takeDamage(-(maxHp - hero.getHp())); // heal to full
                 recallHero(unit);
-                System.out.println(hero.getName() + " respawns at Nexus.");
+                System.out.println("✨ " + hero.getName() + " respawns at the Hero Nexus.");
             }
         }
     }
@@ -1096,7 +1070,7 @@ public class LegendsOfValorGame extends Game {
                 return;
 
             case 3:
-                System.out.println("Thank you for playing. Goodbye!");
+                System.out.println("👋 Thank you for playing Legends of Valor. Farewell, hero!");
                 System.exit(0);
         }
     }
@@ -1322,9 +1296,12 @@ public class LegendsOfValorGame extends Game {
     }
     @Override
     protected void endGame() {
-        System.out.println("\n=== GAME OVER ===");
-        System.out.println("Hero kills: " + heroKills);
-        System.out.println("Monster kills: " + monsterKills);
+        System.out.println("\n🏁 === GAME OVER === 🏁");
+        System.out.println("🗡️ Hero Kills: " + heroKills);
+
+        System.out.println("💀 Monster Kills: " + monsterKills);
+
+
     }
 
 
