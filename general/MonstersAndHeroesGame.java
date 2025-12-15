@@ -169,9 +169,9 @@ protected void initializeGame() {
     private void promptNextAction() {
         while (true) {
             System.out.println("\nWhat would you like to do next?");
-            System.out.println("1) Play Monsters & Heroes");
-            System.out.println("2) Play Legends of Valor");
-            System.out.println("3) Exit Game");
+            System.out.println("1) 🧙 Classic Monsters & Heroes");
+            System.out.println("2) ⚔️ Legends of Valor");
+            System.out.println("3) 🚪 Quit Game Completely");
             System.out.print("> ");
 
             int choice = readIntInRange(1, 3);

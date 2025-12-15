@@ -352,15 +352,15 @@ public class LegendsOfValorGame extends Game {
     // Menu text
     public void printHeroMenu() {
         System.out.println("\nChoose action:");
-        System.out.println("1) 🚶 Move");
-        System.out.println("2) ⚔️ Attack");
-        System.out.println("3) 🔮 Cast Spell");
-        System.out.println("4) 🧪 Use Potion");
-        System.out.println("5) ✨ Teleport");
-        System.out.println("6) 🔙 Recall to Nexus");
-        System.out.println("7) 🛡️ Equip Weapon / Armor");
-        System.out.println("8) ℹ️ View Hero Info (does NOT end turn)");
-        System.out.println("9) 🎒 View Inventory (does NOT end turn)");
+        System.out.println("1)  🚶 Move");
+        System.out.println("2)  ⚔️ Attack");
+        System.out.println("3)  🔮 Cast Spell");
+        System.out.println("4)  🧪 Use Potion");
+        System.out.println("5)  ✨ Teleport");
+        System.out.println("6)  🔙 Recall to Nexus");
+        System.out.println("7)  🛡️ Equip Weapon / Armor");
+        System.out.println("8)  ℹ️ View Hero Info (does NOT end turn)");
+        System.out.println("9)  🎒 View Inventory (does NOT end turn)");
         System.out.println("10) 🏪 Open Market");
         System.out.println("11) ⏭️ Pass Turn");
         System.out.println("12) 🚪 Quit Game");
@@ -1053,9 +1053,9 @@ public class LegendsOfValorGame extends Game {
      */
     private void showPostQuitMenu() {
         System.out.println("\nWhat would you like to do next?");
-        System.out.println("1) Play Monsters and Heroes");
-        System.out.println("2) Play Legends of Valor");
-        System.out.println("3) Quit Game Completely");
+        System.out.println("1) 🧙 Classic Monsters & Heroes");
+        System.out.println("2) ⚔️ Legends of Valor");
+        System.out.println("3) 🚪 Quit Game Completely");
 
         int choice = readInt(scanner, 1, 3);
 
