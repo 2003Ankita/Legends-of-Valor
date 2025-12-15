@@ -283,16 +283,35 @@ protected void initializeGame() {
                 return;
             }
 
+
             /* --- Tile Events --- */
             Tile t = board.getTile(party.getRow(), party.getCol());
 
             // main battle
             if (t.hasMonster()) {
-                startBattle();
+                view.showMessage("⚔ A monster blocks your path!");
+                view.showMessage("1) Fight");
+                view.showMessage("2) Retreat");
+
+                int choice = readIntInRange(1, 2);
+                if (choice == 2) {
+                    view.showMessage("You chose to retreat.");
+                continue;
+                }
+
+                Monster selected = chooseMonsterForTile();
+                if (selected == null) return;
+
+                startBattleWithSelectedMonster(selected);
+
+                // ✅ CLEAR TILE ONLY AFTER BATTLE
                 t.setMonster(false);
                 board.mainMonsterDefeated();
                 continue;
             }
+
+
+
 
             // random battle
             if (t.getType() == TileType.COMMON) {
@@ -312,6 +331,12 @@ protected void initializeGame() {
                     }
 
                     startBattle();
+                    if (board.allMonstersCleared()) {
+                        view.showMessage("🎉 Congratulations, " + playerName + "! " + MSG_WIN);
+                        promptNextAction();
+                        return;
+                    }
+
                 }
             }
         }
@@ -361,30 +386,32 @@ protected void initializeGame() {
 
         Market market = tile.getMarket();
 
-        boolean done = false;
-        while (!done) {
+        while (true) {
             view.showMessage("\nMarket:");
             view.showMessage("1) Buy");
             view.showMessage("2) Sell");
-            view.showMessage("3) Exit");
+            view.showMessage("3) Exit Market");
             view.showMessage("4) Quit Game");
 
             int choice = readIntInRange(1, 4);
 
-            if (choice == 4) {
-                view.showMessage(playerName + ", your journey ends.");
-                promptNextAction();
-                return;
-
-            }
-
             switch (choice) {
-                case 1: marketBuy(market); break;
-                case 2: marketSell(market); break;
-                case 3: done = true; break;
+                case 1:
+                    marketBuy(market);
+                    break;   // 🔑 COME BACK TO MENU
+                case 2:
+                    marketSell(market);
+                    break;   // 🔑 COME BACK TO MENU
+                case 3:
+                    return;  // Exit Market only
+                case 4:
+                    view.showMessage(playerName + ", your journey ends.");
+                    promptNextAction();
+                    return;
             }
         }
     }
+
     private void marketBuy(Market market) {
         Hero hero = chooseHero();
         if (hero == null) return;
@@ -417,9 +444,18 @@ protected void initializeGame() {
             if (market.buy(hero, item)) {
                 view.showMessage("Bought " + item.getName());
                 view.showMessage("Gold left: " + (int) hero.getGold());
+
+                view.showMessage("Buy another item?");
+                view.showMessage("1) Yes");
+                view.showMessage("2) No");
+
+                int again = readIntInRange(1, 2);
+                if (again == 2) return;   // back to market menu
             } else {
                 view.showMessage("❌ Cannot buy (level/gold issue).");
             }
+
+
         }
     }
     private void marketSell(Market market) {
@@ -536,4 +572,28 @@ protected void initializeGame() {
         view.showMessage("M : Market");
         view.showMessage("Q : Quit");
     }
+    private Monster chooseMonsterForTile() {
+        view.showMessage("\nChoose a monster to fight:");
+
+        for (int i = 0; i < monsterPool.size(); i++) {
+            view.showMessage((i + 1) + ") " + monsterPool.get(i).shortInfo());
+        }
+        view.showMessage((monsterPool.size() + 1) + ") Cancel");
+
+        int choice = readIntInRange(1, monsterPool.size() + 1);
+        if (choice == monsterPool.size() + 1) return null;
+
+        Monster m = monsterPool.get(choice - 1).copy();
+        m.setLevel(party.getHighestLevel());
+        return m;
+    }
+    private void startBattleWithSelectedMonster(Monster monster) {
+        List<Monster> enemies = new ArrayList<>();
+        enemies.add(monster);
+
+        new Battle(
+                party, enemies, view, scanner, random, currentWeather, isDay, playerName
+        ).start();
+    }
+
 }
