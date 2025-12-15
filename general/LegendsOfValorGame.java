@@ -37,19 +37,27 @@ public class LegendsOfValorGame {
     private int roundNumber = 1;
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
-    private static final String YELLOW = "\u001B[33m";
     private static final String RESET = "\u001B[0m";
     private int heroKills = 0;
     private int monsterKills = 0;
+    private boolean quitRequested = false;
+
     private int heroComboStreak = 0;
     private int monsterComboStreak = 0;
 
     private final int spawnFrequency; // e.g. every 8 rounds
 
+    /**
+     * Creates a Legends of Valor game with a default monster spawn frequency.
+     */
     public LegendsOfValorGame(Scanner scanner) {
         this(scanner, 8);
     }
 
+    /**
+     * Initializes a Legends of Valor game instance with configurable monster spawn frequency,
+     * sets up the board, heroes, initial monsters, market inventory, and core game systems.
+     */
     public LegendsOfValorGame(Scanner scanner, int spawnFrequency) {
         this.board = new LegendsOfValorBoard.Builder().build();
         this.scanner = scanner;
@@ -63,23 +71,74 @@ public class LegendsOfValorGame {
         this.market = new Market(marketStock);
 
     }
-
+    /**
+     * Returns the current game board instance.
+     */
     public LegendsOfValorBoard getBoard() {
         return board;
     }
-
+    /**
+     * Returns the list of active hero units in the game.
+     */
     public List<HeroUnit> getHeroes() {
         return heroes;
     }
-
+    /**
+     * Returns the list of monster units currently on the board.
+     */
     public List<MonsterUnit> getMonstersOnBoard() {
         return monstersOnBoard;
     }
-
+    /**
+     * Returns the damage calculator used for combat resolution.
+     */
     public DamageCalculator getDamageCalculator() {
         return damageCalculator;
     }
 
+    /**
+     * Starts and manages the main game loop, alternating hero and monster turns,
+     * updating round state, handling spawning and regeneration, and checking
+     * for victory or quit conditions.
+     */
+    public void start() {
+        System.out.println("=== Legends of Valor ===");
+        boolean running = true;
+        while (running) {
+            System.out.println("\n--- ROUND " + roundNumber + " ---");
+            System.out.println(
+                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
+
+            renderBoard();
+            printMonstersStatus();
+
+
+
+            heroesTurn();
+            if (quitRequested) return;
+            if (checkVictoryConditions())
+                break;
+
+            monstersTurn();
+            if (quitRequested) return;
+
+            if (checkVictoryConditions())
+                break;
+            regenHeroes();
+
+            maybeRespawnHeroes();
+            maybeSpawnNewMonsters();
+            heroComboStreak = 0;
+            monsterComboStreak = 0;
+
+            roundNumber++;
+        }
+    }
+
+    /**
+     * Returns the number of rounds between monster spawns
+     * based on the current game difficulty.
+     */
     private int spawnInterval() {
         switch (difficulty) {
             case EASY:
@@ -93,36 +152,16 @@ public class LegendsOfValorGame {
         }
     }
 
-    public void start() {
-        System.out.println("=== Legends of Valor ===");
-        boolean running = true;
-        while (running) {
-            System.out.println("\n--- ROUND " + roundNumber + " ---");
-            System.out.println(
-                    "📊 Kill Stats → Heroes: " + heroKills + " | Monsters: " + monsterKills);
-
-            renderBoard();
-            printMonstersStatus();
-
-            heroesTurn();
-            if (checkVictoryConditions())
-                break;
-
-            monstersTurn();
-            if (checkVictoryConditions())
-                break;
-
-            maybeRespawnHeroes();
-            maybeSpawnNewMonsters();
-
-            roundNumber++;
-        }
-    }
-
+    /**
+     * Allows the player to select heroes and assign each to a unique lane,
+     * initializing hero units at their corresponding hero nexus positions.
+     */
     private List<HeroUnit> chooseHeroesAndLanes() {
         List<Hero> pool = HeroFactoryAdapter.loadAllHeroes();
         List<HeroUnit> result = new ArrayList<>();
         System.out.println("Choose 3 heroes for Legends of Valor:");
+        System.out.println("0) Quit Game");
+
         for (int i = 0; i < pool.size(); i++) {
             Hero h = pool.get(i);
             System.out.printf("%d) %s (lvl %d, HP %.1f, STR %.1f, DEX %.1f, AGI %.1f)%n",
@@ -137,7 +176,16 @@ public class LegendsOfValorGame {
             int idx;
             while (true) {
                 System.out.println("Select hero #" + (heroIndex + 1) + ":");
-                idx = readInt(scanner, 1, pool.size()) - 1;
+                System.out.println("0) Quit Game");
+
+                int choice = readInt(scanner, 0, pool.size());
+                if (choice == 0) {
+                    System.out.println("You chose to quit Legends of Valor.");
+                    showPostQuitMenu();
+                    return new ArrayList<>();
+                }
+                idx = choice - 1;
+
                 if (pickedHeroes.contains(idx)) {
                     System.out.println("Hero already selected, choose another.");
                     continue;
@@ -150,11 +198,19 @@ public class LegendsOfValorGame {
             Lane lane;
             while (true) {
                 System.out.println("Assign a lane for " + chosen.getName() + ":");
+                System.out.println("0) Quit Game");
+
                 for (int li = 0; li < lanes.length; li++) {
                     System.out.printf("%d) %s%n", li + 1, lanes[li]);
                 }
-                int laneIdx = readInt(scanner, 1, lanes.length) - 1;
-                lane = lanes[laneIdx];
+                int laneChoice = readInt(scanner, 0, lanes.length);
+                if (laneChoice == 0) {
+                    System.out.println("You chose to quit Legends of Valor.");
+                    showPostQuitMenu();
+                    return new ArrayList<>();
+                }
+                lane = lanes[laneChoice - 1];
+
                 if (pickedLanes.contains(lane)) {
                     System.out.println("Lane already has a hero, choose another lane.");
                     continue;
@@ -172,6 +228,10 @@ public class LegendsOfValorGame {
         return result;
     }
 
+    /**
+     * Spawns the initial set of monsters at each lane’s monster nexus,
+     * scaling their levels to match the current heroes.
+     */
     private void spawnInitialMonsters() {
         List<Monster> pool = HeroFactoryAdapter.loadAllMonsters();
         Random random = new Random();
@@ -185,6 +245,10 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Creates a copy of a monster and scales its level to match
+     * the highest current hero level.
+     */
     private Monster cloneForCurrentLevel(Monster base) {
         Monster copy = base.copy();
         int maxHeroLevel = 1;
@@ -195,8 +259,10 @@ public class LegendsOfValorGame {
         return copy;
     }
 
-    // ========================== Rounds ==========================
-
+    /**
+     * Executes the turn sequence for all heroes, repeatedly prompting each hero
+     * for an action until a valid turn-ending action is completed.
+     */
     private void heroesTurn() {
         for (HeroUnit unit : heroes) {
             Hero hero = unit.getHero();
@@ -219,7 +285,7 @@ public class LegendsOfValorGame {
                 showHeroInfo(unit);
                 printHeroMenu();
 
-                int choice = readInt(scanner, 0, 10);
+                int choice = readInt(scanner, 0, 12);
 
                 switch (choice) {
                     case 1: // Move
@@ -264,9 +330,15 @@ public class LegendsOfValorGame {
                             System.out.println("\n(You can buy/sell items only at the Hero Nexus.)");
                         }
                         break;
-                    case 0: // Pass
+                    case 11: // Pass
                         turnDone = new PassAction().execute(this, unit, scanner);
                         break;
+                    case 12:
+                        System.out.println("You chose to quit Legends of Valor.");
+                        quitRequested = true;
+                        showPostQuitMenu();
+                        return;
+
 
                     default:
                         System.out.println("Invalid choice, please try again.");
@@ -275,6 +347,15 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Executes a turn for each active monster by delegating behavior
+     * to the monster AI controller.
+     */
+    private void monstersTurn() {
+        for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
+            monsterBehavior.takeTurn(unit, this);
+        }
+    }
     // Menu text
     public void printHeroMenu() {
         System.out.println("\nChoose action:");
@@ -288,57 +369,15 @@ public class LegendsOfValorGame {
         System.out.println("8) Show hero info (does NOT end turn)");
         System.out.println("9) Show inventory (does NOT end turn)");
         System.out.println("10 Market");
-        System.out.println("0) Pass");
+        System.out.println("11) Pass");
+        System.out.println("12) Quit Game");
+
     }
 
-    // Quick status dump for all monsters on the board each round
-    private void printMonstersStatus() {
-        if (monstersOnBoard.isEmpty()) {
-            System.out.println("(No monsters on board)");
-            return;
-        }
-        System.out.println("\nMonsters on board:");
-        for (int i = 0; i < monstersOnBoard.size(); i++) {
-            MonsterUnit mu = monstersOnBoard.get(i);
-            Monster m = mu.getMonster();
-            System.out.printf("M%d) %s (Lvl %d, HP %.1f, DMG %.1f, DEF %.1f, Dodge %.0f%%) at %s lane %s%n",
-                    i + 1, m.getName(), m.getLevel(), m.getHp(), m.getDamage(), m.getDefense(),
-                    m.getDodgeChance() * 100, mu.getPosition(), mu.getLane());
-        }
-    }
-
-    private double effectiveStrength(HeroUnit unit) {
-        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
-        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
-        return unit.getHero().getStrength() * e.getStrengthMultiplier();
-    }
-
-    private double effectiveDexterity(HeroUnit unit) {
-        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
-        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
-        return unit.getHero().getDexterity() * e.getDexterityMultiplier();
-    }
-
-    private double effectiveAgility(HeroUnit unit) {
-        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
-        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
-        return unit.getHero().getAgility() * e.getAgilityMultiplier();
-    }
-
-    // Short status line at the top of a hero's turn
-    public void printSingleHeroStatus(HeroUnit unit) {
-        Hero h = unit.getHero();
-        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
-
-        double str = effectiveStrength(unit);
-        double dex = effectiveDexterity(unit);
-        double agi = effectiveAgility(unit);
-
-        System.out.printf("%s (Lvl %d) HP %.0f MP %.0f Gold %.0f Pos %s Terrain %s | STR %.1f DEX %.1f AGI %.1f%n",
-                h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
-                unit.getPosition(), t, str, dex, agi);
-    }
-
+    /**
+     * Displays detailed information about a hero, including position, terrain-adjusted
+     * effective stats, and currently equipped weapon and armor.
+     */
     private void showHeroInfo(HeroUnit unit) {
         Hero h = unit.getHero();
 
@@ -374,171 +413,10 @@ public class LegendsOfValorGame {
         }
     }
 
-    private void openMarketMenu(HeroUnit unit) {
-        Hero hero = unit.getHero();
-
-        while (true) {
-
-            // ✅ STEP 1: show full catalog FIRST
-            showFullMarketCatalog();
-
-            // ✅ STEP 2: then action menu
-            System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
-            System.out.println("Gold: " + (int) hero.getGold());
-            System.out.println("1) Buy");
-            System.out.println("2) Sell");
-            System.out.println("3) Exit Market");
-
-            int choice = readInt(scanner, 1, 3);
-
-            if (choice == 3)
-                return;
-
-            if (choice == 1) {
-                buyCategoryMenu(hero);
-            } else { // choice == 2
-                handleSell(hero);
-            }
-        }
-    }
-
-    private void buyCategoryMenu(Hero hero) {
-        while (true) {
-            System.out.println("\n--- What do you want to buy? ---");
-            System.out.println("1) Weapons");
-            System.out.println("2) Armors");
-            System.out.println("3) Potions");
-            System.out.println("4) Spells");
-            System.out.println("0) Back");
-
-            int choice = readInt(scanner, 0, 4);
-            if (choice == 0)
-                return;
-
-            switch (choice) {
-                case 1:
-                    handleBuyByType(hero, Weapon.class);
-                    break;
-                case 2:
-                    handleBuyByType(hero, Armor.class);
-                    break;
-                case 3:
-                    handleBuyByType(hero, Potion.class);
-                    break;
-                case 4:
-                    handleBuyByType(hero, Spell.class);
-                    break;
-            }
-        }
-    }
-
-    private void showFullMarketCatalog() {
-        System.out.println("\n===== MARKET CATALOG =====");
-        market.printAllItems();
-    }
-
-    private void handleBuyByType(Hero hero, Class<? extends Item> clazz) {
-        List<Item> stock = market.getStock();
-        List<Item> filtered = new ArrayList<>();
-
-        for (Item it : stock) {
-            if (clazz.isInstance(it))
-                filtered.add(it);
-        }
-
-        if (filtered.isEmpty()) {
-            System.out.println("No items available in this category.");
-            return;
-        }
-
-        System.out.println("\n--- Buy " + clazz.getSimpleName() + "s ---");
-        System.out.println("Gold: " + (int) hero.getGold());
-
-        for (int i = 0; i < filtered.size(); i++) {
-            Item it = filtered.get(i);
-            System.out.printf("%d) %s | price %d | lvl req %d%n",
-                    i + 1, it.getName(), it.getPrice(), it.getLevelRequired());
-        }
-        System.out.println("0) Cancel");
-
-        int choice = readInt(scanner, 0, filtered.size());
-        if (choice == 0)
-            return;
-
-        Item selected = filtered.get(choice - 1);
-
-        if (market.buy(hero, selected)) {
-            System.out.println("Purchased: " + selected.getName());
-            System.out.println("Remaining Gold: " + (int) hero.getGold());
-        } else {
-            System.out.println("Cannot buy item (level too low or insufficient gold).");
-            System.out.println("Current Gold: " + (int) hero.getGold());
-        }
-    }
-
-    private void handleBuy(Hero hero) {
-        List<Item> stock = market.getStock();
-
-        if (stock.isEmpty()) {
-            System.out.println("Market is out of stock.");
-            return;
-        }
-
-        System.out.println("\n--- Buy Items ---");
-        for (int i = 0; i < stock.size(); i++) {
-            Item it = stock.get(i);
-            System.out.printf("%d) %s | price %d | lvl req %d%n",
-                    i + 1,
-                    it.getName(),
-                    it.getPrice(),
-                    it.getLevelRequired());
-        }
-        System.out.println("0) Cancel");
-
-        int choice = readInt(scanner, 0, stock.size());
-        if (choice == 0)
-            return;
-
-        Item selected = stock.get(choice - 1);
-        if (market.buy(hero, selected)) {
-            System.out.println("Purchased: " + selected.getName());
-            System.out.println("Remaining Gold: " + (int) hero.getGold());
-        } else {
-            System.out.println("Cannot buy item (level too low or insufficient gold).");
-            System.out.println("Current Gold: " + (int) hero.getGold());
-        }
-
-    }
-
-    private void handleSell(Hero hero) {
-        List<Item> items = hero.getInventory().getAllItems();
-
-        if (items.isEmpty()) {
-            System.out.println("You have no items to sell.");
-            return;
-        }
-
-        System.out.println("\n--- Sell Items ---");
-        for (int i = 0; i < items.size(); i++) {
-            Item it = items.get(i);
-            System.out.printf("%d) %s | sell price %d%n",
-                    i + 1,
-                    it.getName(),
-                    it.getPrice() / 2);
-        }
-        System.out.println("0) Cancel");
-
-        int choice = readInt(scanner, 0, items.size());
-        if (choice == 0)
-            return;
-
-        Item selected = items.get(choice - 1);
-        market.sell(hero, selected);
-        System.out.println("Sold: " + selected.getName());
-        System.out.println("Updated Gold: " + (int) hero.getGold());
-
-    }
-
+    /**
+     * Displays the specified hero’s inventory to the console, grouped by item type
+     * and formatted with relevant item statistics.
+     */
     private void showHeroInventory(HeroUnit unit) {
         Hero h = unit.getHero();
         Inventory inv = h.getInventory();
@@ -614,14 +492,11 @@ public class LegendsOfValorGame {
             System.out.println("  (none)");
     }
 
-    private void monstersTurn() {
-        for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
-            monsterBehavior.takeTurn(unit, this);
-        }
-    }
-
-    // ========= Movement & range queries used by actions / AI =========
-
+    /**
+     * Determines whether a hero can legally move to the specified position,
+     * enforcing board bounds, terrain rules, occupancy constraints,
+     * and lane-based monster blocking logic.
+     */
     public boolean canHeroMoveTo(HeroUnit unit, Position dest) {
         if (!board.inBounds(dest))
             return false;
@@ -655,7 +530,244 @@ public class LegendsOfValorGame {
 
         return true;
     }
+    /**
+     * Prints the current status of all monsters on the board,
+     * including stats, position, and lane information.
+     */
+    private void printMonstersStatus() {
+        if (monstersOnBoard.isEmpty()) {
+            System.out.println("(No monsters on board)");
+            return;
+        }
+        System.out.println("\nMonsters on board:");
+        for (int i = 0; i < monstersOnBoard.size(); i++) {
+            MonsterUnit mu = monstersOnBoard.get(i);
+            Monster m = mu.getMonster();
+            System.out.printf("M%d) %s (Lvl %d, HP %.1f, DMG %.1f, DEF %.1f, Dodge %.0f%%) at %s lane %s%n",
+                    i + 1, m.getName(), m.getLevel(), m.getHp(), m.getDamage(), m.getDefense(),
+                    m.getDodgeChance() * 100, mu.getPosition(), mu.getLane());
+        }
+    }
+    /**
+     * Computes and returns the hero’s effective strength based on
+     * the terrain the hero is currently standing on.
+     */
+    private double effectiveStrength(HeroUnit unit) {
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
+        return unit.getHero().getStrength() * e.getStrengthMultiplier();
+    }
+    /**
+     * Computes and returns the hero’s effective dexterity based on
+     * the terrain the hero is currently standing on.
+     */
+    private double effectiveDexterity(HeroUnit unit) {
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
+        return unit.getHero().getDexterity() * e.getDexterityMultiplier();
+    }
+    /**
+     * Computes and returns the hero’s effective agility based on
+     * the terrain the hero is currently standing on.
+     */
+    private double effectiveAgility(HeroUnit unit) {
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+        TerrainEffect e = TerrainEffectFactory.forTerrain(t);
+        return unit.getHero().getAgility() * e.getAgilityMultiplier();
+    }
 
+    // Short status line at the top of a hero's turn
+    public void printSingleHeroStatus(HeroUnit unit) {
+        Hero h = unit.getHero();
+        TerrainType t = board.getTile(unit.getPosition()).getTerrainType();
+
+        double str = effectiveStrength(unit);
+        double dex = effectiveDexterity(unit);
+        double agi = effectiveAgility(unit);
+
+        System.out.printf("%s (Lvl %d) HP %.0f MP %.0f Gold %.0f Pos %s Terrain %s | STR %.1f DEX %.1f AGI %.1f%n",
+                h.getName(), h.getLevel(), h.getHp(), h.getMana(), h.getGold(),
+                unit.getPosition(), t, str, dex, agi);
+    }
+
+    /**
+     * Opens and manages the market interaction loop for a hero, allowing
+     * buying, selling, exiting the market, or quitting the game.
+     */
+    private void openMarketMenu(HeroUnit unit) {
+        Hero hero = unit.getHero();
+
+        while (true) {
+
+            showFullMarketCatalog();
+
+            System.out.println("\n=== MARKETPLACE (Hero Nexus) ===");
+            System.out.println("Gold: " + (int) hero.getGold());
+            System.out.println("1) Buy");
+            System.out.println("2) Sell");
+            System.out.println("3) Exit Market");
+            System.out.println("4) Quit Game");
+
+
+
+            int choice = readInt(scanner, 1, 4);
+
+            if (choice == 4) {
+                System.out.println("You chose to quit Legends of Valor.");
+                quitRequested = true;
+                showPostQuitMenu();
+                return;
+            }
+
+
+            if (choice == 3)
+                return;
+
+            if (choice == 1) {
+                buyCategoryMenu(hero);
+            } else { // choice == 2
+                handleSell(hero);
+            }
+        }
+    }
+    /**
+     * Displays a purchase-category menu and routes the hero to the
+     * corresponding item-buying workflow until the user exits.
+     */
+    private void buyCategoryMenu(Hero hero) {
+        while (true) {
+            System.out.println("\n--- What do you want to buy? ---");
+            System.out.println("1) Weapons");
+            System.out.println("2) Armors");
+            System.out.println("3) Potions");
+            System.out.println("4) Spells");
+            System.out.println("0) Back");
+
+            int choice = readInt(scanner, 0, 4);
+            if (choice == 0)
+                return;
+
+            switch (choice) {
+                case 1:
+                    handleBuyByType(hero, Weapon.class);
+                    break;
+                case 2:
+                    handleBuyByType(hero, Armor.class);
+                    break;
+                case 3:
+                    handleBuyByType(hero, Potion.class);
+                    break;
+                case 4:
+                    handleBuyByType(hero, Spell.class);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Displays the complete market catalog of available items to the console.
+     */
+    private void showFullMarketCatalog() {
+        System.out.println("\n===== MARKET CATALOG =====");
+        market.printAllItems();
+    }
+    /**
+     * Handles purchasing items of a specific type for a hero by filtering market stock,
+     * processing user selection, and completing or rejecting the transaction.
+     */
+    private void handleBuyByType(Hero hero, Class<? extends Item> clazz) {
+        List<Item> stock = market.getStock();
+        List<Item> filtered = new ArrayList<>();
+
+        for (Item it : stock) {
+            if (clazz.isInstance(it))
+                filtered.add(it);
+        }
+
+        if (filtered.isEmpty()) {
+            System.out.println("No items available in this category.");
+            return;
+        }
+
+        System.out.println("\n--- Buy " + clazz.getSimpleName() + "s ---");
+        System.out.println("Gold: " + (int) hero.getGold());
+
+        for (int i = 0; i < filtered.size(); i++) {
+            Item it = filtered.get(i);
+            System.out.printf("%d) %s | price %d | lvl req %d%n",
+                    i + 1, it.getName(), it.getPrice(), it.getLevelRequired());
+        }
+        System.out.println("0) Cancel");
+        System.out.println("-1) Quit Game");
+
+        int choice = readInt(scanner, -1, filtered.size());
+
+        if (choice == -1) {
+            System.out.println("You chose to quit Legends of Valor.");
+            quitRequested = true;
+            showPostQuitMenu();
+            return;
+        }
+
+        if (choice == 0) return;
+
+        Item selected = filtered.get(choice - 1);
+
+        if (market.buy(hero, selected)) {
+            System.out.println("Purchased: " + selected.getName());
+            System.out.println("Remaining Gold: " + (int) hero.getGold());
+        } else {
+            System.out.println("Cannot buy item (level too low or insufficient gold).");
+            System.out.println("Current Gold: " + (int) hero.getGold());
+        }
+    }
+
+    /**
+     * Handles the item-selling interaction for a hero, allowing the player to
+     * select, sell, cancel, or quit, and updates inventory and gold accordingly.
+     */
+    private void handleSell(Hero hero) {
+        List<Item> items = hero.getInventory().getAllItems();
+
+        if (items.isEmpty()) {
+            System.out.println("You have no items to sell.");
+            return;
+        }
+
+        System.out.println("\n--- Sell Items ---");
+        for (int i = 0; i < items.size(); i++) {
+            Item it = items.get(i);
+            System.out.printf("%d) %s | sell price %d%n",
+                    i + 1,
+                    it.getName(),
+                    it.getPrice() / 2);
+        }
+        System.out.println("0) Cancel");
+        System.out.println("-1) Quit Game");
+
+        int choice = readInt(scanner, -1, items.size());
+
+        if (choice == -1) {
+            System.out.println("You chose to quit Legends of Valor.");
+            quitRequested = true;
+            showPostQuitMenu();
+            return;
+        }
+
+        if (choice == 0) return;
+
+
+        Item selected = items.get(choice - 1);
+        market.sell(hero, selected);
+        System.out.println("Sold: " + selected.getName());
+        System.out.println("Updated Gold: " + (int) hero.getGold());
+
+    }
+
+    /**
+     * Moves a hero to a new position, updates board occupancy and hero state,
+     * and applies terrain-based buff notifications when entering special tiles.
+     */
     public void moveHero(HeroUnit unit, Position dest) {
         LegendsTile fromTile = board.getTile(unit.getPosition());
         TerrainType fromType = fromTile.getTerrainType();
@@ -697,6 +809,10 @@ public class LegendsOfValorGame {
         moveHero(unit, unit.getNexusPosition());
     }
 
+    /**
+     * Determines whether a monster can legally move to the specified position,
+     * validating board bounds, terrain restrictions, and tile occupancy.
+     */
     public boolean canMonsterMoveTo(MonsterUnit unit, Position dest) {
         if (!board.inBounds(dest))
             return false;
@@ -712,6 +828,10 @@ public class LegendsOfValorGame {
         return true;
     }
 
+    /**
+     * Moves a monster to a new board position by updating tile occupancy
+     * and the monster unit’s internal position state.
+     */
     public void moveMonster(MonsterUnit unit, Position dest) {
         LegendsTile fromTile = board.getTile(unit.getPosition());
         LegendsTile toTile = board.getTile(dest);
@@ -720,6 +840,10 @@ public class LegendsOfValorGame {
         unit.setPosition(dest);
     }
 
+    /**
+     * Returns all living heroes within a given range of the specified position,
+     * based on row and column distance constraints.
+     */
     public List<HeroUnit> getHeroesInRange(Position center, int radius) {
         List<HeroUnit> result = new ArrayList<>();
         for (HeroUnit h : heroes) {
@@ -733,6 +857,10 @@ public class LegendsOfValorGame {
         return result;
     }
 
+    /**
+     * Returns all living monsters within a given Manhattan distance
+     * from the specified center position.
+     */
     public List<MonsterUnit> getMonstersInRange(Position center, int radius) {
         List<MonsterUnit> result = new ArrayList<>();
         for (MonsterUnit m : monstersOnBoard) {
@@ -746,6 +874,9 @@ public class LegendsOfValorGame {
         return result;
     }
 
+    /**
+     * Returns a list of all heroes excluding the specified hero unit.
+     */
     public List<HeroUnit> getOtherHeroes(HeroUnit unit) {
         List<HeroUnit> result = new ArrayList<>();
         for (HeroUnit h : heroes) {
@@ -783,8 +914,10 @@ public class LegendsOfValorGame {
         return result;
     }
 
-    // ==================== Combat helpers ====================
-
+    /**
+     * Executes a hero attack against a monster, applying terrain- and weapon-based
+     * damage, updating combo statistics, and processing monster defeat and rewards.
+     */
     public void heroAttack(HeroUnit attacker, MonsterUnit target) {
         Position pos = attacker.getPosition();
         LegendsTile tile = board.getTile(pos);
@@ -824,6 +957,10 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Executes a monster attack against a hero, applying terrain- and armor-aware
+     * damage, updating combo statistics, and handling hero death outcomes.
+     */
     public void monsterAttack(MonsterUnit attacker, HeroUnit target) {
         Position pos = attacker.getPosition();
         LegendsTile tile = board.getTile(pos);
@@ -866,6 +1003,10 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Grants gold and experience rewards to the hero that kills a monster,
+     * with rewards scaled by the monster’s level.
+     */
     public void rewardHeroesForKill(HeroUnit killer, Monster monster) {
         double goldReward = 500 * monster.getLevel(); // spec suggestion
         int expReward = 2 * monster.getLevel();
@@ -876,7 +1017,6 @@ public class LegendsOfValorGame {
         h.addGold(goldReward);
     }
 
-    // ==================== Round bookkeeping ====================
 
     private void regenHeroes() {
         for (HeroUnit h : heroes) {
@@ -905,6 +1045,45 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Displays a post-game menu and routes the player to the selected next action.
+     * Allows the user to start another game mode or exit the application.
+     *
+     * Side effects: reads user input, launches new game controllers, or terminates the program.
+     */
+    private void showPostQuitMenu() {
+        System.out.println("\nWhat would you like to do next?");
+        System.out.println("1) Play Monsters and Heroes");
+        System.out.println("2) Play Legends of Valor");
+        System.out.println("3) Quit Game Completely");
+
+        int choice = readInt(scanner, 1, 3);
+
+        switch (choice) {
+            case 1:
+                new GameController().startMonsterAndHeroes();
+                return;
+
+            case 2:
+                new LegendsOfValorGame(scanner).start();
+                return;
+
+            case 3:
+                System.out.println("Thank you for playing. Goodbye!");
+                System.exit(0);
+        }
+    }
+
+    /**
+     * Spawns a new wave of monsters at lane-specific nexus positions when the
+     * spawn interval is reached.
+     *
+     * Monsters are scaled to the highest current hero level and one monster
+     * is spawned per lane, unless the lane’s nexus tile is already occupied.
+     *
+     * Side effects: mutates board state, updates the active monster list,
+     * and resets the spawn counter when spawning occurs.
+     */
     private void maybeSpawnNewMonsters() {
         roundsSinceLastSpawn++;
 
@@ -942,6 +1121,12 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Checks whether the game has reached a terminal victory condition.
+     * Heroes win if any hero reaches a monster nexus tile.
+     * Monsters win if any monster reaches a hero nexus tile.
+     * @return true if either side has won; false otherwise
+     */
     private boolean checkVictoryConditions() {
         // Heroes win if any hero reaches a monster Nexus
         for (HeroUnit hu : heroes) {
@@ -964,8 +1149,16 @@ public class LegendsOfValorGame {
         return false;
     }
 
-    // ==================== Rendering ====================
 
+    /**
+     * Renders the current game board to the console in a grid-based layout.
+     *
+     * Each board row is printed with top and bottom borders, terrain indicators
+     * (including inaccessible tiles), and centered entity markers for heroes
+     * and monsters occupying each tile.
+     *
+     * Side effects: prints the board state to standard output.
+     */
     void renderBoard() {
         int size = board.getSize();
         System.out.println();
@@ -1016,6 +1209,10 @@ public class LegendsOfValorGame {
         System.out.println();
     }
 
+    /**
+     * Constructs and returns the horizontal border string for a given board row
+     * using terrain-specific symbols for visual consistency.
+     */
     private String borderRow(int r) {
         int size = board.getSize();
         StringBuilder sb = new StringBuilder();
@@ -1036,6 +1233,10 @@ public class LegendsOfValorGame {
         return -1;
     }
 
+    /**
+     * Returns the index of the specified monster in the active monster list,
+     * or -1 if the monster is not currently on the board.
+     */
     private int indexOfMonster(Monster monster) {
         for (int i = 0; i < monstersOnBoard.size(); i++) {
             if (monstersOnBoard.get(i).getMonster() == monster)
@@ -1044,8 +1245,11 @@ public class LegendsOfValorGame {
         return -1;
     }
 
-    // ==================== Utility ====================
 
+    /**
+     * Reads and validates an integer input from the user within a specified range.
+     * Re-prompts until a valid integer between min and max (inclusive) is entered.
+     */
     public int readInt(Scanner in, int min, int max) {
         while (true) {
             System.out.print("> ");
@@ -1063,6 +1267,10 @@ public class LegendsOfValorGame {
         }
     }
 
+    /**
+     * Returns a single-character symbol representing the terrain type of a tile
+     * for use in board border and grid rendering.
+     */
     private String terrainSymbol(LegendsTile tile) {
         switch (tile.getTerrainType()) {
             case HERO_NEXUS:

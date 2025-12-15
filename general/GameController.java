@@ -72,7 +72,7 @@ public class GameController {
             }
         }
     }
-    private void startMonsterAndHeroes() {
+    public void startMonsterAndHeroes() {
         view.showMessage("Welcome to the Classic Monsters & Heroes!");
         view.showMessage("Please enter your name:");
         playerName = scanner.nextLine().trim();
