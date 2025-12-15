@@ -4,7 +4,6 @@ import java.util.Random;
 
 /**
  * Board implementation dedicated to Legends of Valor.
- *
  * Layout (8x8) per PDF:
  * - 3 lanes of width 2 (TOP, MIDDLE, BOTTOM)
  * - Columns 2 and 5 are INACCESSIBLE walls between lanes
@@ -56,9 +55,6 @@ public class LegendsOfValorBoard {
         }
         return null; // column is a wall (2 or 5)
     }
-    public Lane laneForPosition(Position p) {
-        return laneForColumn(p.col);
-    }
 
     /**
      * Builder for LegendsOfValorBoard (Builder pattern).
@@ -70,31 +66,6 @@ public class LegendsOfValorBoard {
         private double koulouRate = 0.10;
         private double obstacleRate = 0.20;
         private long randomSeed = System.currentTimeMillis();
-
-        public Builder withBushRate(double bushRate) {
-            this.bushRate = bushRate;
-            return this;
-        }
-
-        public Builder withCaveRate(double caveRate) {
-            this.caveRate = caveRate;
-            return this;
-        }
-
-        public Builder withKoulouRate(double koulouRate) {
-            this.koulouRate = koulouRate;
-            return this;
-        }
-
-        public Builder withObstacleRate(double obstacleRate) {
-            this.obstacleRate = obstacleRate;
-            return this;
-        }
-
-        public Builder withRandomSeed(long seed) {
-            this.randomSeed = seed;
-            return this;
-        }
 
         public LegendsOfValorBoard build() {
             LegendsTile[][] grid = new LegendsTile[SIZE][SIZE];

@@ -27,7 +27,11 @@ public class Board {
     }
 
     public Board(int size, double inaccessibleRate, double marketRate, double commonRate) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Board size must be positive.");
+        }
         this.size = size;
+
         this.inaccessibleRate = inaccessibleRate;
         this.marketRate = marketRate;
         this.commonRate = commonRate;
@@ -95,11 +99,6 @@ public class Board {
             return true;
         }
         return false;
-    }
-
-    /** Increments monster count without tile assignment. */
-    public void registerMainMonster() {
-        mainMonstersRemaining++;
     }
 
     public void mainMonsterDefeated() {

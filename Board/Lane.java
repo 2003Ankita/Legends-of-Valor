@@ -27,6 +27,8 @@ public enum Lane {
 
     /** @return true if column index belongs to this lane. */
     public boolean containsColumn(int col) {
+        if (col < 0) return false;
         return col == leftColumn || col == rightColumn;
     }
+
 }
