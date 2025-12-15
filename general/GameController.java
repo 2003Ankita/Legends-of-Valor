@@ -13,7 +13,6 @@ import Monsters.*;
  */
 public class GameController {
 
-    /* ================= CONSTANTS ================= */
     private static final int DEFAULT_BOARD_SIZE = 8;
     private static final double DEFAULT_BATTLE_PROB = 0.30;
 
@@ -22,7 +21,7 @@ public class GameController {
     private static final String MSG_DANGER = "⚠ This area feels dangerous...";
     private static final String MSG_WIN = "🎉 Triumph! All monster tiles have fallen — the realm is safe again!";
 
-    /* ================= GAME STATE ================= */
+
     private Board board;
     private Party party;
     private GameView view;
@@ -42,9 +41,6 @@ public class GameController {
         random = new Random();
     }
 
-    /* ========================================================
-       ENTRY POINT
-       ======================================================== */
     public void startGame() {
 
         while (true) {
@@ -61,8 +57,6 @@ public class GameController {
 
             switch (mode) {
                 case 1:
-//                    startMonsterAndHeroes();
-//                    return;
                     Game game = new MonstersAndHeroesGame(scanner);
                     game.startGame();
                     return;
@@ -95,16 +89,12 @@ public class GameController {
     }
     private void startLegendsOfValorMode() {
         System.out.println("\n⚔ Starting Legends of Valor ⚔\n");
-//        LegendsOfValorGame lov = new LegendsOfValorGame(scanner);
-//        lov.start();
             Game game = new LegendsOfValorGame(scanner);
             game.startGame();
     }
 
 
-    /* ========================================================
-       LOAD HEROES / MONSTERS / ITEMS
-       ======================================================== */
+
     private void loadData() {
         heroPool = new ArrayList<>();
         monsterPool = new ArrayList<>();
@@ -138,9 +128,7 @@ public class GameController {
         itemPool.add(new Spell("Ice Shard", 600, 1, SpellType.ICE, 180, 40));
     }
 
-    /* ========================================================
-       HERO SELECTION
-       ======================================================== */
+
     private void chooseHeroes() {
         view.showMessage("How many heroes join your quest? (1–3): ");
         int n = readIntInRange(1, 3);
@@ -174,10 +162,6 @@ public class GameController {
         party = new Party(chosen);
     }
 
-    /* ========================================================
-       MONSTER PLACEMENT
-       FIXED: removed double increment bug
-       ======================================================== */
     private void placeInitialMonsters() {
         int count = party.getHeroes().size();
         int placed = 0;
@@ -224,9 +208,7 @@ public class GameController {
         }
     }
 
-    /* ========================================================
-       GAME LOOP
-       ======================================================== */
+
     private void mainLoop() {
 
         boolean running = true;
@@ -251,7 +233,7 @@ public class GameController {
 
             /* --- Board Render --- */
             view.render(board, party);
-            view.showMessage("\nCommands: W/A/S/D = move | I = info | M = market | Q = quit");
+            view.showMessage("\nCommands: Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right | I = info | M = market | Q = quit");
             view.showMessage("Enter command:");
 
             char cmd = readChar();
@@ -278,7 +260,6 @@ public class GameController {
                 return;
             }
 
-            /* --- Tile Events --- */
             Tile t = board.getTile(party.getRow(), party.getCol());
 
             // main battle
@@ -312,9 +293,7 @@ public class GameController {
         }
     }
 
-    /* ========================================================
-       MOVEMENT (FULLY FIXED)
-       ======================================================== */
+
     private boolean moveParty(int dr, int dc) {
         int nr = party.getRow() + dr;
         int nc = party.getCol() + dc;
@@ -335,9 +314,7 @@ public class GameController {
         return true;
     }
 
-    /* ========================================================
-       MARKET
-       ======================================================== */
+
     private void enterMarket() {
         Tile tile = board.getTile(party.getRow(), party.getCol());
 
@@ -470,9 +447,6 @@ public class GameController {
         return new ArrayList<>(itemPool.subList(0, Math.min(10, itemPool.size())));
     }
 
-    /* ========================================================
-       BATTLE
-       ======================================================== */
     private void startBattle() {
         view.showMessage("\n⚔ A battle begins!");
 
@@ -500,9 +474,7 @@ public class GameController {
         ).start();
     }
 
-    /* ========================================================
-       HELPERS
-       ======================================================== */
+
 
     private int readIntInRange(int min, int max) {
         while (true) {
