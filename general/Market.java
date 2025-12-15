@@ -88,58 +88,60 @@ public class Market {
 
     public void printAllItems() {
 
-        System.out.println("\n===== Weapons =====");
+        System.out.println("\n⚔️ ===== WEAPONS AVAILABLE =====");
         int count = 0;
         for (Item item : stock) {
             if (item instanceof Weapon) {
                 Weapon w = (Weapon) item;
-                System.out.printf("%d) %s | Price: %d | LevelReq: %d | Damage: %.1f | Hands: %d%n",
+                System.out.printf("%d) %s | 💰 %d | 🔓 Lvl %d | ⚔️ Dmg %.1f | ✋ Hands %d%n",
                         count++, w.getName(), w.getPrice(),
                         w.getLevelRequired(), w.getDamage(), w.getHandsRequired());
             }
         }
         if (count == 0)
-            System.out.println("(none)");
+            System.out.println("(No items available)");
 
-        System.out.println("\n===== Armors =====");
+        System.out.println("\n🛡️ ===== ARMORS AVAILABLE =====");
+
         count = 0;
         for (Item item : stock) {
             if (item instanceof Armor) {
                 Armor a = (Armor) item;
-                System.out.printf("%d) %s | Price: %d | LevelReq: %d | Reduction: %.1f%n",
+                System.out.printf("%d) %s | 💰 %d | 🔓 Lvl %d | 🛡️ Reduction %.1f%n",
                         count++, a.getName(), a.getPrice(),
                         a.getLevelRequired(), a.getDamageReduction());
             }
         }
         if (count == 0)
-            System.out.println("(none)");
+            System.out.println("(No items available)");
+        System.out.println("\n🧪 ===== POTIONS AVAILABLE =====");
 
-        System.out.println("\n===== Potions =====");
         count = 0;
         for (Item item : stock) {
             if (item instanceof Potion) {
                 Potion p = (Potion) item;
-                System.out.printf("%d) %s | Price: %d | LevelReq: %d | EffectAmount: %.1f | Desc: %s%n",
+                System.out.printf("%d) %s | 💰 %d | 🔓 Lvl %d | ✨ Effect %.1f | 📜 %s%n",
                         count++, p.getName(), p.getPrice(),
                         p.getLevelRequired(), p.getAmount(), p.getStat());
             }
         }
         if (count == 0)
-            System.out.println("(none)");
+            System.out.println("(No items available)");
 
-        System.out.println("\n===== Spells =====");
+        System.out.println("\n🔮 ===== SPELLS AVAILABLE =====");
+
         count = 0;
         for (Item item : stock) {
             if (item instanceof Spell) {
                 Spell s = (Spell) item;
-                System.out.printf("%d) %s | Price: %d | LevelReq: %d | Damage: %.1f | Mana: %.1f | Type: %s%n",
+                System.out.printf("%d) %s | 💰 %d | 🔓 Lvl %d | 🔥 Dmg %.1f | 🔮 Mana %.1f | 🧬 %s%n",
                         count++, s.getName(), s.getPrice(),
                         s.getLevelRequired(), s.getDamage(),
                         s.getManaCost(), s.getType());
             }
         }
         if (count == 0)
-            System.out.println("(none)");
+            System.out.println("(No items available)");
     }
 
 }

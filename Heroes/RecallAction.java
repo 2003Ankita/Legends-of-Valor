@@ -12,7 +12,7 @@ public class RecallAction implements HeroAction {
     @Override
     public boolean execute(LegendsOfValorGame game, HeroUnit heroUnit, Scanner in) {
         game.recallHero(heroUnit);
-        System.out.println(heroUnit.getHero().getName() + " recalled to Nexus.");
+        System.out.println("🔙 " + heroUnit.getHero().getName() + " has returned safely to the Hero Nexus.");
         return true;
     }
 }

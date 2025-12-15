@@ -47,7 +47,9 @@ public class Potion extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " +" + (int) amount + " " + stat;
+        return super.info()
+                + " | 🧪 Boost +" + (int) amount
+                + " → " + stat;
     }
 
     /**

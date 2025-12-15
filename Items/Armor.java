@@ -43,7 +43,8 @@ public class Armor extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " reduction " + (int) damageReduction;
+        return super.info()
+                + " | 🛡️ Damage Reduction " + (int) damageReduction;
     }
 
     /**

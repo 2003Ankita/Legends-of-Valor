@@ -17,41 +17,41 @@ public class CastSpellAction implements HeroAction {
         List<Spell> spells = hero.getSpells();
 
         if (spells == null || spells.isEmpty()) {
-            System.out.println("No spells available.");
+            System.out.println("📜 You have no spells available to cast.");
             return false;
         }
 
-        System.out.println("\nAvailable spells:");
+        System.out.println("\n🔮 Available Spells:");
         for (int i = 0; i < spells.size(); i++) {
             Spell s = spells.get(i);
-            System.out.printf("%d) %s (dmg %.1f, mana %.1f, type %s)%n",
+            System.out.printf("%d) %s | 🔥 Dmg %.1f | 🔮 Mana %.1f | 🧬 Type %s%n",
                     i + 1, s.getName(), s.getDamage(), s.getManaCost(), s.getType());
         }
 
-        System.out.println("Choose a spell (0 to cancel):");
+        System.out.println("👉 Choose a spell to cast (0 to cancel):");
         int idx = game.readInt(in, 0, spells.size());
         if (idx == 0) {
-            System.out.println("Cancel casting spell.");
+            System.out.println("↩️ Spell casting cancelled.");
             return false;
         }
         Spell spell = spells.get(idx - 1);
 
         if (hero.getMana() < spell.getManaCost()) {
-            System.out.println("Not enough MP.");
+            System.out.println("❌ Not enough mana to cast this spell.");
             return false;
         }
 
         Position pos = unit.getPosition();
         List<MonsterUnit> targets = game.getMonstersInRange(pos, 1);
         if (targets.isEmpty()) {
-            System.out.println("No monsters in range to cast spell on.");
+            System.out.println("⚠️ No monsters are within spell range.");
             return false;
         }
 
-        System.out.println("Choose target monster:");
+        System.out.println("🎯 Choose a target monster:");
         for (int i = 0; i < targets.size(); i++) {
             Monster m = targets.get(i).getMonster();
-            System.out.printf("%d) %s (HP %.1f, lvl %d)%n",
+            System.out.printf("%d) %s | ❤️ HP %.1f | ⭐ Lvl %d%n",
                     i + 1, m.getName(), m.getHp(), m.getLevel());
         }
 
@@ -65,11 +65,11 @@ public class CastSpellAction implements HeroAction {
                 hero, target.getMonster(), spell, tile.getTerrainType());
 
         target.getMonster().takeDamage(dmg);
-        System.out.printf("%s casts %s on %s for %.1f damage%n",
+        System.out.printf("✨ %s casts %s on %s, dealing %.1f damage!%n",
                 hero.getName(), spell.getName(), target.getMonster().getName(), dmg);
 
         if (!target.isAlive()) {
-            System.out.println(target.getMonster().getName() + " is defeated!");
+            System.out.println("🏆 " + target.getMonster().getName() + " has been defeated!");
             game.getBoard().getTile(target.getPosition()).removeMonster();
             game.getMonstersOnBoard().remove(target);
             game.rewardHeroesForKill(unit, target.getMonster());

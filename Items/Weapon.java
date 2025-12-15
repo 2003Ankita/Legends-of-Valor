@@ -49,7 +49,9 @@ public class Weapon extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " dmg " + (int) damage + " hands " + handsRequired;
+        return super.info()
+                + " | ⚔️ Dmg " + (int) damage
+                + " | ✋ Hands " + handsRequired;
     }
 
     /**

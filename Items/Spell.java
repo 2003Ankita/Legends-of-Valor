@@ -58,7 +58,10 @@ public class Spell extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " " + type + " dmg " + (int) damage + " MPcost " + (int) manaCost;
+        return super.info()
+                + " | 🔮 Type " + type
+                + " | 🔥 Dmg " + (int) damage
+                + " | 🧬 Mana " + (int) manaCost;
     }
 
     /**

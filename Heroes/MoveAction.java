@@ -17,7 +17,7 @@ public class MoveAction implements HeroAction {
             System.out.print("Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right ");
             String line = in.nextLine().trim().toUpperCase();
             if (line.isEmpty()) {
-                System.out.println("Please enter W, A, S, or D.");
+                System.out.println("❌ Invalid input. Please enter W, A, S, or D.");
                 continue;
             }
             char ch = line.charAt(0);
@@ -35,7 +35,7 @@ public class MoveAction implements HeroAction {
                     dc = 1;
                     break; // east
                 default:
-                    System.out.println("Invalid direction. Use W, A, S, or D.");
+                    System.out.println("❌ Invalid direction. Use W, A, S, or D to move.");
                     continue;
             }
             break;
@@ -43,22 +43,24 @@ public class MoveAction implements HeroAction {
         Position current = unit.getPosition();
         Position dest = current.translate(dr, dc);
         if (!game.getBoard().inBounds(dest)) {
-            System.out.println("You cannot move outside the board boundaries. Choose again");
+            System.out.println("🚫 You cannot move outside the battlefield. Choose another direction.");
             return false;
         }
 
         LegendsTile destTile = game.getBoard().getTile(dest);
         if (destTile.getTerrainType() == TerrainType.OBSTACLE) {
-            System.out.print("There is an obstacle ahead. "
-                    + "Do you want to spend one turn to clear this tile? (y/n) ");
+            System.out.print("🧱 An obstacle blocks your path. Spend one turn to clear it? (y/n): ");
+
             String ans = in.nextLine().trim().toLowerCase();
 
             if (!ans.isEmpty() && ans.charAt(0) == 'y') {
                 // Change terrain from OBSTACLE to PLAIN
                 destTile.setTerrainType(TerrainType.PLAIN);
-                System.out.println("You cleared the obstacle tile. Your turn ends.");
+                System.out.println("✅ Obstacle cleared successfully. Your turn ends.");
+
             } else {
-                System.out.println("Obstacle not cleared. Choose a different action/move.");
+                System.out.println("↩️ Obstacle remains. Choose a different action or move.");
+
                 return false; // don't consume turn if they decline
             }
             return true; // consumes turn only when cleared
@@ -69,7 +71,8 @@ public class MoveAction implements HeroAction {
             game.moveHero(unit, dest);
             return true; // valid move consumes the turn
         } else {
-            System.out.println("Illegal move for Legends of Valor. Try again.");
+            System.out.println("❌ That move is not allowed in Legends of Valor. Try again.");
+
             return false; // IMPORTANT: retry; do NOT end turn
         }
 

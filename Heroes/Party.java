@@ -66,13 +66,13 @@ public class Party {
         for (int i = 0; i < heroes.size(); i++) {
             Hero h = heroes.get(i);
             if (i > 0) sb.append(" | ");
-            sb.append(h.getName())
-                    .append(" HP ").append((int) h.getHp())
-                    .append(" MP ").append((int) h.getMana());
+            sb.append("🧙 ").append(h.getName())
+                    .append(" | ❤️ HP ").append((int) h.getHp())
+                    .append(" | 🔮 MP ").append((int) h.getMana());
         }
 
-        sb.append(" | Party level ").append(getHighestLevel());
-        sb.append(" | Gold ").append((int) getTotalGold());
+        sb.append(" | ⭐ Party Level ").append(getHighestLevel());
+        sb.append(" | 💰 Total Gold ").append((int) getTotalGold());
 
         return sb.toString();
     }
