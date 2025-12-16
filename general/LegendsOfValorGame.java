@@ -341,12 +341,6 @@ public class LegendsOfValorGame extends Game {
      * Executes a turn for each active monster by delegating behavior
      * to the monster AI controller.
      */
-    // @Override
-    // protected void monstersTurn() {
-    // for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
-    // monsterBehavior.takeTurn(unit, this);
-    // }
-    // }
     @Override
     protected void monstersTurn() {
         for (MonsterUnit unit : new ArrayList<>(monstersOnBoard)) {
@@ -1217,9 +1211,6 @@ public class LegendsOfValorGame extends Game {
                     content += RED + "M" + (indexOfMonster(tile.getMonster()) + 1) + RESET;
 
                 }
-//
-//                String centered = String.format("%-7s", String.format("%3s", content));
-//                mid2.append("|").append(centered).append("|");
                 String centered = pad(String.format("%3s", content), 7);
                 mid2.append("|").append(centered).append("|");
 
@@ -1243,8 +1234,6 @@ public class LegendsOfValorGame extends Game {
         int size = board.getSize();
         StringBuilder sb = new StringBuilder();
         for (int c = 0; c < size; c++) {
-//            String t = terrainSymbol(board.getTile(r, c));
-//            sb.append(t).append(" - ").append(t).append(" - ").append(t);
             String t = terrainSymbol(board.getTile(r, c));
             sb.append(pad(t, 1))
                     .append(" - ")
@@ -1303,26 +1292,6 @@ public class LegendsOfValorGame extends Game {
      * Returns a single-character symbol representing the terrain type of a tile
      * for use in board border and grid rendering.
      */
-//    private String terrainSymbol(LegendsTile tile) {
-//        switch (tile.getTerrainType()) {
-//            case HERO_NEXUS:
-//                return "N";
-//            case MONSTER_NEXUS:
-//                return "N";
-//            case INACCESSIBLE:
-//                return "I";
-//            case BUSH:
-//                return "B";
-//            case CAVE:
-//                return "C";
-//            case KOULOU:
-//                return "K";
-//            case OBSTACLE:
-//                return "O";
-//            default:
-//                return "P";
-//        }
-//    }
     private String terrainSymbol(LegendsTile tile) {
         switch (tile.getTerrainType()) {
             case HERO_NEXUS:
