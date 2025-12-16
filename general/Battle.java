@@ -78,7 +78,7 @@ public class Battle {
                 continue;
             boolean done = false;
             while (!done) {
-                view.showMessage("\\n⚔" + h.getName() + "'s turn — choose your action wisely.");
+                view.showMessage("\\n⚔ " + h.getName() + "'s turn — choose your action wisely.");
                 view.showMessage("1) Attack an enemy");
                 view.showMessage("2)Cast a powerful spell");
                 view.showMessage("3) Use a potion");

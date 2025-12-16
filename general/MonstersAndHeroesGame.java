@@ -388,7 +388,7 @@ protected void initializeGame() {
                 view.showMessage((i + 1) + ") " + items.get(i).info());
             view.showMessage((items.size() + 1) + ") Back");
             view.showMessage((items.size() + 2) + ") Quit Game");
-
+            view.showMessage("Choose any displayed number:");
             int choice = readIntInRange(1, items.size() + 2);
 
             if (choice == items.size() + 1)
@@ -408,7 +408,7 @@ protected void initializeGame() {
                 view.showMessage("Buy another item?");
                 view.showMessage("1) Yes");
                 view.showMessage("2) No");
-
+                view.showMessage("Choose an option (1–2):");
                 int again = readIntInRange(1, 2);
                 if (again == 2) return;   // back to market menu
             } else {
