@@ -413,6 +413,7 @@ public class Battle {
             map[idxShown - 1] = i;
             idxShown++;
         }
+        view.showMessage("choose an option");
         int choice = readIntInRange(1, idxShown - 1);
         return monsters.get(map[choice - 1]);
     }

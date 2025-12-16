@@ -276,7 +276,7 @@ protected void initializeGame() {
                 if (board.allMonstersCleared()) {
                     view.showMessage("🎉 Congratulations, " + playerName + "! " + MSG_WIN);
                     promptNextAction();
-                    return;   // 🔴 THIS WAS MISSING
+                    return;
                 }
                 continue;
             }
@@ -358,7 +358,7 @@ protected void initializeGame() {
             view.showMessage("2) 💰 Sell items");
             view.showMessage("3) 🚪 Leave market");
             view.showMessage("4) Quit Game");
-
+            view.showMessage("Choose an option(1-4)");
             int choice = readIntInRange(1, 4);
 
             switch (choice) {
