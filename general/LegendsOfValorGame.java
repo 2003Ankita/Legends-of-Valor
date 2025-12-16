@@ -648,6 +648,7 @@ public class LegendsOfValorGame extends Game {
             System.out.println("3) Potions");
             System.out.println("4) Spells");
             System.out.println("0) Back");
+            System.out.println("Choose from above options(0-4)");
 
             int choice = readInt(scanner, 0, 4);
             if (choice == 0)
@@ -698,15 +699,16 @@ public class LegendsOfValorGame extends Game {
         }
 
         System.out.println("\n--- Buy " + clazz.getSimpleName() + "s ---");
-        System.out.println("Gold: " + (int) hero.getGold());
+        System.out.println("💰 Gold: " + (int) hero.getGold());
 
         for (int i = 0; i < filtered.size(); i++) {
             Item it = filtered.get(i);
-            System.out.printf("%d) %s | price %d | lvl req %d%n",
+            System.out.printf("%d) %s | 💰 price %d | 🔓 lvl req %d%n",
                     i + 1, it.getName(), it.getPrice(), it.getLevelRequired());
         }
         System.out.println("0) Cancel");
         System.out.println("-1) Quit Game");
+        System.out.println("Enter a number from above displayed options:");
 
         int choice = readInt(scanner, -1, filtered.size());
 
