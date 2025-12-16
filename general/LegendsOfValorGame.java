@@ -644,10 +644,10 @@ public class LegendsOfValorGame extends Game {
         while (true) {
             System.out.println("\n--- What do you want to buy? ---");
             System.out.println("1) Weapons ⚔️");
-            System.out.println("2) Armors 🛡️");
+            System.out.println("2) Armors  🛡️");
             System.out.println("3) Potions 🧪");
-            System.out.println("4) Spells 🔮");
-            System.out.println("0) Back");
+            System.out.println("4) Spells  🔮");
+            System.out.println("0) Back   ❌");
             System.out.println("Choose from above options(0-4)");
 
             int choice = readInt(scanner, 0, 4);
@@ -698,7 +698,7 @@ public class LegendsOfValorGame extends Game {
             return;
         }
 
-        System.out.println("\n--- Buy " + clazz.getSimpleName() + "s --- 🔮");
+        System.out.println("\n--- Buy " + clazz.getSimpleName() + "s --- ");
         System.out.println("💰 Gold: " + (int) hero.getGold());
 
         for (int i = 0; i < filtered.size(); i++) {
