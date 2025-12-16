@@ -347,10 +347,10 @@ protected void initializeGame() {
         Market market = tile.getMarket();
 
         while (true) {
-            view.showMessage("\nMarket:");
-            view.showMessage("1) Buy");
-            view.showMessage("2) Sell");
-            view.showMessage("3) Exit Market");
+            view.showMessage("\n🏪 Market Menu:");
+            view.showMessage("1) 🛒 Buy items");
+            view.showMessage("2) 💰 Sell items");
+            view.showMessage("3) 🚪 Leave market");
             view.showMessage("4) Quit Game");
 
             int choice = readIntInRange(1, 4);
