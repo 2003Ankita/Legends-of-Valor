@@ -295,3 +295,927 @@ Choose any option in range (1-4)
 0) Back   ❌
 Choose from above options(0-4)
 >
+
+
+----------------------------------------------------------------------------------
+ Hero Turn → Gaerdal_Ironhand | Position: (7,0) | Lane: TOP
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Gaerdal_Ironhand | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 100 | ⚔️ STR 700 | 🏹 DEX 600 | 🤸 AGI 500 | 💰 Gold 1354
+Position: (7,0) in lane TOP
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 600.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Gaerdal_Ironhand waits and passes the turn.
+
+⚔️ Hero Turn → Sehanine_Moonbow | Position: (7,3) | Lane: MIDDLE
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Sehanine_Moonbow | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 600 | ⚔️ STR 700 | 🏹 DEX 500 | 🤸 AGI 800 | 💰 Gold 2500
+Position: (7,3) in lane MIDDLE
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 500.0 / 800.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Sehanine_Moonbow waits and passes the turn.
+
+⚔️ Hero Turn → Muamman_Duathall | Position: (7,6) | Lane: BOTTOM
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Muamman_Duathall | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 300 | ⚔️ STR 900 | 🏹 DEX 750 | 🤸 AGI 500 | 💰 Gold 2546
+Position: (7,6) in lane BOTTOM
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 900.0 / 750.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Muamman_Duathall waits and passes the turn.
+
+⚔️ Hero Turn → Gaerdal_Ironhand | Position: (7,0) | Lane: TOP
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Gaerdal_Ironhand | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 100 | ⚔️ STR 700 | 🏹 DEX 600 | 🤸 AGI 500 | 💰 Gold 1354
+Position: (7,0) in lane TOP
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 600.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Gaerdal_Ironhand waits and passes the turn.
+
+⚔️ Hero Turn → Sehanine_Moonbow | Position: (7,3) | Lane: MIDDLE
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Sehanine_Moonbow | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 600 | ⚔️ STR 700 | 🏹 DEX 500 | 🤸 AGI 800 | 💰 Gold 2500
+Position: (7,3) in lane MIDDLE
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 500.0 / 800.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Sehanine_Moonbow waits and passes the turn.
+
+⚔️ Hero Turn → Muamman_Duathall | Position: (7,6) | Lane: BOTTOM
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Muamman_Duathall | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 300 | ⚔️ STR 900 | 🏹 DEX 750 | 🤸 AGI 500 | 💰 Gold 2546
+Position: (7,6) in lane BOTTOM
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 900.0 / 750.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Muamman_Duathall waits and passes the turn.
+
+⚔️ Hero Turn → Gaerdal_Ironhand | Position: (7,0) | Lane: TOP
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Gaerdal_Ironhand | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 100 | ⚔️ STR 700 | 🏹 DEX 600 | 🤸 AGI 500 | 💰 Gold 1354
+Position: (7,0) in lane TOP
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 600.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Gaerdal_Ironhand waits and passes the turn.
+
+⚔️ Hero Turn → Sehanine_Moonbow | Position: (7,3) | Lane: MIDDLE
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Sehanine_Moonbow | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 600 | ⚔️ STR 700 | 🏹 DEX 500 | 🤸 AGI 800 | 💰 Gold 2500
+Position: (7,3) in lane MIDDLE
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 500.0 / 800.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Sehanine_Moonbow waits and passes the turn.
+
+⚔️ Hero Turn → Muamman_Duathall | Position: (7,6) | Lane: BOTTOM
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Muamman_Duathall | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 300 | ⚔️ STR 900 | 🏹 DEX 750 | 🤸 AGI 500 | 💰 Gold 2546
+Position: (7,6) in lane BOTTOM
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 900.0 / 750.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Muamman_Duathall waits and passes the turn.
+
+⚔️ Hero Turn → Gaerdal_Ironhand | Position: (7,0) | Lane: TOP
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Gaerdal_Ironhand | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 100 | ⚔️ STR 700 | 🏹 DEX 600 | 🤸 AGI 500 | 💰 Gold 1354
+Position: (7,0) in lane TOP
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 600.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Gaerdal_Ironhand waits and passes the turn.
+
+⚔️ Hero Turn → Sehanine_Moonbow | Position: (7,3) | Lane: MIDDLE
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Sehanine_Moonbow | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 600 | ⚔️ STR 700 | 🏹 DEX 500 | 🤸 AGI 800 | 💰 Gold 2500
+Position: (7,3) in lane MIDDLE
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 500.0 / 800.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Sehanine_Moonbow waits and passes the turn.
+
+⚔️ Hero Turn → Muamman_Duathall | Position: (7,6) | Lane: BOTTOM
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Muamman_Duathall | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 300 | ⚔️ STR 900 | 🏹 DEX 750 | 🤸 AGI 500 | 💰 Gold 2546
+Position: (7,6) in lane BOTTOM
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 900.0 / 750.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Muamman_Duathall waits and passes the turn.
+
+⚔️ Hero Turn → Gaerdal_Ironhand | Position: (7,0) | Lane: TOP
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Gaerdal_Ironhand | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 100 | ⚔️ STR 700 | 🏹 DEX 600 | 🤸 AGI 500 | 💰 Gold 1354
+Position: (7,0) in lane TOP
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 600.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Gaerdal_Ironhand waits and passes the turn.
+
+⚔️ Hero Turn → Sehanine_Moonbow | Position: (7,3) | Lane: MIDDLE
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Sehanine_Moonbow | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 600 | ⚔️ STR 700 | 🏹 DEX 500 | 🤸 AGI 800 | 💰 Gold 2500
+Position: (7,3) in lane MIDDLE
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 700.0 / 500.0 / 800.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Sehanine_Moonbow waits and passes the turn.
+
+⚔️ Hero Turn → Muamman_Duathall | Position: (7,6) | Lane: BOTTOM
+
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+P - P - P K - K - K I - I - I P - P - P P - P - P I - I - I P - P - P P - P - P
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M4     | |       | |       | |M5     | |       | |       | |M6     |
+K - K - K P - P - P I - I - I P - P - P P - P - P I - I - I O - O - O B - B - B
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I B - B - B C - C - C I - I - I P - P - P P - P - P
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O C - C - C I - I - I C - C - C K - K - K I - I - I P - P - P P - P - P
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |       | |       | |       | |       | |       | |       | |       |
+O - O - O P - P - P I - I - I O - O - O K - K - K I - I - I P - P - P K - K - K
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|       | |M1     | |       | |       | |M2     | |       | |       | |M3     |
+K - K - K K - K - K I - I - I C - C - C B - B - B I - I - I P - P - P P - P - P
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+|       | |       | |  XXX  | |       | |       | |  XXX  | |       | |       |
+|H1     | |       | |       | |H2     | |       | |       | |H3     | |       |
+N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
+
+
+=== Hero Info ===
+🧙 Muamman_Duathall | ⭐ Lvl 1 | ❤️ HP 100 | 🔮 MP 300 | ⚔️ STR 900 | 🏹 DEX 750 | 🤸 AGI 500 | 💰 Gold 2546
+Position: (7,6) in lane BOTTOM
+Current terrain: HERO_NEXUS
+Effective STR/DEX/AGI: 900.0 / 750.0 / 500.0
+Equipped weapon: none
+Equipped armor: none
+
+Choose action:
+1)  🚶 Move
+2)  ⚔️ Attack
+3)  🔮 Cast Spell
+4)  🧪 Use Potion
+5)  ✨ Teleport
+6)  🔙 Recall to Nexus
+7)  🛡️ Equip Weapon / Armor
+8)  ℹ️ View Hero Info (does NOT end turn)
+9)  🎒 View Inventory (does NOT end turn)
+10) 🏪 Open Market
+11) ⏭️ Pass Turn
+12) 🚪 Quit Game
+Choose any option in range (1-12)
+> 11
+⏭️ Muamman_Duathall waits and passes the turn.
+A monster has reached the Heroes' Nexus. Defeat!
+
+🏁 === GAME OVER === 🏁
+🗡️ Hero Kills: 0
+💀 Monster Kills: 0
+
+
