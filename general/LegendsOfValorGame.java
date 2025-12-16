@@ -38,11 +38,11 @@ public class LegendsOfValorGame extends Game {
     private static final String GREEN = "\u001B[32m";
     private static final String RESET = "\u001B[0m";
     // ANSI COLORS
-    private static final String BLUE = "\u001B[34m";    // Bush (B)
-    private static final String CYAN = "\u001B[36m";    // Cave (C)
-    private static final String YELLOW = "\u001B[33m";  // Koulou (K)
-    private static final String WHITE = "\u001B[37m";   // Nexus (N)
-    private static final String GRAY = "\u001B[90m";    // Inaccessible (I)
+    private static final String BLUE = "\u001B[34m"; // Bush (B)
+    private static final String CYAN = "\u001B[36m"; // Cave (C)
+    private static final String YELLOW = "\u001B[33m"; // Koulou (K)
+    private static final String WHITE = "\u001B[37m"; // Nexus (N)
+    private static final String GRAY = "\u001B[90m"; // Inaccessible (I)
 
     private int heroKills = 0;
     private int monsterKills = 0;
@@ -189,7 +189,7 @@ public class LegendsOfValorGame extends Game {
                 for (int li = 0; li < lanes.length; li++) {
                     System.out.printf("%d) %s%n", li + 1, lanes[li]);
                 }
-               System.out.println("choose an option in range (0-3)");
+                System.out.println("choose an option in range (0-3)");
                 int laneChoice = readInt(scanner, 0, lanes.length);
                 if (laneChoice == 0) {
                     System.out.println("👋 You chose to leave Legends of Valor.");
@@ -1317,16 +1317,16 @@ public class LegendsOfValorGame extends Game {
                 return GREEN + "P" + RESET;
         }
     }
+
     private String pad(String text, int width) {
         int visibleLength = stripAnsi(text).length();
         int padding = Math.max(0, width - visibleLength);
-        return text + " ".repeat(padding);
+        return text + new String(new char[padding]).replace('\0', ' ');
     }
 
     private String stripAnsi(String s) {
         return s.replaceAll("\\u001B\\[[;\\d]*m", "");
     }
-
 
     @Override
     protected void endGame() {
