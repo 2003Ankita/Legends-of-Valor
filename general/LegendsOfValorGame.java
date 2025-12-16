@@ -251,7 +251,7 @@ public class LegendsOfValorGame extends Game {
             if (hero == null) {
                 continue;
             }
-            if (hero.getHP() <= 0) {
+            if (!hero.isAlive()) {
                 continue;
             }
 
@@ -1032,7 +1032,7 @@ public class LegendsOfValorGame extends Game {
     private void regenHeroes() {
         for (HeroUnit h : heroes) {
             Hero hero = h.getHero();
-            if (hero.getHp() > 0) {
+            if (hero.isAlive()) {
                 double maxHp = hero.getLevel() * 100.0;
                 double healHp = maxHp * 0.10;
                 hero.takeDamage(-healHp);
@@ -1047,7 +1047,7 @@ public class LegendsOfValorGame extends Game {
         // Heroes respawn at Nexus at start of next round with full HP.
         for (HeroUnit unit : heroes) {
             Hero hero = unit.getHero();
-            if (hero.getHp() <= 0) {
+            if (!hero.isAlive()) {
                 double maxHp = hero.getLevel() * 100.0;
                 hero.takeDamage(-(maxHp - hero.getHp())); // heal to full
                 recallHero(unit);
