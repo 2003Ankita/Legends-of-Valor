@@ -221,7 +221,7 @@ protected void initializeGame() {
 
             /* --- Board Render --- */
             view.render(board, party);
-            view.showMessage("\nCommands: W/A/S/D = move | I = info | M = market | Q = quit");
+            view.showMessage("\nMove (W/A/S/D):W =move up, A = move left, S = move down, D = move right  | I = info | M = market | Q = quit");
             view.showMessage("Enter command:");
 
             char cmd = readChar();
