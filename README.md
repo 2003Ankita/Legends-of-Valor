@@ -165,14 +165,36 @@ javac Main.java
 👉 Select hero #1:
 0) Quit Game
 Enter a number displayed : 
-> 
+> 1
 🛣️ Assign a lane to Gaerdal_Ironhand:
 0) Quit Game
 1) TOP
 2) MIDDLE
 3) BOTTOM
 choose an option in range (0-3)
->
+>1
+👉 Select hero #2:
+0) Quit Game
+Enter a number displayed : 
+> 8
+🛣️ Assign a lane to Sehanine_Moonbow:
+0) Quit Game
+1) TOP
+2) MIDDLE
+3) BOTTOM
+choose an option in range (0-3)
+> 2
+👉 Select hero #3:
+0) Quit Game
+Enter a number displayed : 
+> 3
+🛣️ Assign a lane to Muamman_Duathall:
+0) Quit Game
+1) TOP
+2) MIDDLE
+3) BOTTOM
+choose an option in range (0-3)
+> 3
 ⚔️ === LEGENDS OF VALOR === ⚔️
 
 🔔 --- ROUND 1 BEGINS --- 🔔
@@ -236,7 +258,7 @@ Choose action:
 12) 🚪 Quit Game
 
 Choose any option in range (1-12)
-> 
+> 10
 Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right 
 Choose a Move:
 ===== MARKET CATALOG =====
@@ -286,7 +308,7 @@ Choose a Move:
 3) 🚪 Leave Market
 4) ❌ Quit Game
 Choose any option in range (1-4)
->
+>1
 --- What do you want to buy? ---
 1) Weapons ⚔️
 2) Armors  🛡️
@@ -294,10 +316,56 @@ Choose any option in range (1-4)
 4) Spells  🔮
 0) Back   ❌
 Choose from above options(0-4)
->
+>0
+===== MARKET CATALOG =====
 
+⚔️ ===== WEAPONS AVAILABLE =====
+0) Sword | 💰 500 | 🔓 Lvl 1 | ⚔️ Dmg 800.0 | ✋ Hands 1
+1) Bow | 💰 300 | 🔓 Lvl 2 | ⚔️ Dmg 500.0 | ✋ Hands 2
+2) Scythe | 💰 1000 | 🔓 Lvl 6 | ⚔️ Dmg 1100.0 | ✋ Hands 2
+3) Axe | 💰 550 | 🔓 Lvl 5 | ⚔️ Dmg 850.0 | ✋ Hands 1
+4) TSwords | 💰 1400 | 🔓 Lvl 8 | ⚔️ Dmg 1600.0 | ✋ Hands 2
+5) Dagger | 💰 200 | 🔓 Lvl 1 | ⚔️ Dmg 250.0 | ✋ Hands 1
 
-----------------------------------------------------------------------------------
+🛡️ ===== ARMORS AVAILABLE =====
+0) Platinum_Shield | 💰 150 | 🔓 Lvl 1 | 🛡️ Reduction 200.0
+1) Breastplate | 💰 350 | 🔓 Lvl 3 | 🛡️ Reduction 600.0
+2) Full_Body_Armor | 💰 1000 | 🔓 Lvl 8 | 🛡️ Reduction 1100.0
+3) Wizard_Shield | 💰 1200 | 🔓 Lvl 10 | 🛡️ Reduction 1500.0
+4) Guardian_Angel | 💰 1000 | 🔓 Lvl 10 | 🛡️ Reduction 1000.0
+
+🧪 ===== POTIONS AVAILABLE =====
+0) Healing_Potion | 💰 250 | 🔓 Lvl 1 | ✨ Effect 100.0 | 📜 HP
+1) Strength_Potion | 💰 200 | 🔓 Lvl 1 | ✨ Effect 75.0 | 📜 STRENGTH
+2) Magic_Potion | 💰 350 | 🔓 Lvl 2 | ✨ Effect 100.0 | 📜 MANA
+3) Luck_Elixir | 💰 500 | 🔓 Lvl 4 | ✨ Effect 65.0 | 📜 AGILITY
+4) Mermaid_Tears | 💰 850 | 🔓 Lvl 5 | ✨ Effect 100.0 | 📜 HP
+5) Ambrosia | 💰 1000 | 🔓 Lvl 8 | ✨ Effect 150.0 | 📜 HP
+
+🔮 ===== SPELLS AVAILABLE =====
+0) Flame_Tornado | 💰 700 | 🔓 Lvl 4 | 🔥 Dmg 850.0 | 🔮 Mana 300.0 | 🧬 FIRE
+1) Breath_of_Fire | 💰 350 | 🔓 Lvl 1 | 🔥 Dmg 450.0 | 🔮 Mana 100.0 | 🧬 FIRE
+2) Heat_Wave | 💰 450 | 🔓 Lvl 2 | 🔥 Dmg 600.0 | 🔮 Mana 150.0 | 🧬 FIRE
+3) Lava_Comet | 💰 800 | 🔓 Lvl 7 | 🔥 Dmg 1000.0 | 🔮 Mana 550.0 | 🧬 FIRE
+4) Hell_Storm | 💰 600 | 🔓 Lvl 3 | 🔥 Dmg 950.0 | 🔮 Mana 600.0 | 🧬 FIRE
+5) Snow_Cannon | 💰 500 | 🔓 Lvl 2 | 🔥 Dmg 650.0 | 🔮 Mana 250.0 | 🧬 ICE
+6) Ice_Blade | 💰 250 | 🔓 Lvl 1 | 🔥 Dmg 450.0 | 🔮 Mana 100.0 | 🧬 ICE
+7) Frost_Blizzard | 💰 750 | 🔓 Lvl 5 | 🔥 Dmg 850.0 | 🔮 Mana 350.0 | 🧬 ICE
+8) Arctic_Storm | 💰 700 | 🔓 Lvl 6 | 🔥 Dmg 800.0 | 🔮 Mana 300.0 | 🧬 ICE
+9) Lightning_Dagger | 💰 400 | 🔓 Lvl 1 | 🔥 Dmg 500.0 | 🔮 Mana 150.0 | 🧬 LIGHTNING
+10) Thunder_Blast | 💰 750 | 🔓 Lvl 4 | 🔥 Dmg 950.0 | 🔮 Mana 400.0 | 🧬 LIGHTNING
+11) Electric_Arrows | 💰 550 | 🔓 Lvl 5 | 🔥 Dmg 650.0 | 🔮 Mana 200.0 | 🧬 LIGHTNING
+12) Spark_Needles | 💰 500 | 🔓 Lvl 2 | 🔥 Dmg 600.0 | 🔮 Mana 200.0 | 🧬 LIGHTNING
+
+🏪 === MARKETPLACE (Hero Nexus) === 🏪
+💰 Gold Available: 1354
+1) 🛒 Buy Items
+2) 💰 Sell Items
+3) 🚪 Leave Market
+4) ❌ Quit Game
+Choose any option in range (1-4)
+3
+
  Hero Turn → Gaerdal_Ironhand | Position: (7,0) | Lane: TOP
 
 N - N - N N - N - N I - I - I N - N - N N - N - N I - I - I N - N - N N - N - N
