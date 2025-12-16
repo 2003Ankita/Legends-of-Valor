@@ -272,6 +272,12 @@ protected void initializeGame() {
                 // ✅ CLEAR TILE ONLY AFTER BATTLE
                 t.setMonster(false);
                 board.mainMonsterDefeated();
+
+                if (board.allMonstersCleared()) {
+                    view.showMessage("🎉 Congratulations, " + playerName + "! " + MSG_WIN);
+                    promptNextAction();
+                    return;   // 🔴 THIS WAS MISSING
+                }
                 continue;
             }
 
