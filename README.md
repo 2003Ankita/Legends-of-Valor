@@ -116,7 +116,13 @@ src/
 
 | `Main.java` | Entry point.  Create a new GameController to call `controller.startGame()` to launch the game selection menu. |
 
-## How to Run
+
+## How to compile and run
+-----------------------------------------------------------------------------------------------------------------------------------
+•   Save all the code in a file named Main.java.
+•   Open a terminal/command prompt in the same directory.
+•   Compile the code:Javac  Main.java
+•   Run the program:java Main
 
 ### Requirements
 - Java 8 
