@@ -14,7 +14,8 @@ public class MoveAction implements HeroAction {
     public boolean execute(LegendsOfValorGame game, HeroUnit unit, Scanner in) {
         int dr = 0, dc = 0;
         while (true) {
-            System.out.print("Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right ");
+            System.out.println("Move (W/A/S/D):W =move up, A = move left, S = move down, D = move right ");
+            System.out.println("Choose a Move:");
             String line = in.nextLine().trim().toUpperCase();
             if (line.isEmpty()) {
                 System.out.println("❌ Invalid input. Please enter W, A, S, or D.");
@@ -49,9 +50,10 @@ public class MoveAction implements HeroAction {
 
         LegendsTile destTile = game.getBoard().getTile(dest);
         if (destTile.getTerrainType() == TerrainType.OBSTACLE) {
-            System.out.print("🧱 An obstacle blocks your path. Spend one turn to clear it? (y/n): ");
+            System.out.println("🧱 An obstacle blocks your path. Spend one turn to clear it? (y/n): ");
 
             String ans = in.nextLine().trim().toLowerCase();
+
 
             if (!ans.isEmpty() && ans.charAt(0) == 'y') {
                 // Change terrain from OBSTACLE to PLAIN
