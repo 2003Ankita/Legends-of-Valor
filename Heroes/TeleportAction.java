@@ -27,6 +27,7 @@ public class TeleportAction implements HeroAction {
 
                     i + 1, h.getHero().getName(), h.getPosition(), h.getLane());
         }
+        System.out.println("Enter a number displayed : ");
         int choice = game.readInt(in, 1, others.size());
         HeroUnit target = others.get(choice - 1);
 
@@ -41,6 +42,7 @@ public class TeleportAction implements HeroAction {
             System.out.printf("%d) 📍 %s%n",
                     i + 1, candidates.get(i));
         }
+        System.out.println("Enter a number displayed : ");
         int destIdx = game.readInt(in, 1, candidates.size());
         Position dest = candidates.get(destIdx - 1);
 

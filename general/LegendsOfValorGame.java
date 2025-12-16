@@ -153,6 +153,7 @@ public class LegendsOfValorGame extends Game {
                 System.out.println("👉 Select hero #" + (heroIndex + 1) + ":");
 
                 System.out.println("0) Quit Game");
+                System.out.println("Enter a number displayed : ");
 
                 int choice = readInt(scanner, 0, pool.size());
                 if (choice == 0) {
@@ -181,6 +182,7 @@ public class LegendsOfValorGame extends Game {
                 for (int li = 0; li < lanes.length; li++) {
                     System.out.printf("%d) %s%n", li + 1, lanes[li]);
                 }
+               System.out.println("choose an option in range (0-3)");
                 int laneChoice = readInt(scanner, 0, lanes.length);
                 if (laneChoice == 0) {
                     System.out.println("👋 You chose to leave Legends of Valor.");
@@ -367,6 +369,7 @@ public class LegendsOfValorGame extends Game {
         System.out.println("10) 🏪 Open Market");
         System.out.println("11) ⏭️ Pass Turn");
         System.out.println("12) 🚪 Quit Game");
+        System.out.println("Choose any option in range (1-12)");
 
     }
 
@@ -609,6 +612,7 @@ public class LegendsOfValorGame extends Game {
             System.out.println("2) 💰 Sell Items");
             System.out.println("3) 🚪 Leave Market");
             System.out.println("4) ❌ Quit Game");
+            System.out.println("Choose any option in range (1-4)");
 
             int choice = readInt(scanner, 1, 4);
 
