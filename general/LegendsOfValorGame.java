@@ -37,6 +37,13 @@ public class LegendsOfValorGame extends Game {
     private static final String RED = "\u001B[31m";
     private static final String GREEN = "\u001B[32m";
     private static final String RESET = "\u001B[0m";
+    // ANSI COLORS
+    private static final String BLUE = "\u001B[34m";    // Bush (B)
+    private static final String CYAN = "\u001B[36m";    // Cave (C)
+    private static final String YELLOW = "\u001B[33m";  // Koulou (K)
+    private static final String WHITE = "\u001B[37m";   // Nexus (N)
+    private static final String GRAY = "\u001B[90m";    // Inaccessible (I)
+
     private int heroKills = 0;
     private int monsterKills = 0;
     private boolean quitRequested = false;
@@ -1202,15 +1209,20 @@ public class LegendsOfValorGame extends Game {
                 String content = "";
 
                 if (tile.getHero() != null)
-                    content += "H" + (indexOfHero(tile.getHero()) + 1);
+                    content += GREEN + "H" + (indexOfHero(tile.getHero()) + 1) + RESET;
+
                 if (tile.getMonster() != null) {
                     if (!content.isEmpty())
                         content += " ";
-                    content += "M" + (indexOfMonster(tile.getMonster()) + 1);
-                }
+                    content += RED + "M" + (indexOfMonster(tile.getMonster()) + 1) + RESET;
 
-                String centered = String.format("%-7s", String.format("%3s", content));
+                }
+//
+//                String centered = String.format("%-7s", String.format("%3s", content));
+//                mid2.append("|").append(centered).append("|");
+                String centered = pad(String.format("%3s", content), 7);
                 mid2.append("|").append(centered).append("|");
+
                 if (c != size - 1)
                     mid2.append(" ");
             }
@@ -1231,8 +1243,15 @@ public class LegendsOfValorGame extends Game {
         int size = board.getSize();
         StringBuilder sb = new StringBuilder();
         for (int c = 0; c < size; c++) {
+//            String t = terrainSymbol(board.getTile(r, c));
+//            sb.append(t).append(" - ").append(t).append(" - ").append(t);
             String t = terrainSymbol(board.getTile(r, c));
-            sb.append(t).append(" - ").append(t).append(" - ").append(t);
+            sb.append(pad(t, 1))
+                    .append(" - ")
+                    .append(pad(t, 1))
+                    .append(" - ")
+                    .append(pad(t, 1));
+
             if (c != size - 1)
                 sb.append(" ");
         }
@@ -1284,26 +1303,61 @@ public class LegendsOfValorGame extends Game {
      * Returns a single-character symbol representing the terrain type of a tile
      * for use in board border and grid rendering.
      */
+//    private String terrainSymbol(LegendsTile tile) {
+//        switch (tile.getTerrainType()) {
+//            case HERO_NEXUS:
+//                return "N";
+//            case MONSTER_NEXUS:
+//                return "N";
+//            case INACCESSIBLE:
+//                return "I";
+//            case BUSH:
+//                return "B";
+//            case CAVE:
+//                return "C";
+//            case KOULOU:
+//                return "K";
+//            case OBSTACLE:
+//                return "O";
+//            default:
+//                return "P";
+//        }
+//    }
     private String terrainSymbol(LegendsTile tile) {
         switch (tile.getTerrainType()) {
             case HERO_NEXUS:
-                return "N";
             case MONSTER_NEXUS:
-                return "N";
+                return WHITE + "N" + RESET;
+
             case INACCESSIBLE:
-                return "I";
+                return GRAY + "I" + RESET;
+
             case BUSH:
-                return "B";
+                return BLUE + "B" + RESET;
+
             case CAVE:
-                return "C";
+                return CYAN + "C" + RESET;
+
             case KOULOU:
-                return "K";
+                return YELLOW + "K" + RESET;
+
             case OBSTACLE:
-                return "O";
-            default:
-                return "P";
+                return RED + "O" + RESET;
+
+            default: // PLAIN
+                return GREEN + "P" + RESET;
         }
     }
+    private String pad(String text, int width) {
+        int visibleLength = stripAnsi(text).length();
+        int padding = Math.max(0, width - visibleLength);
+        return text + " ".repeat(padding);
+    }
+
+    private String stripAnsi(String s) {
+        return s.replaceAll("\\u001B\\[[;\\d]*m", "");
+    }
+
 
     @Override
     protected void endGame() {
