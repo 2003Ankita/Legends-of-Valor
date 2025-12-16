@@ -265,7 +265,7 @@ protected void initializeGame() {
                 }
 
                 Monster selected = chooseMonsterForTile();
-                if (selected == null) return;
+                if (selected == null) continue;
 
                 startBattleWithSelectedMonster(selected);
 
