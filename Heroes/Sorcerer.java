@@ -1,15 +1,14 @@
-package Heros;
+package Heroes;
 
 /**
- * Represents a Paladin hero.
- * Paladins gain balanced attribute increases when leveling up,
- * but receive an additional +5% bonus to Strength and Dexterity
- * (their favored stats).
+ * Represents a Sorcerer hero.
+ * Sorcerers excel in spellcasting and receive extra bonuses
+ * to Dexterity and Agility when leveling up.
  */
-public class Paladin extends Hero {
+public class Sorcerer extends Hero {
 
     /**
-     * Constructs a Paladin with the given attributes.
+     * Creates a Sorcerer with the given attributes.
      *
      * @param name      hero name
      * @param level     starting level
@@ -19,17 +18,17 @@ public class Paladin extends Hero {
      * @param agility   base agility value
      * @param gold      starting gold
      */
-    public Paladin(String name, int level, double mana,
+    public Sorcerer(String name, int level, double mana,
             double strength, double dexterity, double agility,
             double gold) {
         super(name, level, mana, strength, dexterity, agility, gold);
     }
 
     /**
-     * Levels up the Paladin.
+     * Levels up the Sorcerer.
      * Stat scaling rules:
      * - Base +5% to Strength, Dexterity, Agility
-     * - Additional +5% to Strength and Dexterity (favored stats)
+     * - Additional +5% to Dexterity & Agility (favored stats)
      * - HP resets to (level × 100)
      * - Mana increases by 10%
      */
@@ -37,26 +36,27 @@ public class Paladin extends Hero {
     public void levelUp() {
         level++;
 
+        // Base +5%
         strength *= 1.05;
         dexterity *= 1.05;
         agility *= 1.05;
 
-        // Favored +5%
-        strength *= 1.05;
+        // Favored +5%: Only Dexterity & Agility
         dexterity *= 1.05;
+        agility *= 1.05;
 
         hp = level * 100;
         mana *= 1.1;
     }
 
     /**
-     * Creates a deep copy of this Paladin.
-     * Used in hero selection to avoid shared references.
+     * Creates a deep copy of this Sorcerer.
+     * Used when forming a party so no hero instance is shared.
      * 
-     * @return a new Paladin with identical stats
+     * @return a new Sorcerer with identical stats
      */
     @Override
     protected Hero copyInternal() {
-        return new Paladin(name, level, mana, strength, dexterity, agility, gold);
+        return new Sorcerer(name, level, mana, strength, dexterity, agility, gold);
     }
 }

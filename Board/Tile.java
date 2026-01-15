@@ -26,6 +26,7 @@ public class Tile {
     public Tile(TileType type) {
         this.type = type;
         this.hasMonster = false;
+
     }
 
     /**

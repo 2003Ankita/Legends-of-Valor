@@ -1,6 +1,6 @@
 package Items;
 
-import Heros.HeroStat;
+import Heroes.HeroStat;
 
 /**
  * Represents a consumable potion item that boosts a specific hero stat
@@ -47,7 +47,9 @@ public class Potion extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " +" + (int) amount + " " + stat;
+        return super.info()
+                + " | 🧪 Boost +" + (int) amount
+                + " → " + stat;
     }
 
     /**

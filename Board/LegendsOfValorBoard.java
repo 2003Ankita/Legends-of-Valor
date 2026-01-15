@@ -2,11 +2,8 @@ package Board;
 
 import java.util.Random;
 
-import Items.Position;
-
 /**
  * Board implementation dedicated to Legends of Valor.
- *
  * Layout (8x8) per PDF:
  * - 3 lanes of width 2 (TOP, MIDDLE, BOTTOM)
  * - Columns 2 and 5 are INACCESSIBLE walls between lanes
@@ -52,41 +49,23 @@ public class LegendsOfValorBoard {
         return new Position(0, lane.getRightColumn());
     }
 
+    public Lane laneForColumn(int col) {
+        for (Lane l : Lane.values()) {
+            if (l.containsColumn(col)) return l;
+        }
+        return null; // column is a wall (2 or 5)
+    }
+
     /**
      * Builder for LegendsOfValorBoard (Builder pattern).
      * Lets you tweak terrain distribution if needed.
      */
     public static class Builder {
-        private double bushRate = 0.20;
-        private double caveRate = 0.20;
-        private double koulouRate = 0.20;
-        private double obstacleRate = 0.05;
+        private double bushRate = 0.15;
+        private double caveRate = 0.15;
+        private double koulouRate = 0.10;
+        private double obstacleRate = 0.20;
         private long randomSeed = System.currentTimeMillis();
-
-        public Builder withBushRate(double bushRate) {
-            this.bushRate = bushRate;
-            return this;
-        }
-
-        public Builder withCaveRate(double caveRate) {
-            this.caveRate = caveRate;
-            return this;
-        }
-
-        public Builder withKoulouRate(double koulouRate) {
-            this.koulouRate = koulouRate;
-            return this;
-        }
-
-        public Builder withObstacleRate(double obstacleRate) {
-            this.obstacleRate = obstacleRate;
-            return this;
-        }
-
-        public Builder withRandomSeed(long seed) {
-            this.randomSeed = seed;
-            return this;
-        }
 
         public LegendsOfValorBoard build() {
             LegendsTile[][] grid = new LegendsTile[SIZE][SIZE];

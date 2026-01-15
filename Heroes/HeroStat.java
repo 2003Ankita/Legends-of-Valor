@@ -1,4 +1,4 @@
-package Heros;
+package Heroes;
 
 /**
  * Enumeration representing all hero statistics that can be modified

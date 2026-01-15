@@ -52,7 +52,9 @@ public abstract class Item {
      * @return formatted item info string
      */
     public String info() {
-        return name + " (lvl " + levelRequired + ", price " + price + ")";
+        return name
+                + " | 🎯 Level " + levelRequired
+                + " | 💰 Price " + price;
     }
 
     /**

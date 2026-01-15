@@ -1,7 +1,7 @@
 package Monsters;
 
 import Board.Lane;
-import Items.Position;
+import Board.Position;
 
 /**
  * Represents a monster piece on the Legends of Valor board.

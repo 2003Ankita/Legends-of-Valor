@@ -43,6 +43,7 @@ public abstract class Monster extends Character {
 
     /** @return monster’s defense value */
     public double getDefense() {
+
         return defense;
     }
 
@@ -98,7 +99,7 @@ public abstract class Monster extends Character {
      * @return battle HP summary
      */
     public String battleInfo() {
-        return name + " HP " + (int) hp;
+        return "👹 " + name + " | ❤️ HP " + (int) hp;
     }
 
     /**
@@ -108,7 +109,7 @@ public abstract class Monster extends Character {
      */
     public String shortInfo() {
         return String.format(
-                "%s (Lvl %d, HP %.0f, DMG %.0f, DEF %.0f, Dodge %.0f%%)",
+                "👹 %s | Lvl %d | HP %.0f | DMG %.0f | DEF %.0f | Dodge %.0f%%",
                 name, level, hp, damage, defense, dodgeChance * 100);
     }
 
@@ -118,13 +119,14 @@ public abstract class Monster extends Character {
      * @return detailed monster stats
      */
     public String fullInfo() {
-        return "Name: " + name +
-                "\nLevel: " + level +
-                "\nHP: " + hp +
-                "\nDamage: " + damage +
-                "\nDefense: " + defense +
-                "\nDodge Chance: " + (dodgeChance * 100) + "%" +
-                "\n-----------------------";
+        return "👹 MONSTER DETAILS 👹" +
+                "\nName        : " + name +
+                "\nLevel       : " + level +
+                "\n❤️ HP       : " + (int) hp +
+                "\n⚔️ Damage   : " + (int) damage +
+                "\n🛡️ Defense  : " + (int) defense +
+                "\n🌀 Dodge    : " + (int) (dodgeChance * 100) + "%" +
+                "\n----------------------------";
     }
 
     public void SetDamage(double damage) {

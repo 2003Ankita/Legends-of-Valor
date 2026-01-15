@@ -2,9 +2,9 @@ package Monsters;
 
 import java.util.List;
 
-import Board.LegendsOfValorGame;
-import Heros.HeroUnit;
-import Items.Position;
+import Board.Position;
+import Heroes.HeroUnit;
+import general.LegendsOfValorGame;
 
 /**
  * Default monster AI:
@@ -23,7 +23,10 @@ public class DefaultMonsterBehavior implements MonsterBehavior {
         // 1) Look for heroes in range 1 (cross pattern)
         List<HeroUnit> targets = game.getHeroesInRange(pos, 1);
         if (!targets.isEmpty()) {
-            HeroUnit target = targets.get(0);
+            HeroUnit target = targets.stream()
+                    .min(java.util.Comparator.comparingDouble(h -> h.getHero().getHp()))
+                    .orElse(null);
+
             game.monsterAttack(unit, target);
             return;
         }

@@ -31,6 +31,10 @@ public class Armor extends Item {
         return damageReduction;
     }
 
+    public int getLevelRequirement() {
+        return levelRequired;
+    }
+
     /**
      * Returns a formatted string containing armor information, including
      * the base item info and its damage reduction.
@@ -39,7 +43,8 @@ public class Armor extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " reduction " + (int) damageReduction;
+        return super.info()
+                + " | 🛡️ Damage Reduction " + (int) damageReduction;
     }
 
     /**

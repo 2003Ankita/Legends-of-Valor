@@ -35,6 +35,10 @@ public class Weapon extends Item {
         return handsRequired;
     }
 
+    public int getLevelRequirement() {
+        return levelRequired;
+    }
+
     /**
      * Returns formatted weapon information including:
      * - name, price, level requirement (from Item)
@@ -45,7 +49,9 @@ public class Weapon extends Item {
      */
     @Override
     public String info() {
-        return super.info() + " dmg " + (int) damage + " hands " + handsRequired;
+        return super.info()
+                + " | ⚔️ Dmg " + (int) damage
+                + " | ✋ Hands " + handsRequired;
     }
 
     /**

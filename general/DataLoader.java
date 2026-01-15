@@ -3,11 +3,11 @@ package general;
 import java.util.ArrayList;
 import java.util.List;
 
-import Heros.Hero;
-import Heros.HeroStat;
-import Heros.Paladin;
-import Heros.Sorcerer;
-import Heros.Warrior;
+import Heroes.Hero;
+import Heroes.HeroStat;
+import Heroes.Paladin;
+import Heroes.Sorcerer;
+import Heroes.Warrior;
 import Items.Armor;
 import Items.Item;
 import Items.Potion;
@@ -211,7 +211,7 @@ public final class DataLoader {
     public static List<Item> loadPotions(String ignored) {
         List<Item> list = new ArrayList<>();
 
-        list.add(new Potion("Healing_Potion", 250, 1, HeroStat.HP, 100));
+        list.add(new Potion("Healing_Potion", 250, 1, HeroStat.HP, 100.));
         list.add(new Potion("Strength_Potion", 200, 1, HeroStat.STRENGTH, 75));
         list.add(new Potion("Magic_Potion", 350, 2, HeroStat.MANA, 100));
         list.add(new Potion("Luck_Elixir", 500, 4, HeroStat.AGILITY, 65));
@@ -227,20 +227,17 @@ public final class DataLoader {
      * Loads spells based on the supplied filename.
      * If the filename contains "ice", "fire", or "lightning",
      * returns the appropriate spell list.
-     * 
-     * @param fileName name of the spell file
+     *
      * @return list of spells matching the category
      */
-    public static List<Item> loadSpells(String fileName) {
-        String lower = fileName.toLowerCase();
-        if (lower.contains("ice"))
-            return loadIceSpells();
-        if (lower.contains("fire"))
-            return loadFireSpells();
-        if (lower.contains("lightning"))
-            return loadLightningSpells();
-        return new ArrayList<>();
+    public static List<Item> loadSpells(String ignored) {
+        List<Item> list = new ArrayList<>();
+        list.addAll(loadFireSpells());
+        list.addAll(loadIceSpells());
+        list.addAll(loadLightningSpells());
+        return list;
     }
+
 
     /**
      * Loads Ice spells only.

@@ -1,4 +1,4 @@
-package Items;
+package Board;
 
 /**
  * Immutable value object for (row, col) coordinates.
